@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://5668jhmn8u4w" path="res://scripts/ui/hand_manager.gd" id="3_ikfks"]
 [ext_resource type="Script" uid="uid://c0aushg0urxfa" path="res://scripts/ui/board_ui_manager.gd" id="3_m2d54"]
 [ext_resource type="PackedScene" uid="uid://6iigglaq8stq" path="res://scenes/card.tscn" id="4_0vylu"]
-[ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/MountOlympus.png" id="7_6ovae"]
+[ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/terrains/MountOlympus.png" id="7_6ovae"]
 [ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="8_ivkwx"]
 [ext_resource type="Script" uid="uid://bu27sgv624n3b" path="res://scripts/ui/combat_hud.gd" id="9_g0m11"]
 [ext_resource type="FontFile" uid="uid://duljvvactrvqk" path="res://assets/fonts/Beholden-Bold-Italic.ttf" id="10_5qq3q"]
@@ -141,21 +141,43 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LocationInfo" type="CenterContainer" parent="BoardPanel/left"]
+[node name="LocationInfo" type="TextureRect" parent="BoardPanel/left"]
 custom_minimum_size = Vector2(160, 150)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/left/LocationInfo"]
 layout_mode = 2
+offset_right = 446.0
+offset_bottom = 150.0
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/left/LocationInfo"]
 layout_mode = 2
+offset_left = 93.0
+offset_top = 54.0
+offset_right = 353.0
+offset_bottom = 95.0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_ivkwx")
 theme_override_font_sizes/font_size = 40
 text = "Location Name"
+
+[node name="LocationDescription" type="Label" parent="BoardPanel/left/LocationInfo"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = -5
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("11_g5ebj")
+theme_override_font_sizes/font_size = 18
+text = "Location description"
+horizontal_alignment = 1
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/left"]
 custom_minimum_size = Vector2(0, 80)
@@ -230,19 +252,43 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LocationInfo" type="CenterContainer" parent="BoardPanel/middle"]
+[node name="LocationInfo" type="TextureRect" parent="BoardPanel/middle"]
+custom_minimum_size = Vector2(160, 150)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/middle/LocationInfo"]
 layout_mode = 2
+offset_right = 446.0
+offset_bottom = 150.0
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/middle/LocationInfo"]
 layout_mode = 2
+offset_left = 93.0
+offset_top = 54.0
+offset_right = 353.0
+offset_bottom = 95.0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_ivkwx")
 theme_override_font_sizes/font_size = 40
 text = "Location Name"
+
+[node name="LocationDescription" type="Label" parent="BoardPanel/middle/LocationInfo"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = -5
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("11_g5ebj")
+theme_override_font_sizes/font_size = 18
+text = "Location description"
+horizontal_alignment = 1
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/middle"]
 custom_minimum_size = Vector2(0, 80)
@@ -317,19 +363,43 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LocationInfo" type="CenterContainer" parent="BoardPanel/right"]
+[node name="LocationInfo" type="TextureRect" parent="BoardPanel/right"]
+custom_minimum_size = Vector2(160, 150)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/right/LocationInfo"]
 layout_mode = 2
+offset_right = 446.0
+offset_bottom = 150.0
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/right/LocationInfo"]
 layout_mode = 2
+offset_left = 93.0
+offset_top = 54.0
+offset_right = 353.0
+offset_bottom = 95.0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_ivkwx")
 theme_override_font_sizes/font_size = 40
 text = "Location Name"
+
+[node name="LocationDescription" type="Label" parent="BoardPanel/right/LocationInfo"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = -5
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("11_g5ebj")
+theme_override_font_sizes/font_size = 18
+text = "Location description"
+horizontal_alignment = 1
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/right"]
 custom_minimum_size = Vector2(0, 80)

@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="TerrainData" load_steps=2 format=3 uid="uid://c7jlumgv3jspk"]
+[gd_resource type="Resource" script_class="TerrainData" load_steps=3 format=3 uid="uid://c7jlumgv3jspk"]
 
+[ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/terrains/MountOlympus.png" id="1_4bh2t"]
 [ext_resource type="Script" uid="uid://bo4a777qosw1u" path="res://scripts/data/terrain_data.gd" id="1_fggek"]
 
 [resource]
@@ -12,5 +13,6 @@ triggers = Array[Dictionary]([{
 "event": "on_end_turn",
 "side": "both"
 }])
-owner_type = ""
+owner_type = 3
+art = ExtResource("1_4bh2t")
 metadata/_custom_type_script = "uid://bo4a777qosw1u"

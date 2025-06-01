@@ -2,6 +2,8 @@ extends CardEffect
 @export var amount: int = 1
 @export var turns: int = 1
 
+# Applies a temporary negative power buff (debuff) to all enemy units in the location.
+
 func execute(card: CardData, context: Dictionary) -> void:
 	var board = context["board"]
 	var location = context["location"]
@@ -9,5 +11,10 @@ func execute(card: CardData, context: Dictionary) -> void:
 	for idx in [0, 1, 2, 3]:
 		var target = board.board[location][target_side][idx]
 		if target:
-			target.power = max(0, target.power - amount)
-			# Optionally: add a duration system for temporary debuffs
+			var debuffs = target.get_meta("temp_buffs") if target.has_meta("temp_buffs") else []
+			debuffs.append({
+				"stat": "power",
+				"amount": -amount,
+				"turns_left": turns
+			})
+			target.set_meta("temp_buffs", debuffs)

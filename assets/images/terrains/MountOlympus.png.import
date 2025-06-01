@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clvi4wkljish1"
-path="res://.godot/imported/MountOlympus.png-9ed79e18faafcec0476b541d7e681f9b.ctex"
+path="res://.godot/imported/MountOlympus.png-21128e653a1894808245dbffd969dfe4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/MountOlympus.png"
-dest_files=["res://.godot/imported/MountOlympus.png-9ed79e18faafcec0476b541d7e681f9b.ctex"]
+source_file="res://assets/images/terrains/MountOlympus.png"
+dest_files=["res://.godot/imported/MountOlympus.png-21128e653a1894808245dbffd969dfe4.ctex"]
 
 [params]
 
