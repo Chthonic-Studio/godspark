@@ -8,13 +8,13 @@ atlas = ExtResource("2_6u4wf")
 region = Rect2(444, 138, 99, 128)
 
 [node name="CardRoot" type="Control"]
-custom_minimum_size = Vector2(150, 220)
+custom_minimum_size = Vector2(120, 150)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1450.0
-offset_bottom = -680.0
+offset_right = -1480.0
+offset_bottom = -750.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d81rb")

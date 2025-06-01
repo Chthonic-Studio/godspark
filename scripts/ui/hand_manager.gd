@@ -51,6 +51,27 @@ func _on_board_slot_clicked(location, slot_idx):
 		var combat_manager_node = get_node(combat_manager)
 		var played = combat_manager_node.play_card(selected_card_ui.card_data, location, slot_idx)
 		if played:
+			var board_ui = get_node(board_ui_manager)
+			var card_ui = card_ui_scene.instantiate()
+			card_ui.set_card_data(selected_card_ui.card_data)
+			card_ui.scale = Vector2(0.5, 0.5)
+			var slot_node = board_ui.get_slot_node(location, slot_idx) # <-- changed to get_slot_node
+			if slot_node:
+				slot_node.add_child(card_ui)
+				card_ui.anchor_left = 0.5
+				card_ui.anchor_top = 0.5
+				card_ui.anchor_right = 0.5
+				card_ui.anchor_bottom = 0.5
+				card_ui.offset_left = -30 # -half width (60/2)
+				card_ui.offset_top = -37.5 # -half height (75/2)
+				card_ui.offset_right = 30
+				card_ui.offset_bottom = 37.5
+				card_ui.position = Vector2.ZERO
+				card_ui.size_flags_horizontal = Control.SIZE_FILL
+				card_ui.size_flags_vertical = Control.SIZE_FILL
+				card_ui.scale = Vector2(0.5, 0.5) # your current test scaling
+			else:
+				print("Could not find slot node for", location, slot_idx)
 			refresh_hand()
 		get_node(board_ui_manager).clear_highlights()
 		selected_card_ui = null

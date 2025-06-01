@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://0xhypofm2kgd"]
+[gd_scene load_steps=10 format=3 uid="uid://0xhypofm2kgd"]
 
+[ext_resource type="Texture2D" uid="uid://cpc1emlovgoau" path="res://assets/images/squareCircle_vector.png" id="1_2edba"]
 [ext_resource type="Script" uid="uid://b3dnb661jfaum" path="res://scripts/core/combat_manager.gd" id="1_m17q1"]
 [ext_resource type="Script" uid="uid://dmyfxbt14eg03" path="res://scripts/board/board_manager.gd" id="2_a2e2y"]
 [ext_resource type="Script" uid="uid://5668jhmn8u4w" path="res://scripts/ui/hand_manager.gd" id="3_ikfks"]
 [ext_resource type="Script" uid="uid://c0aushg0urxfa" path="res://scripts/ui/board_ui_manager.gd" id="3_m2d54"]
 [ext_resource type="PackedScene" uid="uid://6iigglaq8stq" path="res://scenes/card.tscn" id="4_0vylu"]
+[ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/MountOlympus.png" id="7_6ovae"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="8_ivkwx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sw3s"]
+atlas = ExtResource("1_2edba")
+region = Rect2(2569, 9, 501, 498)
 
 [node name="CombatScene" type="Control"]
 layout_mode = 3
@@ -17,26 +24,41 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="CombatManager" type="Node" parent="."]
+[node name="BoardBG" type="NinePatchRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(1350, 580)
+layout_mode = 2
+anchor_left = 0.078125
+anchor_top = 0.111111
+anchor_right = 0.921875
+anchor_bottom = 0.666667
+offset_top = -20.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_6sw3s")
+metadata/_edit_use_anchors_ = true
+
+[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager")]
 script = ExtResource("1_m17q1")
+board_manager = NodePath("../BoardManager")
 
 [node name="BoardManager" type="Node" parent="."]
 script = ExtResource("2_a2e2y")
 
 [node name="HandPanel" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(1300, 250)
+custom_minimum_size = Vector2(1300, 180)
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = -650.0
-offset_top = 125.0
+offset_top = -180.0
 offset_right = 650.0
-offset_bottom = 375.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 alignment = 1
 
 [node name="HandManager" type="Control" parent="HandPanel"]
@@ -54,11 +76,14 @@ alignment = 1
 
 [node name="BoardPanel" type="GridContainer" parent="."]
 layout_mode = 0
-offset_left = 125.0
-offset_top = 100.0
-offset_right = 1475.0
-offset_bottom = 600.0
+anchor_left = 0.078125
+anchor_top = 0.111111
+anchor_right = 0.921875
+anchor_bottom = 0.666667
+offset_top = -20.0
+offset_bottom = 60.0
 columns = 4
+metadata/_edit_use_anchors_ = true
 
 [node name="BoardUIManager" type="Control" parent="BoardPanel"]
 layout_mode = 2
@@ -66,66 +91,94 @@ script = ExtResource("3_m2d54")
 board_manager = NodePath("../../BoardManager")
 
 [node name="left" type="VBoxContainer" parent="BoardPanel"]
+custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="EnemyBackRow" type="VBoxContainer" parent="BoardPanel/left"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/EnemyBackRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot2" type="Panel" parent="BoardPanel/left/EnemyBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot3" type="Panel" parent="BoardPanel/left/EnemyBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="EnemyFrontRow" type="VBoxContainer" parent="BoardPanel/left"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/EnemyFrontRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot0" type="Panel" parent="BoardPanel/left/EnemyFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot1" type="Panel" parent="BoardPanel/left/EnemyFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="LocationInfo" type="CenterContainer" parent="BoardPanel/left"]
+custom_minimum_size = Vector2(160, 150)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/left/LocationInfo"]
 layout_mode = 2
+texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/left/LocationInfo"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 40
+text = "Location Name"
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/left"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/PlayerFrontRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot0" type="Panel" parent="BoardPanel/left/PlayerFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot1" type="Panel" parent="BoardPanel/left/PlayerFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PlayerBackRow" type="VBoxContainer" parent="BoardPanel/left"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/PlayerBackRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot2" type="Panel" parent="BoardPanel/left/PlayerBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot3" type="Panel" parent="BoardPanel/left/PlayerBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="middle" type="VBoxContainer" parent="BoardPanel"]
 layout_mode = 2
@@ -133,61 +186,86 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="EnemyBackRow" type="VBoxContainer" parent="BoardPanel/middle"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/EnemyBackRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot2" type="Panel" parent="BoardPanel/middle/EnemyBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot3" type="Panel" parent="BoardPanel/middle/EnemyBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="EnemyFrontRow" type="VBoxContainer" parent="BoardPanel/middle"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/EnemyFrontRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot0" type="Panel" parent="BoardPanel/middle/EnemyFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot1" type="Panel" parent="BoardPanel/middle/EnemyFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="LocationInfo" type="CenterContainer" parent="BoardPanel/middle"]
 layout_mode = 2
 
 [node name="Art" type="TextureRect" parent="BoardPanel/middle/LocationInfo"]
 layout_mode = 2
+texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/middle/LocationInfo"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 40
+text = "Location Name"
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/middle"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/PlayerFrontRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot0" type="Panel" parent="BoardPanel/middle/PlayerFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot1" type="Panel" parent="BoardPanel/middle/PlayerFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PlayerBackRow" type="VBoxContainer" parent="BoardPanel/middle"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/PlayerBackRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot2" type="Panel" parent="BoardPanel/middle/PlayerBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot3" type="Panel" parent="BoardPanel/middle/PlayerBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="right" type="VBoxContainer" parent="BoardPanel"]
 layout_mode = 2
@@ -195,61 +273,86 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="EnemyBackRow" type="VBoxContainer" parent="BoardPanel/right"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/EnemyBackRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot2" type="Panel" parent="BoardPanel/right/EnemyBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot3" type="Panel" parent="BoardPanel/right/EnemyBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="EnemyFrontRow" type="VBoxContainer" parent="BoardPanel/right"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/EnemyFrontRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot0" type="Panel" parent="BoardPanel/right/EnemyFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot1" type="Panel" parent="BoardPanel/right/EnemyFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="LocationInfo" type="CenterContainer" parent="BoardPanel/right"]
 layout_mode = 2
 
 [node name="Art" type="TextureRect" parent="BoardPanel/right/LocationInfo"]
 layout_mode = 2
+texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/right/LocationInfo"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 40
+text = "Location Name"
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/right"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/PlayerFrontRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot0" type="Panel" parent="BoardPanel/right/PlayerFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot1" type="Panel" parent="BoardPanel/right/PlayerFrontRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PlayerBackRow" type="VBoxContainer" parent="BoardPanel/right"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/PlayerBackRow"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Slot2" type="Panel" parent="BoardPanel/right/PlayerBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Slot3" type="Panel" parent="BoardPanel/right/PlayerBackRow/cardSlots"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PlayerHUD" type="Control" parent="."]
 layout_mode = 1
@@ -258,9 +361,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -650.0
-offset_top = -134.0
-offset_right = 650.0
+offset_left = -275.0
+offset_top = -225.0
+offset_right = 275.0
+offset_bottom = -185.0
 grow_horizontal = 2
 grow_vertical = 0
 

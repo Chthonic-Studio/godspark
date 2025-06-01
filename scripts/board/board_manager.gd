@@ -5,6 +5,11 @@ class_name BoardManager
 var locations := ["left", "middle", "right"]
 var board := {}
 
+func _ready():
+	# Failsafe: if the board is empty, set it up
+	if board.is_empty():
+		setup_board()
+
 # Called once at combat start
 func setup_board():
 	board.clear()
@@ -13,20 +18,36 @@ func setup_board():
 			"player": [null, null, null, null], # slots 0,1 = front, 2,3 = back
 			"enemy": [null, null, null, null]
 		}
+	print("setup_board called. Current board: ", board)
 
 # Place a card in a given slot (location, side, slot_idx)
 func place_card(card: CardData, location: String, side: String, slot_idx: int) -> bool:
+	if not board.has(location):
+		print("ERROR: board missing location: ", location, " available: ", board.keys())
+		return false
+	if not board[location].has(side):
+		print("ERROR: board[", location, "] missing side: ", side, " available: ", board[location].keys())
+		return false
+	if slot_idx < 0 or slot_idx >= board[location][side].size():
+		print("ERROR: slot_idx out of range: ", slot_idx)
+		return false
 	if board[location][side][slot_idx] == null:
 		board[location][side][slot_idx] = card
 		return true
 	return false
-
+	
 # Remove a card from its slot
 func remove_card(location: String, side: String, slot_idx: int) -> void:
 	board[location][side][slot_idx] = null
 
 # Find the first available slot for a side in a location (front/back optional)
 func get_available_slot(location: String, side: String, prefer_back: bool=false) -> int:
+	if not board.has(location):
+		print("ERROR: get_available_slot missing location: ", location)
+		return -1
+	if not board[location].has(side):
+		print("ERROR: get_available_slot missing side: ", side)
+		return -1
 	var range = [2, 3, 0, 1] if prefer_back else [0, 1, 2, 3]
 	for idx in range:
 		if board[location][side][idx] == null:
