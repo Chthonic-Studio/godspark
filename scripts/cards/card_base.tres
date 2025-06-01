@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://ckpp47p2yxs0h"]
+
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="1_kksqy"]
+
+[resource]
+script = ExtResource("1_kksqy")
+id = ""
+name = ""
+description = ""
+type = ""
+cost = 0
+effects = Array[Dictionary]([])
+tags = Array[String]([])
+requirements = {}
+metadata/_custom_type_script = "uid://cjoyfln420vcw"
