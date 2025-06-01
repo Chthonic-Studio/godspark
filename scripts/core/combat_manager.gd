@@ -1,31 +1,51 @@
 extends Node
 
 @export var board_manager: BoardManager
+@export var enemy_deck_manager: EnemyDeckManager
 @export var player_health: int = 100
 @export var enemy_health: int = 100
 
 var turn: int = 1
 var phase: String = "PlayerTurn"
-var resources: int = 3 # Faith for playing cards
+var divinity: int = 10 # Faith for playing cards
+
+signal divinity_changed
+signal phase_changed
+signal turn_changed
 
 # Called once at combat start
 func start_combat():
-	DeckManager.draw_cards(DeckManager.max_hand_size)
+	DeckManager.start_game()
+	enemy_deck_manager.draw_cards(3)
 	phase = "PlayerTurn"
-	resources = 3
+	divinity = 10
 	turn = 1
 	board_manager.setup_board()
+	emit_signal("phase_changed")
+	emit_signal("turn_changed")
 
 func end_player_turn():
 	# (Resolve end-of-turn effects, etc. as needed)
 	phase = "EnemyTurn"
+	emit_signal("phase_changed")
 	call_deferred("enemy_turn")
 
 func enemy_turn():
-	# (Enemy AI logic goes here)
-	# After enemies act:
+	enemy_deck_manager.draw_cards(1)
+	for location in board_manager.locations:
+		var slot = board_manager.get_available_slot(location, "enemy")
+		if slot != -1 and enemy_deck_manager.hand.size() > 0:
+			var card = enemy_deck_manager.hand[0] # Simplest AI: play first card
+			board_manager.place_card(card, location, "enemy", slot)
+			enemy_deck_manager.play_card(card)
+			# Instantiate UI here (see below)
+			if has_node("/root/CombatScene/BoardPanel/BoardUIManager"):
+				var board_ui = get_node("/root/CombatScene/BoardPanel/BoardUIManager")
+				board_ui.add_enemy_card_to_slot(card, location, slot)
+			break  # Play only one card per turn for now
 	phase = "Resolution"
 	call_deferred("resolve_turn")
+	emit_signal("phase_changed")
 
 func resolve_turn():
 	if turn >= 4:
@@ -45,31 +65,37 @@ func resolve_turn():
 
 	# Prepare for next turn
 	turn += 1
+	emit_signal("turn_changed")
 	phase = "PlayerTurn"
-	DeckManager.draw_cards(DeckManager.max_hand_size)
-	resources += 1
+	DeckManager.draw_cards(1)
+	divinity += 1
+	emit_signal("divinity_changed")
+	emit_signal("phase_changed")
 
-func play_card(card: CardData, location: String, slot_idx: int = -1):
-	if resources < card.cost:
-		return false # Not enough Faith
+func play_card(card: CardData, location: String, slot_idx: int = -1) -> String:
+	if divinity < card.cost:
+		return "Not enough Divinity!"
 	if slot_idx == -1:
-		slot_idx = board_manager.get_available_slot(location, "player", card.type=="Spell") # Spells can prefer back
-	if board_manager.place_card(card, location, "player", slot_idx):
-		resources -= card.cost
-		DeckManager.play_card(card)
-		# Execute effects
-		for effect in card.effects:
-			if effect is CardEffect:
-				var context = {
-					"combat_manager": self,
-					"board": board_manager,
-					"owner": "player",
-					"location": location,
-					"slot_idx": slot_idx
-				}
-				effect.execute(card, context)
-		return true
-	return false
+		slot_idx = board_manager.get_available_slot(location, "player", card.type=="Spell")
+		if slot_idx == -1:
+			return "Location is full!"
+	var placement_success = board_manager.place_card(card, location, "player", slot_idx)
+	if not placement_success:
+		return "That slot is already occupied!"
+	divinity -= card.cost
+	emit_signal("divinity_changed")
+	DeckManager.play_card(card)
+	for effect in card.effects:
+		if effect is CardEffect:
+			var context = {
+				"combat_manager": self,
+				"board": board_manager,
+				"owner": "player",
+				"location": location,
+				"slot_idx": slot_idx
+			}
+			effect.execute(card, context)
+	return "success"
 
 func deal_commander_damage(target: String, amount: int):
 	if target == "enemy":
@@ -90,3 +116,8 @@ func victory():
 func defeat():
 	# Handle defeat logic, soldier loss, etc.
 	pass
+
+
+# When you implement AI, simply call the same BoardUIManager function for the enemy side:
+# Example call from CombatManager or AI logic:
+# $BoardUIManager.add_card_to_slot(enemy_card_data, location, "enemy", slot_idx, card_ui_scene)

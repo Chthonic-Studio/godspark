@@ -23,17 +23,20 @@ func setup_board():
 # Place a card in a given slot (location, side, slot_idx)
 func place_card(card: CardData, location: String, side: String, slot_idx: int) -> bool:
 	if not board.has(location):
-		print("ERROR: board missing location: ", location, " available: ", board.keys())
+		print("BoardManager: ERROR - board missing location:", location, "Available keys:", board.keys())
 		return false
 	if not board[location].has(side):
-		print("ERROR: board[", location, "] missing side: ", side, " available: ", board[location].keys())
+		print("BoardManager: ERROR - board[%s] missing side: %s Available sides: %s" % [location, side, board[location].keys()])
 		return false
 	if slot_idx < 0 or slot_idx >= board[location][side].size():
-		print("ERROR: slot_idx out of range: ", slot_idx)
+		print("BoardManager: ERROR - slot_idx out of range: %d (location: %s, side: %s)" % [slot_idx, location, side])
 		return false
 	if board[location][side][slot_idx] == null:
 		board[location][side][slot_idx] = card
+		print("BoardManager: Placed card '%s' in %s/%s slot %d" % [card.name, location, side, slot_idx])
 		return true
+	else:
+		print("BoardManager: Slot %d at %s/%s is already occupied (card: %s)" % [slot_idx, location, side, board[location][side][slot_idx].name])
 	return false
 	
 # Remove a card from its slot
@@ -49,9 +52,13 @@ func get_available_slot(location: String, side: String, prefer_back: bool=false)
 		print("ERROR: get_available_slot missing side: ", side)
 		return -1
 	var range = [2, 3, 0, 1] if prefer_back else [0, 1, 2, 3]
+	print("Checking slots for", location, side, "range:", range)
 	for idx in range:
+		print("- slot", idx, "=", board[location][side][idx])
 		if board[location][side][idx] == null:
+			print("-- returning idx", idx)
 			return idx
+	print("-- No available slot found")
 	return -1
 
 # Move card from one slot to another (for effects)

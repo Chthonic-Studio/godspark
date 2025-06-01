@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://6iigglaq8stq"]
+[gd_scene load_steps=7 format=3 uid="uid://6iigglaq8stq"]
 
 [ext_resource type="Script" uid="uid://x3q7w62rlk68" path="res://scripts/cards/card_ui.gd" id="1_d81rb"]
 [ext_resource type="Texture2D" uid="uid://dg8fxts8qnpco" path="res://assets/images/cardbacks4092021.png" id="2_6u4wf"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="3_sy11y"]
+[ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="4_6ligt"]
+[ext_resource type="FontFile" uid="uid://coi4y2x1halg5" path="res://assets/fonts/Beholden-Regular.ttf" id="5_8w5pg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ktuci"]
 atlas = ExtResource("2_6u4wf")
@@ -44,29 +47,73 @@ metadata/_edit_use_anchors_ = true
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = 0.0916667
+anchor_top = 0.546667
+anchor_right = 0.908333
+anchor_bottom = 0.646667
+theme_override_fonts/font = ExtResource("3_sy11y")
+theme_override_font_sizes/font_size = 14
+text = "Card Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="CostLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = 0.316667
+anchor_top = 0.84
+anchor_right = 0.65
+anchor_bottom = 0.993333
+theme_override_colors/font_outline_color = Color(0.0233837, 0.298257, 0.281321, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_sy11y")
+theme_override_font_sizes/font_size = 20
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="PowerLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 77.0
+offset_top = 14.0
+offset_right = 95.0
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("4_6ligt")
+theme_override_font_sizes/font_size = 15
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HealthLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = 0.208333
+anchor_top = 0.0866667
+anchor_right = 0.358333
+anchor_bottom = 0.193333
+theme_override_fonts/font = ExtResource("5_8w5pg")
+theme_override_font_sizes/font_size = 15
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="EffectLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_left = 0.15
+anchor_top = 0.653333
+anchor_right = 0.85
+anchor_bottom = 0.853333
 mouse_filter = 2
+theme_override_constants/table_v_separation = -10
+theme_override_constants/table_h_separation = -10
+theme_override_constants/text_highlight_v_padding = -10
+theme_override_constants/line_separation = -4
+theme_override_fonts/normal_font = ExtResource("5_8w5pg")
+theme_override_font_sizes/normal_font_size = 10
+text = "Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet"
+metadata/_edit_use_anchors_ = true
 
 [node name="HighlightOverlay" type="ColorRect" parent="."]
 visible = false

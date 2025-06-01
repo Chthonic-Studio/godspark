@@ -1,13 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://0xhypofm2kgd"]
+[gd_scene load_steps=15 format=3 uid="uid://0xhypofm2kgd"]
 
 [ext_resource type="Texture2D" uid="uid://cpc1emlovgoau" path="res://assets/images/squareCircle_vector.png" id="1_2edba"]
 [ext_resource type="Script" uid="uid://b3dnb661jfaum" path="res://scripts/core/combat_manager.gd" id="1_m17q1"]
+[ext_resource type="Script" uid="uid://vjdx3knk6tbc" path="res://scripts/core/enemy_deck_manager.gd" id="2_5qq3q"]
 [ext_resource type="Script" uid="uid://dmyfxbt14eg03" path="res://scripts/board/board_manager.gd" id="2_a2e2y"]
 [ext_resource type="Script" uid="uid://5668jhmn8u4w" path="res://scripts/ui/hand_manager.gd" id="3_ikfks"]
 [ext_resource type="Script" uid="uid://c0aushg0urxfa" path="res://scripts/ui/board_ui_manager.gd" id="3_m2d54"]
 [ext_resource type="PackedScene" uid="uid://6iigglaq8stq" path="res://scenes/card.tscn" id="4_0vylu"]
 [ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/MountOlympus.png" id="7_6ovae"]
 [ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="8_ivkwx"]
+[ext_resource type="Script" uid="uid://bu27sgv624n3b" path="res://scripts/ui/combat_hud.gd" id="9_g0m11"]
+[ext_resource type="FontFile" uid="uid://duljvvactrvqk" path="res://assets/fonts/Beholden-Bold-Italic.ttf" id="10_5qq3q"]
+[ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="11_g5ebj"]
+[ext_resource type="FontFile" uid="uid://coi4y2x1halg5" path="res://assets/fonts/Beholden-Regular.ttf" id="12_ohwxf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sw3s"]
 atlas = ExtResource("1_2edba")
@@ -39,9 +44,13 @@ size_flags_vertical = 3
 texture = SubResource("AtlasTexture_6sw3s")
 metadata/_edit_use_anchors_ = true
 
-[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager")]
+[node name="EnemyDeckManager" type="Node" parent="."]
+script = ExtResource("2_5qq3q")
+
+[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager", "enemy_deck_manager")]
 script = ExtResource("1_m17q1")
 board_manager = NodePath("../BoardManager")
+enemy_deck_manager = NodePath("../EnemyDeckManager")
 
 [node name="BoardManager" type="Node" parent="."]
 script = ExtResource("2_a2e2y")
@@ -89,6 +98,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 script = ExtResource("3_m2d54")
 board_manager = NodePath("../../BoardManager")
+enemy_card_ui_scene = ExtResource("4_0vylu")
 
 [node name="left" type="VBoxContainer" parent="BoardPanel"]
 custom_minimum_size = Vector2(0, 160)
@@ -361,12 +371,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -275.0
+offset_left = -443.0
 offset_top = -225.0
-offset_right = 275.0
+offset_right = 447.0
 offset_bottom = -185.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("9_g0m11")
+combat_manager = NodePath("../CombatManager")
 
 [node name="PlayerHealthBar" type="TextureProgressBar" parent="PlayerHUD"]
 custom_minimum_size = Vector2(550, 40)
@@ -382,6 +394,56 @@ offset_right = 275.0
 grow_horizontal = 2
 grow_vertical = 0
 value = 100.0
+
+[node name="DivinityLabel" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_right = 142.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("10_5qq3q")
+theme_override_font_sizes/font_size = 28
+text = "Divinity: "
+
+[node name="EndTurnButton" type="Button" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.833708
+anchor_right = 1.0236
+anchor_bottom = 1.025
+offset_right = 6.10352e-05
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_g5ebj")
+theme_override_font_sizes/font_size = 25
+text = "Finish Turn"
+metadata/_edit_use_anchors_ = true
+
+[node name="ErrorLabel" type="Label" parent="PlayerHUD"]
+layout_mode = 0
+offset_left = 109.0
+offset_top = -26.0
+offset_right = 728.0
+offset_bottom = -3.0
+theme_override_fonts/font = ExtResource("12_ohwxf")
+theme_override_font_sizes/font_size = 15
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnInfoLabel" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.248315
+anchor_top = -15.725
+anchor_right = 0.749438
+anchor_bottom = -14.875
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 28
+text = "Turn 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="EnemyHUD" type="Control" parent="."]
 layout_mode = 1
