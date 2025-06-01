@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 
 CorruptionManager="*res://scripts/core/corruption_manager.gd"
 DeckManager="*res://scripts/core/deck_manager.gd"
-CombatManager="*res://scripts/core/combat_manager.gd"
 FaithManager="*res://scripts/meta/faith_manager.gd"
 
 [display]
