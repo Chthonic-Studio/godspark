@@ -15,3 +15,6 @@ func is_ongoing() -> bool:
 # Utility: For UI previewing
 func get_preview_text(card: CardData) -> String:
 	return description
+
+func on_end_turn(card: CardData, context: Dictionary) -> void:
+	pass # To be optionally overridden by specific effects

@@ -47,9 +47,10 @@ metadata/_edit_use_anchors_ = true
 [node name="EnemyDeckManager" type="Node" parent="."]
 script = ExtResource("2_5qq3q")
 
-[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager", "enemy_deck_manager")]
+[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager", "hand_manager", "enemy_deck_manager")]
 script = ExtResource("1_m17q1")
 board_manager = NodePath("../BoardManager")
+hand_manager = NodePath("../HandPanel/HandManager")
 enemy_deck_manager = NodePath("../EnemyDeckManager")
 
 [node name="BoardManager" type="Node" parent="."]

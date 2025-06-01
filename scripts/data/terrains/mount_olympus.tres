@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TerrainData" load_steps=2 format=3 uid="uid://c7jlumgv3jspk"]
+
+[ext_resource type="Script" uid="uid://bo4a777qosw1u" path="res://scripts/data/terrain_data.gd" id="1_fggek"]
+
+[resource]
+script = ExtResource("1_fggek")
+id = "mount_olympus"
+name = "Mount Olympus"
+effect_description = "At the end of every odd turn, units here get +1 power or -1 health at random."
+triggers = Array[Dictionary]([{
+"effect": "olympus_odd_turn",
+"event": "on_end_turn",
+"side": "both"
+}])
+owner_type = ""
+metadata/_custom_type_script = "uid://bo4a777qosw1u"

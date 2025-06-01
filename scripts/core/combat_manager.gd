@@ -1,6 +1,7 @@
 extends Node
 
 @export var board_manager: BoardManager
+@export var hand_manager: HandManager
 @export var enemy_deck_manager: EnemyDeckManager
 @export var player_health: int = 100
 @export var enemy_health: int = 100
@@ -35,19 +36,36 @@ func enemy_turn():
 	for location in board_manager.locations:
 		var slot = board_manager.get_available_slot(location, "enemy")
 		if slot != -1 and enemy_deck_manager.hand.size() > 0:
-			var card = enemy_deck_manager.hand[0] # Simplest AI: play first card
+			var card = enemy_deck_manager.hand[0]
 			board_manager.place_card(card, location, "enemy", slot)
 			enemy_deck_manager.play_card(card)
-			# Instantiate UI here (see below)
 			if has_node("/root/CombatScene/BoardPanel/BoardUIManager"):
 				var board_ui = get_node("/root/CombatScene/BoardPanel/BoardUIManager")
 				board_ui.add_enemy_card_to_slot(card, location, slot)
-			break  # Play only one card per turn for now
+			# --- ADD: Execute enemy card effects ---
+			for effect in card.effects:
+				if board_manager.is_location_silenced(location) and effect.effect_name != "Silence":
+					print("Effect skipped due to ongoing Silence at location %s" % location)
+					continue
+				if effect is CardEffect:
+					var context = {
+						"combat_manager": self,
+						"board": board_manager,
+						"owner": "enemy",
+						"location": location,
+						"slot_idx": slot
+					}
+					effect.execute(card, context)
+			break
 	phase = "Resolution"
 	call_deferred("resolve_turn")
 	emit_signal("phase_changed")
 
 func resolve_turn():
+	board_manager.resolve_ongoing_effects()
+	board_manager.resolve_terrain_end_of_turn_triggers()
+	board_manager.decrement_and_cleanup_temporary_buffs()
+	
 	if turn >= 4:
 		var player_total = 0
 		var enemy_total = 0
@@ -59,7 +77,6 @@ func resolve_turn():
 		player_health -= player_total
 		enemy_health -= enemy_total
 		# Add UI feedback for health change here
-
 	# Check for defeat/victory
 	check_end_conditions()
 
@@ -69,6 +86,7 @@ func resolve_turn():
 	phase = "PlayerTurn"
 	DeckManager.draw_cards(1)
 	divinity += 1
+	hand_manager.refresh_hand()
 	emit_signal("divinity_changed")
 	emit_signal("phase_changed")
 
@@ -76,7 +94,7 @@ func play_card(card: CardData, location: String, slot_idx: int = -1) -> String:
 	if divinity < card.cost:
 		return "Not enough Divinity!"
 	if slot_idx == -1:
-		slot_idx = board_manager.get_available_slot(location, "player", card.type=="Spell")
+		slot_idx = board_manager.get_available_slot(location, "player", card.type == "Spell")
 		if slot_idx == -1:
 			return "Location is full!"
 	var placement_success = board_manager.place_card(card, location, "player", slot_idx)
@@ -86,15 +104,19 @@ func play_card(card: CardData, location: String, slot_idx: int = -1) -> String:
 	emit_signal("divinity_changed")
 	DeckManager.play_card(card)
 	for effect in card.effects:
-		if effect is CardEffect:
-			var context = {
-				"combat_manager": self,
-				"board": board_manager,
-				"owner": "player",
-				"location": location,
-				"slot_idx": slot_idx
-			}
-			effect.execute(card, context)
+		# Skip all effects if location is silenced, except for silence itself
+		if board_manager.is_location_silenced(location) and effect.effect_name != "Silence":
+			print("Effect skipped due to ongoing Silence at location %s" % location)
+			continue
+		var context = {
+			"combat_manager": self,
+			"board": board_manager,
+			"owner": "player",
+			"location": location,
+			"slot_idx": slot_idx,
+			"enemy_deck_manager": enemy_deck_manager
+		}
+		effect.execute(card, context)
 	return "success"
 
 func deal_commander_damage(target: String, amount: int):

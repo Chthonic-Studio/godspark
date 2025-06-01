@@ -3,7 +3,7 @@ extends Node
 var draw_pile: Array[CardData] = []
 var discard_pile: Array[CardData] = []
 var hand: Array[CardData] = []
-var max_hand_size: int = 5
+var max_hand_size: int = 7
 
 var debug_generate_test_cards := true
 

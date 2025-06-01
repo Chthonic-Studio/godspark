@@ -15,4 +15,9 @@ class_name CardData
 @export var art: Texture2D
 
 func get_power():
-	return power
+	var total = power
+	if has_meta("temp_buffs"):
+		for buff in get_meta("temp_buffs"):
+			if buff.get("stat", "") == "power":
+				total += buff.get("amount", 0)
+	return total

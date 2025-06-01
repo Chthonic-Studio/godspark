@@ -7,6 +7,7 @@ class_name BoardUIManager
 signal location_clicked(location: String)
 
 func _ready():
+	get_node(board_manager).card_removed.connect(remove_card_from_slot)
 	for location in ["left", "middle", "right"]:
 		var loc_node = get_parent().get_node(location)
 		for row in ["PlayerFrontRow", "PlayerBackRow"]:
@@ -129,3 +130,17 @@ func get_enemy_slot_node(location: String, idx: int) -> Panel:
 	if has_node(node_path):
 		return get_node(node_path)
 	return null
+
+func remove_card_from_slot(location: String, side: String, slot_idx: int) -> void:
+	var slot_node = get_slot_node_for_side(location, side, slot_idx)
+	if slot_node:
+		for child in slot_node.get_children():
+			child.queue_free()
+
+# Call after repacking: updates visual position of all cards in a row
+func repack_cards_in_location(location: String, side: String) -> void:
+	for idx in [0, 1, 2, 3]:
+		remove_card_from_slot(location, side, idx)
+		var card = get_node(board_manager).board[location][side][idx]
+		if card:
+			add_card_to_slot(card, location, side, idx, enemy_card_ui_scene if side == "enemy" else preload("res://scenes/card.tscn"))
