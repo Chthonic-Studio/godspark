@@ -70,16 +70,61 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Slot0" type="Panel" parent="BoardPanel/left"]
+[node name="EnemyBackRow" type="VBoxContainer" parent="BoardPanel/left"]
 layout_mode = 2
 
-[node name="Slot1" type="Panel" parent="BoardPanel/left"]
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/EnemyBackRow"]
 layout_mode = 2
 
-[node name="Slot2" type="Panel" parent="BoardPanel/left"]
+[node name="Slot2" type="Panel" parent="BoardPanel/left/EnemyBackRow/cardSlots"]
 layout_mode = 2
 
-[node name="Slot3" type="Panel" parent="BoardPanel/left"]
+[node name="Slot3" type="Panel" parent="BoardPanel/left/EnemyBackRow/cardSlots"]
+layout_mode = 2
+
+[node name="EnemyFrontRow" type="VBoxContainer" parent="BoardPanel/left"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/EnemyFrontRow"]
+layout_mode = 2
+
+[node name="Slot0" type="Panel" parent="BoardPanel/left/EnemyFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="BoardPanel/left/EnemyFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="LocationInfo" type="CenterContainer" parent="BoardPanel/left"]
+layout_mode = 2
+
+[node name="Art" type="TextureRect" parent="BoardPanel/left/LocationInfo"]
+layout_mode = 2
+
+[node name="LocationName" type="Label" parent="BoardPanel/left/LocationInfo"]
+layout_mode = 2
+
+[node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/left"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/PlayerFrontRow"]
+layout_mode = 2
+
+[node name="Slot0" type="Panel" parent="BoardPanel/left/PlayerFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="BoardPanel/left/PlayerFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="PlayerBackRow" type="VBoxContainer" parent="BoardPanel/left"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/left/PlayerBackRow"]
+layout_mode = 2
+
+[node name="Slot2" type="Panel" parent="BoardPanel/left/PlayerBackRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot3" type="Panel" parent="BoardPanel/left/PlayerBackRow/cardSlots"]
 layout_mode = 2
 
 [node name="middle" type="VBoxContainer" parent="BoardPanel"]
@@ -87,16 +132,61 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Slot0" type="Panel" parent="BoardPanel/middle"]
+[node name="EnemyBackRow" type="VBoxContainer" parent="BoardPanel/middle"]
 layout_mode = 2
 
-[node name="Slot1" type="Panel" parent="BoardPanel/middle"]
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/EnemyBackRow"]
 layout_mode = 2
 
-[node name="Slot2" type="Panel" parent="BoardPanel/middle"]
+[node name="Slot2" type="Panel" parent="BoardPanel/middle/EnemyBackRow/cardSlots"]
 layout_mode = 2
 
-[node name="Slot3" type="Panel" parent="BoardPanel/middle"]
+[node name="Slot3" type="Panel" parent="BoardPanel/middle/EnemyBackRow/cardSlots"]
+layout_mode = 2
+
+[node name="EnemyFrontRow" type="VBoxContainer" parent="BoardPanel/middle"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/EnemyFrontRow"]
+layout_mode = 2
+
+[node name="Slot0" type="Panel" parent="BoardPanel/middle/EnemyFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="BoardPanel/middle/EnemyFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="LocationInfo" type="CenterContainer" parent="BoardPanel/middle"]
+layout_mode = 2
+
+[node name="Art" type="TextureRect" parent="BoardPanel/middle/LocationInfo"]
+layout_mode = 2
+
+[node name="LocationName" type="Label" parent="BoardPanel/middle/LocationInfo"]
+layout_mode = 2
+
+[node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/middle"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/PlayerFrontRow"]
+layout_mode = 2
+
+[node name="Slot0" type="Panel" parent="BoardPanel/middle/PlayerFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="BoardPanel/middle/PlayerFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="PlayerBackRow" type="VBoxContainer" parent="BoardPanel/middle"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/middle/PlayerBackRow"]
+layout_mode = 2
+
+[node name="Slot2" type="Panel" parent="BoardPanel/middle/PlayerBackRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot3" type="Panel" parent="BoardPanel/middle/PlayerBackRow/cardSlots"]
 layout_mode = 2
 
 [node name="right" type="VBoxContainer" parent="BoardPanel"]
@@ -104,16 +194,61 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Slot0" type="Panel" parent="BoardPanel/right"]
+[node name="EnemyBackRow" type="VBoxContainer" parent="BoardPanel/right"]
 layout_mode = 2
 
-[node name="Slot1" type="Panel" parent="BoardPanel/right"]
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/EnemyBackRow"]
 layout_mode = 2
 
-[node name="Slot2" type="Panel" parent="BoardPanel/right"]
+[node name="Slot2" type="Panel" parent="BoardPanel/right/EnemyBackRow/cardSlots"]
 layout_mode = 2
 
-[node name="Slot3" type="Panel" parent="BoardPanel/right"]
+[node name="Slot3" type="Panel" parent="BoardPanel/right/EnemyBackRow/cardSlots"]
+layout_mode = 2
+
+[node name="EnemyFrontRow" type="VBoxContainer" parent="BoardPanel/right"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/EnemyFrontRow"]
+layout_mode = 2
+
+[node name="Slot0" type="Panel" parent="BoardPanel/right/EnemyFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="BoardPanel/right/EnemyFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="LocationInfo" type="CenterContainer" parent="BoardPanel/right"]
+layout_mode = 2
+
+[node name="Art" type="TextureRect" parent="BoardPanel/right/LocationInfo"]
+layout_mode = 2
+
+[node name="LocationName" type="Label" parent="BoardPanel/right/LocationInfo"]
+layout_mode = 2
+
+[node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/right"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/PlayerFrontRow"]
+layout_mode = 2
+
+[node name="Slot0" type="Panel" parent="BoardPanel/right/PlayerFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="BoardPanel/right/PlayerFrontRow/cardSlots"]
+layout_mode = 2
+
+[node name="PlayerBackRow" type="VBoxContainer" parent="BoardPanel/right"]
+layout_mode = 2
+
+[node name="cardSlots" type="HBoxContainer" parent="BoardPanel/right/PlayerBackRow"]
+layout_mode = 2
+
+[node name="Slot2" type="Panel" parent="BoardPanel/right/PlayerBackRow/cardSlots"]
+layout_mode = 2
+
+[node name="Slot3" type="Panel" parent="BoardPanel/right/PlayerBackRow/cardSlots"]
 layout_mode = 2
 
 [node name="PlayerHUD" type="Control" parent="."]
