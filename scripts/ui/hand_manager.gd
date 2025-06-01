@@ -5,7 +5,8 @@ class_name HandManager
 # - Attach this script to a Control node in your combat scene (e.g., "HandPanel").
 # - Set 'card_ui_scene' to your Card.tscn scene.
 # - Set 'hand_container' to an HBoxContainer/GridContainer for hand cards.
-# - Set 'combat_manager' to the node path of your CombatManager.
+# - Set 'combat_manager' to the NodePath of your CombatManager node (e.g., "../../CombatManager").
+# - Set 'board_ui_manager' to the NodePath of your BoardUIManager node (e.g., "../BoardPanel/BoardUIManager").
 # - Call refresh_hand() after drawing, discarding, or playing cards.
 # - Signals from CardUI will trigger play/cancel logic (see _on_card_play_attempt, _on_card_cancelled).
 # - Integrate with BoardUIManager for slot selection on card play.
@@ -13,12 +14,16 @@ class_name HandManager
 @export var card_ui_scene: PackedScene
 @export var hand_container: NodePath # reference to a UI container node (e.g., HBoxContainer)
 @export var combat_manager: NodePath
+@export var board_ui_manager: NodePath
 
 var card_instances: Array[Node] = []
 
+var selected_card_ui: Node = null
+
 func _ready():
 	refresh_hand()
-
+	get_node(board_ui_manager).slot_clicked.connect(_on_board_slot_clicked)
+	
 # Call this after every draw/discard/play event
 func refresh_hand():
 	# Clear existing UI
@@ -37,21 +42,25 @@ func refresh_hand():
 
 # Handles play attempts (drag or click)
 func _on_card_play_attempt(card_ui):
-	# This assumes you have logic to choose location and slot, or prompt the player
-	var result = _prompt_for_location_and_slot(card_ui)
-	var location = result[0]
-	var slot_idx = result[1]	
-	if location != null and slot_idx != null:
-		var combat_manager_node = get_node(combat_manager) # Use exported variable 'combat_manager'
-		var played = combat_manager_node.play_card(card_ui.card_data, location, slot_idx)
+	selected_card_ui = card_ui
+	get_node(board_ui_manager).highlight_valid_slots(card_ui.card_data)
+	# Wait for slot_clicked signal to proceed
+
+func _on_board_slot_clicked(location, slot_idx):
+	if selected_card_ui:
+		var combat_manager_node = get_node(combat_manager)
+		var played = combat_manager_node.play_card(selected_card_ui.card_data, location, slot_idx)
 		if played:
-			refresh_hand() # Remove from hand UI
+			refresh_hand()
+		get_node(board_ui_manager).clear_highlights()
+		selected_card_ui = null
 
 func _on_card_cancelled(card_ui):
 	card_ui.is_selected = false
 	card_ui.get_node("HighlightOverlay").visible = false
+	get_node(board_ui_manager).clear_highlights()
+	selected_card_ui = null
 
 func _prompt_for_location_and_slot(card_ui):
-	# TODO: Implement UI to allow player to click/select where to play
-	# For now, return dummy values or integrate with your board UI logic
-	return ["middle", 0]
+	# Now handled by slot selection; not needed.
+	return [null, null]
