@@ -5,6 +5,29 @@ var discard_pile: Array[CardData] = []
 var hand: Array[CardData] = []
 var max_hand_size: int = 5
 
+var debug_generate_test_cards := true
+
+func _ready():
+	if debug_generate_test_cards and draw_pile.is_empty() and hand.is_empty():
+		_generate_test_cards()
+	
+func _generate_test_cards():
+	# Generates 5 simple test CardData resources for debugging.
+	var test_cards: Array[CardData] = []
+	for i in range(5):
+		var card = CardData.new()
+		card.id = "test_%d" % i
+		card.name = "Test Card %d" % i
+		card.description = "A debug card for prototyping."
+		card.type = "SoldierAttack"
+		card.cost = i % 3 + 1
+		card.effects.clear() # <- FIX: clear instead of assigning a new array
+		card.tags.clear()
+		card.requirements = {}
+		test_cards.append(card)
+	setup_deck(test_cards)
+	draw_cards(max_hand_size) # Ensures hand is filled at start
+
 func setup_deck(card_list: Array[CardData]) -> void:
 	draw_pile = card_list.duplicate()
 	discard_pile.clear()

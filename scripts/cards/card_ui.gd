@@ -38,6 +38,8 @@ signal card_cancelled(card_ui)
 
 func _ready():
 	update_card_visuals()
+	connect("mouse_entered", Callable(self, "_on_mouse_entered"))
+	connect("mouse_exited", Callable(self, "_on_mouse_exited"))
 
 func set_card_data(data: Resource):
 	card_data = data
@@ -48,19 +50,21 @@ func update_card_visuals():
 		return
 	$NameLabel.text = card_data.name
 	$CostLabel.text = str(card_data.cost)
-	$PowerLabel.text = str(card_data.get("power") if card_data.has("power") else "")
-	$HealthLabel.text = str(card_data.get("health") if card_data.has("health") else "")
-	$Art.texture = card_data.get("art") if card_data.has("art") else null
+	$PowerLabel.text = str(card_data.power) if card_data.power != 0 else ""
+	$HealthLabel.text = str(card_data.health) if card_data.health != 0 else ""
+	$Art.texture = card_data.art if card_data.art else null
 	$EffectLabel.text = card_data.description
+	# Hide Power/Health for Spell cards
 	$HealthLabel.visible = card_data.type != "Spell"
+	$PowerLabel.visible = card_data.type != "Spell"
 	# Additional tag/effect icons can be added here
 
 # Drag-and-drop
 func _gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		emit_signal("card_selected", self)
-		is_selected = true
-		$HighlightOverlay.visible = true
+		# is_selected = true
+		# $HighlightOverlay.visible = true
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		if is_selected:
 			emit_signal("card_cancelled", self)

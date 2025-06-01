@@ -13,13 +13,13 @@ class_name BoardUIManager
 signal slot_clicked(location: String, slot_idx: int)
 
 func _ready():
-	# Assign metadata and connect gui_input for all slots
-	for location in ["Left", "Middle", "Right"]:
+	# Auto-connect gui_input for all slot Panels
+	for location in ["left", "middle", "right"]:
 		var container = get_parent().get_node(location)
-		for i in range(4):
-			var slot = container.get_node("Slot%d" % i)
+		for idx in range(4):
+			var slot = container.get_node("Slot%d" % idx)
 			slot.set_meta("location", location.to_lower())
-			slot.set_meta("slot_idx", i)
+			slot.set_meta("slot_idx", idx)
 			slot.gui_input.connect(_on_slot_gui_input.bind(slot))
 
 func _on_slot_gui_input(event: InputEvent, slot: Panel):
@@ -28,11 +28,13 @@ func _on_slot_gui_input(event: InputEvent, slot: Panel):
 		var slot_idx = slot.get_meta("slot_idx")
 		emit_signal("slot_clicked", location, slot_idx)
 
-
 # Call this to highlight valid slots for a card
 func highlight_valid_slots(card_data):
 	var board = get_node(board_manager)
 	for location in board.locations:
+		if not board.board.has(location):
+			print("Board is missing location key:", location, "; board.board keys:", board.board.keys())
+			continue
 		for idx in range(4):
 			if board.board[location]["player"][idx] == null:
 				var slot_node = _get_slot_node(location, idx)

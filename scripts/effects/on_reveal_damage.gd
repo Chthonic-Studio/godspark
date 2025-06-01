@@ -8,4 +8,5 @@ func _init():
 func execute(card: CardData, context: Dictionary) -> void:
 	if context.has("target_commander"):
 		var target_commander = context["target_commander"]
-		CombatManager.deal_commander_damage(target_commander, damage)
+		if context.has("combat_manager"):
+			context["combat_manager"].deal_commander_damage(target_commander, damage)

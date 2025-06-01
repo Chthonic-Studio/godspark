@@ -17,7 +17,6 @@ class_name HandManager
 @export var board_ui_manager: NodePath
 
 var card_instances: Array[Node] = []
-
 var selected_card_ui: Node = null
 
 func _ready():
@@ -35,6 +34,7 @@ func refresh_hand():
 	for card_data in DeckManager.hand:
 		var card_ui = card_ui_scene.instantiate()
 		card_ui.set_card_data(card_data)
+		card_ui.card_selected.connect(_on_card_selected)
 		card_ui.card_play_attempt.connect(_on_card_play_attempt)
 		card_ui.card_cancelled.connect(_on_card_cancelled)
 		container.add_child(card_ui)
@@ -61,6 +61,18 @@ func _on_card_cancelled(card_ui):
 	get_node(board_ui_manager).clear_highlights()
 	selected_card_ui = null
 
-func _prompt_for_location_and_slot(card_ui):
-	# Now handled by slot selection; not needed.
-	return [null, null]
+func _on_card_selected(card_ui):
+	# Deselect all cards
+	for c in card_instances:
+		c.is_selected = false
+		c.get_node("HighlightOverlay").visible = false
+	# Select the clicked card
+	card_ui.is_selected = true
+	card_ui.get_node("HighlightOverlay").visible = true
+	selected_card_ui = card_ui
+	get_node(board_ui_manager).highlight_valid_slots(card_ui.card_data)
+
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F1:
+		DeckManager._generate_test_cards()
+		refresh_hand()
