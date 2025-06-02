@@ -10,18 +10,27 @@ var turn: int = 1
 var phase: String = "PlayerTurn"
 var divinity: int = 10 # Faith for playing cards
 
+# Hold terrain assignments for this combat
+var current_terrain_assignments: Dictionary = {}
+
 signal divinity_changed
 signal phase_changed
 signal turn_changed
 
 # Called once at combat start
 func start_combat():
+	# Before calling start_combat(), call set_terrain_assignments(terrain_dict) on the CombatManager
+	# Where terrain_dict comes from the current node (see above).
+	if current_terrain_assignments and not current_terrain_assignments.is_empty():
+		board_manager.setup_terrain(current_terrain_assignments)
+	else:
+		print("WARNING: No terrain assignments set for this combat!")
+	board_manager.setup_board()
 	DeckManager.start_game()
 	enemy_deck_manager.draw_cards(3)
 	phase = "PlayerTurn"
 	divinity = 10
 	turn = 1
-	board_manager.setup_board()
 	emit_signal("phase_changed")
 	emit_signal("turn_changed")
 
@@ -138,6 +147,10 @@ func victory():
 func defeat():
 	# Handle defeat logic, soldier loss, etc.
 	pass
+
+func set_terrain_assignments(terrain_assignments: Dictionary) -> void:
+	current_terrain_assignments = terrain_assignments
+
 
 
 # When you implement AI, simply call the same BoardUIManager function for the enemy side:

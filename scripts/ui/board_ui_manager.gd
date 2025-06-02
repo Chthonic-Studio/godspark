@@ -144,3 +144,16 @@ func repack_cards_in_location(location: String, side: String) -> void:
 		var card = get_node(board_manager).board[location][side][idx]
 		if card:
 			add_card_to_slot(card, location, side, idx, enemy_card_ui_scene if side == "enemy" else preload("res://scenes/card.tscn"))
+
+# Call this after setup_terrain or at combat start
+func update_location_info():
+	var bm = get_node(board_manager)
+	for location in ["left", "middle", "right"]:
+		var terrain = bm.terrain_by_location.get(location, null)
+		if terrain == null:
+			continue
+		var loc_node = get_parent().get_node(location)
+		var info_node = loc_node.get_node("LocationInfo")
+		info_node.get_node("Art").texture = terrain.art
+		info_node.get_node("LocationName").text = terrain.name
+		info_node.get_node("LocationDescription").text = terrain.effect_description
