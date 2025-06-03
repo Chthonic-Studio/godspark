@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://bisl16idheldx"]
+
+[ext_resource type="Script" uid="uid://ds68xfrljmrg7" path="res://scripts/ui/terrain_select.gd" id="1_622yd"]
+
+[node name="TerrainSelectRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_622yd")
+
+[node name="BGOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.419608)
+metadata/_edit_use_anchors_ = true
+
+[node name="TerrainCardGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.046
+anchor_bottom = 0.199
+offset_left = 279.0
+offset_top = 520.0
+offset_right = 1186.4
+offset_bottom = 540.9
+
+[node name="SelectedTerrainsPanel" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 171.0
+offset_right = 1324.0
+offset_bottom = 561.0
+
+[node name="ConfirmButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 656.0
+offset_top = 796.0
+offset_right = 872.0
+offset_bottom = 855.0
+
+[node name="ErrorLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

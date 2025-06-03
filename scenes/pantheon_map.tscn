@@ -1,0 +1,239 @@
+[gd_scene load_steps=8 format=3 uid="uid://hvjfdug3t2bc"]
+
+[ext_resource type="Script" uid="uid://bn5jhm1ii0qhk" path="res://scripts/ui/pantheon_map.gd" id="1_b7s0k"]
+[ext_resource type="Texture2D" uid="uid://nxwclftbw4bw" path="res://assets/images/NodePending.png" id="2_b0452"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="2_q732j"]
+[ext_resource type="Texture2D" uid="uid://dlvpi8s844662" path="res://assets/images/NodeCleared.png" id="3_21bmb"]
+[ext_resource type="Texture2D" uid="uid://v0qmkpt5fy7f" path="res://assets/images/NodeBlank.png" id="3_b0452"]
+[ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/terrains/MountOlympus.png" id="4_21bmb"]
+[ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="5_hc12i"]
+
+[node name="PantheonMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b7s0k")
+node_icon_available = ExtResource("2_b0452")
+node_icon_cleared = ExtResource("3_21bmb")
+node_icon_locked = ExtResource("3_b0452")
+
+[node name="PantheonBG" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1506.0
+offset_bottom = 803.0
+
+[node name="PantheonName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 91.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_q732j")
+theme_override_font_sizes/font_size = 50
+text = "PANTHEON NAME"
+horizontal_alignment = 1
+
+[node name="NodeContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(1200, 150)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.416667
+anchor_right = 0.875
+anchor_bottom = 0.583333
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="NodeButton" type="TextureButton" parent="NodeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_b0452")
+stretch_mode = 0
+
+[node name="VoidTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -66.0
+offset_right = 149.0
+offset_bottom = -6.0
+texture = ExtResource("4_21bmb")
+
+[node name="PantheonTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 159.0
+offset_right = 151.0
+offset_bottom = 219.0
+texture = ExtResource("4_21bmb")
+
+[node name="NodeButton2" type="TextureButton" parent="NodeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_b0452")
+stretch_mode = 0
+
+[node name="VoidTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton2"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -66.0
+offset_right = 149.0
+offset_bottom = -6.0
+texture = ExtResource("4_21bmb")
+
+[node name="PantheonTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton2"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 159.0
+offset_right = 151.0
+offset_bottom = 219.0
+texture = ExtResource("4_21bmb")
+
+[node name="NodeButton3" type="TextureButton" parent="NodeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_b0452")
+stretch_mode = 0
+
+[node name="VoidTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton3"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -66.0
+offset_right = 149.0
+offset_bottom = -6.0
+texture = ExtResource("4_21bmb")
+
+[node name="PantheonTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton3"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 159.0
+offset_right = 151.0
+offset_bottom = 219.0
+texture = ExtResource("4_21bmb")
+
+[node name="NodeButton4" type="TextureButton" parent="NodeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_b0452")
+stretch_mode = 0
+
+[node name="VoidTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton4"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -66.0
+offset_right = 149.0
+offset_bottom = -6.0
+texture = ExtResource("4_21bmb")
+
+[node name="PantheonTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton4"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 159.0
+offset_right = 151.0
+offset_bottom = 219.0
+texture = ExtResource("4_21bmb")
+
+[node name="NodeButton5" type="TextureButton" parent="NodeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_b0452")
+stretch_mode = 0
+
+[node name="VoidTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton5"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -66.0
+offset_right = 149.0
+offset_bottom = -6.0
+texture = ExtResource("4_21bmb")
+
+[node name="PantheonTerrainIcon" type="NinePatchRect" parent="NodeContainer/NodeButton5"]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 159.0
+offset_right = 151.0
+offset_bottom = 219.0
+texture = ExtResource("4_21bmb")
+
+[node name="MenuPanel" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(850, 120)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.234375
+anchor_top = 0.866667
+anchor_right = 0.765625
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 15
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="EditDeckButton" type="Button" parent="MenuPanel"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hc12i")
+theme_override_font_sizes/font_size = 30
+text = "Edit Deck"
+
+[node name="AbandonRunButton" type="Button" parent="MenuPanel"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hc12i")
+theme_override_font_sizes/font_size = 30
+text = "Abandon Run"
+
+[node name="AbandonConfirmDialog" type="ConfirmationDialog" parent="."]
+title = "Are you sure?"
+initial_position = 2
+size = Vector2i(300, 106)
+ok_button_text = "Yes"
+dialog_text = "You will be abandoning this whole 
+universe to the threat of the void..."
+cancel_button_text = "No"
+
+[node name="AbandonMessageWindow" type="AcceptDialog" parent="."]
+title = "Run Abandoned!"
+initial_position = 2
+size = Vector2i(655, 132)
+dialog_text = "You've abandoned this universe to its fate, assuming it as lost. 
+
+Let's hope a better outcome for the next universe, or perhaps just a better savior..."
+
+[node name="FadeOverlay" type="ColorRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true

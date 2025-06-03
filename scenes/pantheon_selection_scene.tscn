@@ -1,0 +1,507 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctmofarfq7yv5"]
+
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="1_lomj4"]
+[ext_resource type="Script" uid="uid://dwbfqedk33yj4" path="res://scripts/ui/pantheon_selection.gd" id="1_slrei"]
+[ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/terrains/MountOlympus.png" id="2_slrei"]
+[ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="3_sif4s"]
+
+[node name="PantheonSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 174.0
+offset_top = 54.0
+offset_right = -146.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_slrei")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.144141
+anchor_right = 0.855859
+anchor_bottom = 0.06375
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 50
+text = "WHICH PANTHEON WILL YOU LIBERATE?"
+metadata/_edit_use_anchors_ = true
+
+[node name="PantheonGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -606.0
+offset_top = -335.0
+offset_right = 606.0
+offset_bottom = 157.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="GreekPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "GREEK PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/GreekPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/GreekPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="IroquoisPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "IROQUOIS PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/IroquoisPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/IroquoisPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="KalevalaPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "KALEVALA PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/KalevalaPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/KalevalaPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="NorsePantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "NORSE PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/NorsePantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/NorsePantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="PolynesianPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "POLYNESIAN PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/PolynesianPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/PolynesianPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="ZoroastrianPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "ZOROASTRIAN PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/ZoroastrianPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/ZoroastrianPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="EgyptianPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "EGYPTIAN PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/EgyptianPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/EgyptianPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="IncaPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "INCA PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/IncaPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/IncaPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="MesopotamianPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "MESOPOTAMIAN PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/MesopotamianPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/MesopotamianPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="ShintoPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "SHINTO PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/ShintoPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/ShintoPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="AztecPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "AZTEC PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/AztecPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/AztecPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="HinduPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "HINDU PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/HinduPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/HinduPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="YorubaPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "YORUBA PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/YorubaPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/YorubaPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="MayaPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "MAYA PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/MayaPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/MayaPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="ChinesePantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "CHINESE PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/ChinesePantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/ChinesePantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="CelticPantheon" type="Button" parent="PantheonGrid"]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("1_lomj4")
+theme_override_font_sizes/font_size = 20
+text = "CELTIC PANTHEON"
+flat = true
+
+[node name="PantheonCard" type="PanelContainer" parent="PantheonGrid/CelticPantheon"]
+modulate = Color(1, 1, 1, 0.34902)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PantheonGrid/CelticPantheon/PantheonCard"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="ConfirmPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.30625
+anchor_top = 0.73625
+anchor_right = 0.704687
+anchor_bottom = 0.99125
+offset_right = 6.10352e-05
+metadata/_edit_use_anchors_ = true
+
+[node name="PantheonArt" type="TextureRect" parent="ConfirmPanel"]
+show_behind_parent = true
+layout_mode = 2
+texture = ExtResource("2_slrei")
+
+[node name="PantheonName" type="Label" parent="ConfirmPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_sif4s")
+theme_override_font_sizes/font_size = 30
+text = "PANTHEON NAME"
+
+[node name="ConfirmButton" type="Button" parent="ConfirmPanel"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("3_sif4s")
+theme_override_font_sizes/font_size = 20
+text = "CONFIRM"
+metadata/_edit_use_anchors_ = true
+
+[node name="CancelButton" type="Button" parent="ConfirmPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("3_sif4s")
+theme_override_font_sizes/font_size = 20
+text = "CANCEL"
+metadata/_edit_use_anchors_ = true

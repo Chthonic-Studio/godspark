@@ -1,28 +1,19 @@
 extends Node
 class_name ZoneGenerator
 
-const TerrainPool = preload("res://scripts/data/terrain_pools.gd")
+# Place this on CombatScene as a node: Handles terrain assignment for combat
 
-func get_random_from_array(arr: Array) -> Resource:
-	if arr.is_empty():
-		return null
-	return arr[randi() % arr.size()]
+# Returns a terrain assignment dictionary for the current combat node:
+# { "left": TerrainData (void), "middle": TerrainData (pantheon), "right": TerrainData (player) }
+func get_combat_terrain_assignment(node_terrain: Dictionary, player_terrain: Resource) -> Dictionary:
+	return {
+		"left": node_terrain.get("void"),
+		"middle": node_terrain.get("pantheon"),
+		"right": player_terrain
+	}
 
-func generate_zone(pantheon: String, difficulty: int, player_terrains: Array) -> Array[Dictionary]:
-	var zone_nodes = []
-	for i in range(4 + difficulty):
-		var node_type = "combat" if randi() % 2 == 0 else "event"
-		var node = {
-			"type": node_type,
-			"enemies": [],
-			"terrain": null
-		}
-		if node_type == "combat":
-			var terrain_assignments = {
-				"left": get_random_from_array(TerrainPool.VOID_TERRAIN_POOL),
-				"middle": get_random_from_array(TerrainPool.PANTHEON_TERRAIN_POOLS.get(pantheon, [])),
-				"right": get_random_from_array(player_terrains)
-			}
-			node["terrain"] = terrain_assignments
-		zone_nodes.append(node)
-	return zone_nodes
+# Utility: At combat scene, call this at setup:
+# var zone_gen = $ZoneGenerator
+# var node_terrain = PantheonRunManager.get_current_node_terrains()
+# var player_terrain = PantheonRunManager.player_terrain_cards.pick_random()
+# zone_gen.get_combat_terrain_assignment(node_terrain, player_terrain)

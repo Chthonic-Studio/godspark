@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 CorruptionManager="*res://scripts/core/corruption_manager.gd"
 DeckManager="*res://scripts/core/deck_manager.gd"
 FaithManager="*res://scripts/meta/faith_manager.gd"
+PantheonRunManager="*res://scripts/core/pantheon_run_manager.gd"
 
 [display]
 

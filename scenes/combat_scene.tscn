@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://0xhypofm2kgd"]
+[gd_scene load_steps=16 format=3 uid="uid://0xhypofm2kgd"]
 
 [ext_resource type="Texture2D" uid="uid://cpc1emlovgoau" path="res://assets/images/squareCircle_vector.png" id="1_2edba"]
 [ext_resource type="Script" uid="uid://b3dnb661jfaum" path="res://scripts/core/combat_manager.gd" id="1_m17q1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://5668jhmn8u4w" path="res://scripts/ui/hand_manager.gd" id="3_ikfks"]
 [ext_resource type="Script" uid="uid://c0aushg0urxfa" path="res://scripts/ui/board_ui_manager.gd" id="3_m2d54"]
 [ext_resource type="PackedScene" uid="uid://6iigglaq8stq" path="res://scenes/card.tscn" id="4_0vylu"]
+[ext_resource type="Script" uid="uid://30pvqlssotfy" path="res://scripts/core/zone_generator.gd" id="5_g5ebj"]
 [ext_resource type="Texture2D" uid="uid://clvi4wkljish1" path="res://assets/images/terrains/MountOlympus.png" id="7_6ovae"]
 [ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="8_ivkwx"]
 [ext_resource type="Script" uid="uid://bu27sgv624n3b" path="res://scripts/ui/combat_hud.gd" id="9_g0m11"]
@@ -55,6 +56,9 @@ enemy_deck_manager = NodePath("../EnemyDeckManager")
 
 [node name="BoardManager" type="Node" parent="."]
 script = ExtResource("2_a2e2y")
+
+[node name="ZoneGenerator" type="Node" parent="."]
+script = ExtResource("5_g5ebj")
 
 [node name="HandPanel" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(1300, 180)

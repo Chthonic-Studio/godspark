@@ -13,16 +13,30 @@ var divinity: int = 10 # Faith for playing cards
 # Hold terrain assignments for this combat
 var current_terrain_assignments: Dictionary = {}
 
+var DEBUG_FAKE_TERRAIN := true
+
 signal divinity_changed
 signal phase_changed
 signal turn_changed
 
 # Called once at combat start
 func start_combat():
-	# Before calling start_combat(), call set_terrain_assignments(terrain_dict) on the CombatManager
-	# Where terrain_dict comes from the current node (see above).
+	# Fallback: For direct testing, if current_terrain_assignments is empty, assign test terrain
+	if (not current_terrain_assignments or current_terrain_assignments.is_empty()) and DEBUG_FAKE_TERRAIN:
+		# Only for debug! Replace with real terrain assignments via PantheonRunManager in-game.
+		var TerrainPool = preload("res://scripts/data/terrain_pools.gd")
+		current_terrain_assignments = {
+			"left": TerrainPool.VOID_TERRAIN_POOL["THE DREAMING MAW"][0],
+			"middle": TerrainPool.PANTHEON_TERRAIN_POOLS["GREEK"][0],
+			"right": TerrainPool.PANTHEON_TERRAIN_POOLS["GREEK"][0],
+		}
+		print("DEBUG: Assigned fake terrain for direct scene test.")
+	# Called once at combat start.
+	# In campaign flow: call assign_terrain_from_run() before this to set up terrain.
+	# In direct scene test: set DEBUG_FAKE_TERRAIN = true to use hardcoded test terrrain.
 	if current_terrain_assignments and not current_terrain_assignments.is_empty():
 		board_manager.setup_terrain(current_terrain_assignments)
+		print("CombatManager: Terrain assignments:", current_terrain_assignments)
 	else:
 		print("WARNING: No terrain assignments set for this combat!")
 	board_manager.setup_board()
@@ -151,7 +165,23 @@ func defeat():
 func set_terrain_assignments(terrain_assignments: Dictionary) -> void:
 	current_terrain_assignments = terrain_assignments
 
-
+# Call this from campaign/pantheon flow before start_combat to set up terrain using PantheonRunManager and ZoneGenerator.
+func assign_terrain_from_run():
+	if not PantheonRunManager.current_run_active:
+		print("PantheonRunManager: No active run, skipping terrain assignment.")
+		return
+	var node_terrain = PantheonRunManager.get_current_node_terrains()
+	# You should already have prompted the player to pick/shuffle their terrain card before this.
+	var player_terrain = node_terrain.get("player")
+	if not player_terrain:
+		print("CombatManager: No player terrain assigned for this node. Make sure to call PantheonRunManager.set_player_terrain_for_current_combat() before combat!")
+		return
+	var zone_gen = get_node_or_null("/root/CombatScene/ZoneGenerator")
+	if not zone_gen:
+		print("CombatManager: ZoneGenerator node not found in scene!")
+		return
+	var terrain_assignment = zone_gen.get_combat_terrain_assignment(node_terrain, player_terrain)
+	set_terrain_assignments(terrain_assignment)
 
 # When you implement AI, simply call the same BoardUIManager function for the enemy side:
 # Example call from CombatManager or AI logic:
