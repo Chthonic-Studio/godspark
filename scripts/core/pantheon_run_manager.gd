@@ -17,6 +17,7 @@ var current_node_terrains: Array[Dictionary] = [] # 5 nodes: [{pantheon: Terrain
 
 var player_deck: Array[Resource] = [] # CardData (15 max), set at run start
 var player_terrain_cards: Array[Resource] = [] # 3 TerrainData
+var available_player_terrain_cards: Array[Resource] = []
 var dead_soldiers: Array[String] = [] # Card IDs of fallen soldiers (removed after defeat)
 var run_seed: int = 0
 
@@ -61,6 +62,12 @@ func start_new_run(seed: int = 0):
 	var terrain_pools = preload("res://scripts/data/terrain_pools.gd")
 	available_void_pantheons = terrain_pools.VOID_TERRAIN_POOL.keys().duplicate()
 	print("Available void pantheons at start:", available_void_pantheons)
+	available_player_terrain_cards.clear()
+	# Assign 4 random unique terrains from a specific pool
+	var player_pool = preload("res://scripts/data/terrain_pools.gd").PLAYER_TERRAIN_POOL.duplicate()
+	player_pool.shuffle()
+	for i in range(min(4, player_pool.size())):
+		available_player_terrain_cards.append(player_pool[i])
 	emit_signal("run_started")
 
 # Called when the player picks a pantheon from campaign screen

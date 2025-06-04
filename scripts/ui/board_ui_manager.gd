@@ -7,7 +7,10 @@ class_name BoardUIManager
 signal location_clicked(location: String)
 
 func _ready():
-	get_node(board_manager).card_removed.connect(remove_card_from_slot)
+	var bm = get_node(board_manager)
+	bm.card_removed.connect(remove_card_from_slot)
+	bm.power_changed.connect(_on_power_changed)
+	
 	for location in ["left", "middle", "right"]:
 		var loc_node = get_parent().get_node(location)
 		for row in ["PlayerFrontRow", "PlayerBackRow"]:
@@ -63,17 +66,12 @@ func add_card_to_slot(card_data: CardData, location: String, side: String, slot_
 		return null
 	var card_ui = card_ui_scene.instantiate()
 	card_ui.set_card_data(card_data)
-	card_ui.scale = Vector2(0.5, 0.5)
+	card_ui.scale = Vector2(0.7, 0.7)
 	# Center the card in the slot
 	card_ui.anchor_left = 0.5
 	card_ui.anchor_top = 0
 	card_ui.anchor_right = 0
 	card_ui.anchor_bottom = 0
-	# Half of scaled size: 60x75
-	card_ui.offset_left = -30
-	card_ui.offset_top = -37.5
-	card_ui.offset_right = 30
-	card_ui.offset_bottom = 37.5
 	card_ui.position = Vector2.ZERO
 	card_ui.size_flags_horizontal = Control.SIZE_FILL
 	card_ui.size_flags_vertical = Control.SIZE_FILL
@@ -157,3 +155,25 @@ func update_location_info():
 		info_node.get_node("Art").texture = terrain.art
 		info_node.get_node("LocationName").text = terrain.name
 		info_node.get_node("LocationDescription").text = terrain.effect_description
+
+# Call this to update all power labels in the UI
+func update_power_labels():
+	var bm = get_node(board_manager)
+	for location in bm.locations:
+		var player_power = bm.calculate_power(location, "player")
+		var enemy_power = bm.calculate_power(location, "enemy")
+		var loc_node = get_parent().get_node(location)
+		var info_node = loc_node.get_node("LocationInfo")
+		info_node.get_node("PlayerPowerLabel").text = str(player_power)
+		info_node.get_node("EnemyPowerLabel").text = str(enemy_power)
+
+# This function will update the UI labels for a single location when power changes
+func _on_power_changed(location: String, player_power: int, enemy_power: int) -> void:
+	print("Power changed at %s: player %d, enemy %d" % [location, player_power, enemy_power])
+	var loc_node = get_parent().get_node(location)
+	if not loc_node.has_node("LocationInfo/PlayerPowerLabel"):
+		# You need to add these labels in your scene for each location!
+		return
+	var info_node = loc_node.get_node("LocationInfo")
+	info_node.get_node("PlayerPowerLabel").text = str(player_power)
+	info_node.get_node("EnemyPowerLabel").text = str(enemy_power)

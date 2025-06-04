@@ -10,6 +10,7 @@ var locations := ["left", "middle", "right"]
 var board := {}
 
 signal card_removed(location, side, slot_idx)
+signal power_changed(location: String, player_power: int, enemy_power: int)
 
 func _ready():
 	# Failsafe: if the board is empty, set it up
@@ -27,6 +28,16 @@ func setup_board():
 			"enemy": [null, null, null, null]
 		}
 	print("setup_board called. Current board: ", board)
+	if GameManager.dev_mode == true:
+		var player_bar = $"../PlayerHUD/PlayerHealthBar"
+		print("Player health bar: " + str(player_bar))
+		player_bar.call_deferred("fade_in")
+		player_bar.value = 100
+
+		var enemy_bar = $"../EnemyHUD/EnemyHealthBar"
+		print("Player health bar: " + str(enemy_bar))
+		enemy_bar.call_deferred("fade_in")
+		enemy_bar.value = 100
 
 # Place a card in a given slot (location, side, slot_idx)
 func place_card(card: CardData, location: String, side: String, slot_idx: int) -> bool:
@@ -39,12 +50,6 @@ func place_card(card: CardData, location: String, side: String, slot_idx: int) -
 	if slot_idx < 0 or slot_idx >= board[location][side].size():
 		print("BoardManager: ERROR - slot_idx out of range: %d (location: %s, side: %s)" % [slot_idx, location, side])
 		return false
-
-	# Check Ongoing Silence before placing card (optional: allow unit play, block effects)
-	# If you want to block play entirely, uncomment:
-	# if is_location_silenced(location):
-	#     print("BoardManager: Cannot play card, location is silenced!")
-	#     return false
 
 	if board[location][side][slot_idx] == null:
 		board[location][side][slot_idx] = card
@@ -59,6 +64,12 @@ func place_card(card: CardData, location: String, side: String, slot_idx: int) -
 				print("On Reveal: %s takes %d damage" % [card.name, damage])
 			# Remove trigger after use
 			pending_on_play_damage.erase(key)
+		
+		# Emit power_changed signal for UI update after card placement
+		var player_power = calculate_power(location, "player")
+		var enemy_power = calculate_power(location, "enemy")
+		emit_signal("power_changed", location, player_power, enemy_power)
+
 		return true
 	else:
 		print("BoardManager: Slot %d at %s/%s is already occupied (card: %s)" % [slot_idx, location, side, board[location][side][slot_idx].name])
@@ -68,6 +79,10 @@ func place_card(card: CardData, location: String, side: String, slot_idx: int) -
 func remove_card(location: String, side: String, slot_idx: int):
 	board[location][side][slot_idx] = null
 	emit_signal("card_removed", location, side, slot_idx)
+	# Emit power_changed signal for UI update after card removal
+	var player_power = calculate_power(location, "player")
+	var enemy_power = calculate_power(location, "enemy")
+	emit_signal("power_changed", location, player_power, enemy_power)
 
 # Find the first available slot for a side in a location (front/back optional)
 func get_available_slot(location: String, side: String, prefer_back: bool=false) -> int:

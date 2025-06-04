@@ -238,3 +238,15 @@ const VOID_TERRAIN_POOL = {
 	preload("res://scripts/data/terrains/necrotic_sea.tres")
 	]	
 }
+
+const PLAYER_TERRAIN_POOL = [
+	preload("res://scripts/data/terrains/PlayerTerrains/alexandrian_great_library.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/cleopatra_throne_room.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/da_vinci_ingenuity_workshop.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/hanging_gardens_canopy.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/roman_senate_floor.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/silk_road_grand_bazaar.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/sun_tzu_strategy_tent.tres"),
+	preload("res://scripts/data/terrains/PlayerTerrains/lighthouse_of_pharos.tres")
+	
+]

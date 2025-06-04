@@ -1,50 +1,87 @@
 extends Control
+# Attach to TerrainSelectRoot
 
-# Exports for flexibility in the editor
-@export var terrain_card_button_scene: PackedScene
-@export var terrain_data_list: Array[Resource] # Assign all available TerrainData resources in the editor
+## EXPORTED VARS
+@export var card_scene: PackedScene   # Assign terrain_card.tscn in the editor
 
-@onready var terrain_grid = $TerrainCardGrid
-@onready var selected_panel = $SelectedTerrainsPanel
-@onready var confirm_button = $ConfirmButton
-@onready var error_label = $ErrorLabel
+## NODES
+@onready var card_hbox = $VBoxContainer/CardScroll/CardHbox
+@onready var selected_vbox = $VBoxContainer/HBoxContainer/SelectedVbox
+@onready var confirm_btn = $VBoxContainer/HBoxContainer/ButtonsVBox/ConfirmButton
+@onready var cancel_btn = $VBoxContainer/HBoxContainer/ButtonsVBox/CancelButton
+@onready var error_label = $VBoxContainer/ErrorLabel
 
+## LOGIC VARS
+var available_terrains: Array[Resource] = []
 var selected_terrains: Array[Resource] = []
 
 func _ready():
-	# Populate terrain selection grid
-	for terrain in terrain_data_list:
-		var btn = terrain_card_button_scene.instantiate()
-		btn.set_terrain(terrain)
-		btn.pressed.connect(_on_terrain_card_pressed.bind(terrain))
-		terrain_grid.add_child(btn)
-	confirm_button.pressed.connect(_on_confirm_button_pressed)
-	_update_selected_panel()
-
-func _on_terrain_card_pressed(terrain):
-	if terrain in selected_terrains:
-		selected_terrains.erase(terrain)
+		# --- DEV MODE TEST TERRAIN INJECTION ---
+	if GameManager.dev_mode and (not PantheonRunManager.available_player_terrain_cards or PantheonRunManager.available_player_terrain_cards.size() == 0):
+		# Load a few test terrains (edit paths/types as appropriate for your project)
+		var pools = preload("res://scripts/data/terrain_pools.gd")
+		var test_terrains = pools.PLAYER_TERRAIN_POOL.duplicate()
+		test_terrains.shuffle()
+		available_terrains = test_terrains.slice(0, 4) # get first 4
 	else:
-		if selected_terrains.size() >= 3:
-			error_label.text = "You can select up to 3 terrain cards."
-			return
-		selected_terrains.append(terrain)
+		available_terrains = PantheonRunManager.available_player_terrain_cards.duplicate()
+	# Get available terrains for this run
+	selected_terrains.clear()
+	_populate_card_hbox()
+	_update_selected_vbox()
+	confirm_btn.disabled = true
 	error_label.text = ""
-	_update_selected_panel()
+	confirm_btn.pressed.connect(_on_confirm_pressed)
+	cancel_btn.pressed.connect(_on_cancel_pressed)
 
-func _update_selected_panel():
-	for child in selected_panel.get_children():
+func _populate_card_hbox():
+	for child in card_hbox.get_children():
+		child.queue_free()
+	for terrain in available_terrains:
+		var card = card_scene.instantiate()
+		card.custom_minimum_size = Vector2(240, 300)
+		card.set_terrain(terrain)
+		card.set_selected(false)
+		card.connect("gui_input", Callable(self, "_on_card_gui_input").bind(terrain, card))
+		card_hbox.add_child(card)
+
+func _on_card_gui_input(event: InputEvent, terrain: Resource, card):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if terrain in selected_terrains:
+			selected_terrains.erase(terrain)
+			card.set_selected(false)
+		elif selected_terrains.size() < 3:
+			selected_terrains.append(terrain)
+			card.set_selected(true)
+		# Optionally, show error if trying to select more than 3
+		if selected_terrains.size() > 3:
+			error_label.text = "You can only select 3 terrain cards."
+		else:
+			error_label.text = ""
+		_update_selected_vbox()
+		confirm_btn.disabled = (selected_terrains.size() != 3)
+
+func _update_selected_vbox():
+	for child in selected_vbox.get_children():
 		child.queue_free()
 	for terrain in selected_terrains:
-		var btn = terrain_card_button_scene.instantiate()
-		btn.set_terrain(terrain)
-		btn.disabled = true
-		selected_panel.add_child(btn)
+		var card = card_scene.instantiate()
+		card.call_deferred("set_terrain", terrain)
+		card.call_deferred("set_selected", false) 
+		card.modulate = Color(1, 1, 1, 0.8)  # Optional: faded to show unclickable
+		selected_vbox.add_child(card)
 
-func _on_confirm_button_pressed():
-	if selected_terrains.size() != 3:
-		error_label.text = "Select exactly 3 terrain cards."
-		return
-	PantheonRunManager.player_terrain_cards = selected_terrains.duplicate()
-	# Proceed to next scene (e.g., pantheon selection)
-	get_tree().change_scene_to_file("res://scenes/pantheon_selection_scene.tscn")
+func _on_confirm_pressed():
+	if selected_terrains.size() == 3:
+		PantheonRunManager.player_terrain_cards = selected_terrains.duplicate()
+		hide() # Or queue_free(), or emit a custom signal to notify parent
+	else:
+		error_label.text = "Please select exactly 3 terrain cards."
+
+func _on_cancel_pressed():
+	hide() # Or queue_free(), or notify parent via signal
+
+# Optional: utility for clearing children of a container in Godot 4.4
+func clear():
+	for child in self.get_children():
+		child.queue_free()

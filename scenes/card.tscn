@@ -43,7 +43,6 @@ offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 0
@@ -56,7 +55,6 @@ theme_override_font_sizes/font_size = 14
 text = "Card Name"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="CostLabel" type="Label" parent="."]
 layout_mode = 0
@@ -72,7 +70,6 @@ theme_override_font_sizes/font_size = 20
 text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="PowerLabel" type="Label" parent="."]
 layout_mode = 0
@@ -97,7 +94,6 @@ theme_override_font_sizes/font_size = 15
 text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="EffectLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -113,7 +109,6 @@ theme_override_constants/line_separation = -4
 theme_override_fonts/normal_font = ExtResource("5_8w5pg")
 theme_override_font_sizes/normal_font_size = 10
 text = "Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet"
-metadata/_edit_use_anchors_ = true
 
 [node name="HighlightOverlay" type="ColorRect" parent="."]
 visible = false

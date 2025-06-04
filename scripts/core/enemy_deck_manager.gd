@@ -22,6 +22,8 @@ func _generate_test_cards():
 		card.description = "A debug enemy card."
 		card.type = "SoldierAttack"
 		card.cost = i % 3 + 1
+		card.power = i % 3 + 1
+		card.health = i % 7 + 2
 		card.effects.clear()
 		card.tags.clear()
 		card.requirements = {}

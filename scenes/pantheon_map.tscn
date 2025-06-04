@@ -202,6 +202,13 @@ theme_override_fonts/font = ExtResource("5_hc12i")
 theme_override_font_sizes/font_size = 30
 text = "Edit Deck"
 
+[node name="SelectTerrainButton" type="Button" parent="MenuPanel"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hc12i")
+theme_override_font_sizes/font_size = 30
+text = "Choose Terrains"
+
 [node name="AbandonRunButton" type="Button" parent="MenuPanel"]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2

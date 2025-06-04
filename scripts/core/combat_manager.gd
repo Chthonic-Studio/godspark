@@ -3,6 +3,7 @@ extends Node
 @export var board_manager: BoardManager
 @export var hand_manager: HandManager
 @export var enemy_deck_manager: EnemyDeckManager
+@export var board_ui_manager: BoardUIManager
 @export var player_health: int = 100
 @export var enemy_health: int = 100
 
@@ -21,6 +22,7 @@ signal turn_changed
 
 # Called once at combat start
 func start_combat():
+	
 	# Fallback: For direct testing, if current_terrain_assignments is empty, assign test terrain
 	if (not current_terrain_assignments or current_terrain_assignments.is_empty()) and DEBUG_FAKE_TERRAIN:
 		# Only for debug! Replace with real terrain assignments via PantheonRunManager in-game.
@@ -40,6 +42,18 @@ func start_combat():
 	else:
 		print("WARNING: No terrain assignments set for this combat!")
 	board_manager.setup_board()
+	board_ui_manager.update_power_labels()
+	
+	var player_bar = $"../PlayerHUD/PlayerHealthBar"
+	print("Player health bar: " + str(player_bar))
+	player_bar.fade_in()
+	player_bar.set_health(player_health)
+
+	var enemy_bar = $"../EnemyHUD/EnemyHealthBar"
+	print("Player health bar: " + str(enemy_bar))
+	enemy_bar.fade_in()
+	enemy_bar.set_health(enemy_health)
+	
 	DeckManager.start_game()
 	enemy_deck_manager.draw_cards(3)
 	phase = "PlayerTurn"
@@ -51,6 +65,7 @@ func start_combat():
 func end_player_turn():
 	# (Resolve end-of-turn effects, etc. as needed)
 	phase = "EnemyTurn"
+	board_ui_manager.update_power_labels()
 	emit_signal("phase_changed")
 	call_deferred("enemy_turn")
 
@@ -62,6 +77,7 @@ func enemy_turn():
 			var card = enemy_deck_manager.hand[0]
 			board_manager.place_card(card, location, "enemy", slot)
 			enemy_deck_manager.play_card(card)
+			board_ui_manager.update_power_labels()
 			if has_node("/root/CombatScene/BoardPanel/BoardUIManager"):
 				var board_ui = get_node("/root/CombatScene/BoardPanel/BoardUIManager")
 				board_ui.add_enemy_card_to_slot(card, location, slot)
@@ -95,12 +111,25 @@ func resolve_turn():
 		for loc in board_manager.locations:
 			var player_power = board_manager.calculate_power(loc, "player")
 			var enemy_power = board_manager.calculate_power(loc, "enemy")
-			player_total += max(enemy_power - player_power, 0)
-			enemy_total += max(player_power - enemy_power, 0)
+			# UI: update power labels
+			if has_node("/root/CombatScene/BoardPanel/BoardUIManager"):
+				get_node("/root/CombatScene/BoardPanel/BoardUIManager").update_power_labels()
+			if player_power > enemy_power:
+				enemy_total += player_power - enemy_power
+			elif enemy_power > player_power:
+				player_total += enemy_power - player_power
+			# (no damage if equal)
 		player_health -= player_total
 		enemy_health -= enemy_total
-		# Add UI feedback for health change here
-	# Check for defeat/victory
+		# Update health bars visually after health changes
+		if has_node("/root/CombatScene/PlayerHUD/PlayerHealthBar"):
+			var player_bar = get_node("/root/CombatScene/PlayerHUD/PlayerHealthBar")
+			player_bar.set_health(player_health)
+		if has_node("/root/CombatScene/EnemyHUD/EnemyHealthBar"):
+			var enemy_bar = get_node("/root/CombatScene/EnemyHUD/EnemyHealthBar")
+			enemy_bar.set_health(enemy_health)
+			
+	
 	check_end_conditions()
 
 	# Prepare for next turn
@@ -110,6 +139,7 @@ func resolve_turn():
 	DeckManager.draw_cards(1)
 	divinity += 1
 	hand_manager.refresh_hand()
+	board_ui_manager.update_power_labels()
 	emit_signal("divinity_changed")
 	emit_signal("phase_changed")
 
@@ -140,6 +170,7 @@ func play_card(card: CardData, location: String, slot_idx: int = -1) -> String:
 			"enemy_deck_manager": enemy_deck_manager
 		}
 		effect.execute(card, context)
+	board_ui_manager.update_power_labels()
 	return "success"
 
 func deal_commander_damage(target: String, amount: int):
@@ -171,16 +202,18 @@ func assign_terrain_from_run():
 		print("PantheonRunManager: No active run, skipping terrain assignment.")
 		return
 	var node_terrain = PantheonRunManager.get_current_node_terrains()
-	# You should already have prompted the player to pick/shuffle their terrain card before this.
-	var player_terrain = node_terrain.get("player")
-	if not player_terrain:
-		print("CombatManager: No player terrain assigned for this node. Make sure to call PantheonRunManager.set_player_terrain_for_current_combat() before combat!")
+	var player_terrains = PantheonRunManager.player_terrain_cards
+	if player_terrains.size() != 3:
+		print("CombatManager: Player must have exactly 3 terrain cards selected!")
 		return
+	player_terrains.shuffle()
+	var selected_terrain = player_terrains[0]
+	PantheonRunManager.set_player_terrain_for_current_combat(selected_terrain)
 	var zone_gen = get_node_or_null("/root/CombatScene/ZoneGenerator")
 	if not zone_gen:
 		print("CombatManager: ZoneGenerator node not found in scene!")
 		return
-	var terrain_assignment = zone_gen.get_combat_terrain_assignment(node_terrain, player_terrain)
+	var terrain_assignment = zone_gen.get_combat_terrain_assignment(node_terrain, selected_terrain)
 	set_terrain_assignments(terrain_assignment)
 
 # When you implement AI, simply call the same BoardUIManager function for the enemy side:

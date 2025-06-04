@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TerrainData" load_steps=2 format=3 uid="uid://n0rqn87jucdu"]
+
+[ext_resource type="Script" uid="uid://bo4a777qosw1u" path="res://scripts/data/terrain_data.gd" id="1_gyyh2"]
+
+[resource]
+script = ExtResource("1_gyyh2")
+id = "silk_road_grand_bazaar"
+name = "Silk Road's Grand Bazaar"
+effect_description = ""
+triggers = Array[Dictionary]([])
+owner_type = 0
+metadata/_custom_type_script = "uid://bo4a777qosw1u"

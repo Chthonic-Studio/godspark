@@ -1,8 +1,98 @@
-[gd_scene format=3 uid="uid://c3kqymmkxo14d"]
+[gd_scene load_steps=5 format=3 uid="uid://c7pf13kqdakcy"]
 
-[node name="TerrainCard" type="Button"]
+[ext_resource type="Script" uid="uid://xht2468ggd5a" path="res://scripts/ui/terrain_card.gd" id="1_ek7fm"]
+[ext_resource type="Texture2D" uid="uid://by3oc1pj3kny" path="res://assets/images/terrains/terrain_card_bg.tres" id="2_ek7fm"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="3_x75kt"]
+[ext_resource type="FontFile" uid="uid://coi4y2x1halg5" path="res://assets/fonts/Beholden-Regular.ttf" id="5_0wnb8"]
+
+[node name="TerrainCard" type="Control"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1480.0
+offset_bottom = -750.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ek7fm")
+
+[node name="CardBG" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_ek7fm")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="HighlightOverlay" type="ColorRect" parent="CardBG"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.203922)
+metadata/_edit_use_anchors_ = true
+
+[node name="Art" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(99, 66)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.0954545
+anchor_right = 0.926667
+anchor_bottom = 0.577273
+offset_left = 1.4
+offset_top = -0.000175476
+offset_right = -1.20004
+offset_bottom = -6.27295
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="NameLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(98, 49)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0916667
+anchor_top = 0.336667
+anchor_right = 0.908333
+anchor_bottom = 0.663333
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_x75kt")
+theme_override_font_sizes/font_size = 13
+text = "Card Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="EffectLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(91, 38)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.133333
+anchor_top = 0.653333
+anchor_right = 0.891667
+anchor_bottom = 0.906667
+mouse_filter = 2
+theme_override_constants/table_v_separation = -10
+theme_override_constants/table_h_separation = -10
+theme_override_constants/text_highlight_v_padding = -10
+theme_override_constants/line_separation = -4
+theme_override_fonts/normal_font = ExtResource("5_0wnb8")
+theme_override_font_sizes/normal_font_size = 10
+text = "Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet"
+metadata/_edit_use_anchors_ = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://0xhypofm2kgd"]
+[gd_scene load_steps=18 format=3 uid="uid://0xhypofm2kgd"]
 
 [ext_resource type="Texture2D" uid="uid://cpc1emlovgoau" path="res://assets/images/squareCircle_vector.png" id="1_2edba"]
 [ext_resource type="Script" uid="uid://b3dnb661jfaum" path="res://scripts/core/combat_manager.gd" id="1_m17q1"]
@@ -14,6 +14,8 @@
 [ext_resource type="FontFile" uid="uid://duljvvactrvqk" path="res://assets/fonts/Beholden-Bold-Italic.ttf" id="10_5qq3q"]
 [ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="11_g5ebj"]
 [ext_resource type="FontFile" uid="uid://coi4y2x1halg5" path="res://assets/fonts/Beholden-Regular.ttf" id="12_ohwxf"]
+[ext_resource type="Texture2D" uid="uid://bpuf7gjen4r8o" path="res://assets/images/HealthBar.png" id="13_blj0x"]
+[ext_resource type="Script" uid="uid://jesd32qvu16t" path="res://scripts/ui/commander_health_bar.gd" id="13_ohwxf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sw3s"]
 atlas = ExtResource("1_2edba")
@@ -48,11 +50,12 @@ metadata/_edit_use_anchors_ = true
 [node name="EnemyDeckManager" type="Node" parent="."]
 script = ExtResource("2_5qq3q")
 
-[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager", "hand_manager", "enemy_deck_manager")]
+[node name="CombatManager" type="Node" parent="." node_paths=PackedStringArray("board_manager", "hand_manager", "enemy_deck_manager", "board_ui_manager")]
 script = ExtResource("1_m17q1")
 board_manager = NodePath("../BoardManager")
 hand_manager = NodePath("../HandPanel/HandManager")
 enemy_deck_manager = NodePath("../EnemyDeckManager")
+board_ui_manager = NodePath("../BoardPanel/BoardUIManager")
 
 [node name="BoardManager" type="Node" parent="."]
 script = ExtResource("2_a2e2y")
@@ -183,6 +186,32 @@ theme_override_font_sizes/font_size = 18
 text = "Location description"
 horizontal_alignment = 1
 
+[node name="PlayerPowerLabel" type="Label" parent="BoardPanel/left/LocationInfo"]
+top_level = true
+layout_mode = 0
+offset_left = 335.0
+offset_top = 534.0
+offset_right = 375.0
+offset_bottom = 570.0
+theme_override_colors/font_outline_color = Color(0, 0.619608, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 1
+
+[node name="EnemyPowerLabel" type="Label" parent="BoardPanel/left/LocationInfo"]
+offset_left = 203.0
+offset_top = -128.0
+offset_right = 243.0
+offset_bottom = -91.9999
+theme_override_colors/font_outline_color = Color(0.647059, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 1
+
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/left"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
@@ -292,6 +321,31 @@ theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("11_g5ebj")
 theme_override_font_sizes/font_size = 18
 text = "Location description"
+horizontal_alignment = 1
+
+[node name="PlayerPowerLabel" type="Label" parent="BoardPanel/middle/LocationInfo"]
+top_level = true
+offset_left = 782.0
+offset_top = 534.0
+offset_right = 822.0
+offset_bottom = 570.0
+theme_override_colors/font_outline_color = Color(0, 0.619608, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 1
+
+[node name="EnemyPowerLabel" type="Label" parent="BoardPanel/middle/LocationInfo"]
+offset_left = 203.0
+offset_top = -128.0
+offset_right = 243.0
+offset_bottom = -91.9999
+theme_override_colors/font_outline_color = Color(0.647059, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 35
+text = "0"
 horizontal_alignment = 1
 
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/middle"]
@@ -405,6 +459,31 @@ theme_override_font_sizes/font_size = 18
 text = "Location description"
 horizontal_alignment = 1
 
+[node name="PlayerPowerLabel" type="Label" parent="BoardPanel/right/LocationInfo"]
+top_level = true
+offset_left = 1234.0
+offset_top = 537.0
+offset_right = 1274.0
+offset_bottom = 573.0
+theme_override_colors/font_outline_color = Color(0, 0.619608, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 1
+
+[node name="EnemyPowerLabel" type="Label" parent="BoardPanel/right/LocationInfo"]
+offset_left = 203.0
+offset_top = -128.0
+offset_right = 243.0
+offset_bottom = -91.9999
+theme_override_colors/font_outline_color = Color(0.647059, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_ivkwx")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 1
+
 [node name="PlayerFrontRow" type="VBoxContainer" parent="BoardPanel/right"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
@@ -456,19 +535,43 @@ script = ExtResource("9_g0m11")
 combat_manager = NodePath("../CombatManager")
 
 [node name="PlayerHealthBar" type="TextureProgressBar" parent="PlayerHUD"]
-custom_minimum_size = Vector2(550, 40)
+custom_minimum_size = Vector2(500, 40)
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = -1
+anchor_left = 0.097
+anchor_top = -0.382
+anchor_right = 0.961798
 anchor_bottom = 1.0
-offset_left = -275.0
-offset_top = -40.0
-offset_right = 275.0
+offset_left = 132.67
+offset_top = 13.28
+offset_right = -137.0
+offset_bottom = -2.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 value = 100.0
+rounded = true
+texture_progress = ExtResource("13_blj0x")
+script = ExtResource("13_ohwxf")
+health_label_path = NodePath("HealthValueLabel")
+
+[node name="HealthValueLabel" type="Label" parent="PlayerHUD/PlayerHealthBar"]
+custom_minimum_size = Vector2(83, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = -11.5
+offset_right = 41.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_g5ebj")
+theme_override_font_sizes/font_size = 20
+text = "100"
+horizontal_alignment = 1
 
 [node name="DivinityLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 1
@@ -531,17 +634,44 @@ offset_bottom = 40.0
 grow_horizontal = 2
 
 [node name="EnemyHealthBar" type="TextureProgressBar" parent="EnemyHUD"]
-custom_minimum_size = Vector2(550, 40)
+custom_minimum_size = Vector2(500, 40)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -6.375
-anchor_right = 7.375
+anchor_left = 0.097
+anchor_top = -0.382
+anchor_right = 0.961798
 anchor_bottom = 1.0
-offset_left = 255.0
-offset_right = -255.0
+offset_left = 132.67
+offset_top = 13.28
+offset_right = -137.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+value = 100.0
+rounded = true
+texture_progress = ExtResource("13_blj0x")
+script = ExtResource("13_ohwxf")
+is_player = false
+health_label_path = NodePath("HealthValueLabel")
+
+[node name="HealthValueLabel" type="Label" parent="EnemyHUD/EnemyHealthBar"]
+custom_minimum_size = Vector2(83, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = -11.5
+offset_right = 41.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_g5ebj")
+theme_override_font_sizes/font_size = 20
+text = "100"
+horizontal_alignment = 1
 
 [node name="DebugPanel" type="Control" parent="."]
 anchors_preset = 0

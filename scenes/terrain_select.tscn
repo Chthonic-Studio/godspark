@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bisl16idheldx"]
+[gd_scene load_steps=4 format=3 uid="uid://bisl16idheldx"]
 
 [ext_resource type="Script" uid="uid://ds68xfrljmrg7" path="res://scripts/ui/terrain_select.gd" id="1_622yd"]
+[ext_resource type="PackedScene" uid="uid://c7pf13kqdakcy" path="res://scenes/terrain_card.tscn" id="2_2yoqb"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="2_fij85"]
 
 [node name="TerrainSelectRoot" type="Control"]
 layout_mode = 3
@@ -10,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_622yd")
+card_scene = ExtResource("2_2yoqb")
 
 [node name="BGOverlay" type="ColorRect" parent="."]
 layout_mode = 1
@@ -21,31 +24,61 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.419608)
 metadata/_edit_use_anchors_ = true
 
-[node name="TerrainCardGrid" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.046
-anchor_bottom = 0.199
-offset_left = 279.0
-offset_top = 520.0
-offset_right = 1186.4
-offset_bottom = 540.9
-
-[node name="SelectedTerrainsPanel" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 341.0
-offset_top = 171.0
-offset_right = 1324.0
-offset_bottom = 561.0
+offset_left = 144.0
+offset_top = 116.0
+offset_right = 1431.0
+offset_bottom = 788.0
 
-[node name="ConfirmButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 656.0
-offset_top = 796.0
-offset_right = 872.0
-offset_bottom = 855.0
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fij85")
+theme_override_font_sizes/font_size = 45
+text = "Select 3 Terrain Cards"
+horizontal_alignment = 1
 
-[node name="ErrorLabel" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="CardScroll" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="CardHbox" type="HBoxContainer" parent="VBoxContainer/CardScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SelectedVbox" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="VBoxContainer/HBoxContainer/ButtonsVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fij85")
+theme_override_font_sizes/font_size = 35
+text = "Confirm"
+metadata/_edit_use_anchors_ = true
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer/ButtonsVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fij85")
+theme_override_font_sizes/font_size = 35
+text = "Cancel"
+metadata/_edit_use_anchors_ = true
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2

@@ -23,6 +23,8 @@ func _generate_test_cards():
 		card.id = "test_%d" % i
 		card.name = "Test Card %d" % i
 		card.description = "A debug card for prototyping."
+		card.power = i % 3 + 1
+		card.health = i % 7 + 2
 		card.type = "SoldierAttack"
 		card.cost = i % 3 + 1
 		card.effects.clear() # <- FIX: clear instead of assigning a new array

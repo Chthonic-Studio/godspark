@@ -7,6 +7,7 @@ extends Control
 @onready var node_container = $NodeContainer
 @onready var abandon_btn = $MenuPanel/AbandonRunButton
 @onready var edit_deck_btn = $MenuPanel/EditDeckButton
+@onready var select_terrain_btn = $MenuPanel/SelectTerrainButton
 
 @onready var abandon_confirm = $AbandonConfirmDialog
 @onready var abandon_message = $AbandonMessageWindow
@@ -35,6 +36,7 @@ func _ready():
 	abandon_btn.pressed.connect(_on_AbandonRunButton_pressed)
 	edit_deck_btn.pressed.connect(_on_EditDeckButton_pressed)
 	abandon_confirm.confirmed.connect(_on_abandon_confirmed)
+	select_terrain_btn.pressed.connect(_on_select_terrain_button_pressed)
 	
 
 func _setup_pantheon_display():
@@ -64,6 +66,12 @@ func _setup_nodes():
 			node_btn.visible = false
 
 func _on_NodeButton_pressed(idx):
+	if PantheonRunManager.player_terrain_cards.size() != 3:
+		var dialog = AcceptDialog.new()
+		dialog.dialog_text = "You must select 3 terrain cards before entering combat!"
+		add_child(dialog)
+		dialog.popup_centered()
+		return
 	if idx > PantheonRunManager.current_node_index:
 		return # Not unlocked yet
 	# Prompt for terrain shuffle/selection (implement this UI as needed)
@@ -101,3 +109,8 @@ func _after_fade_abandon():
 
 func _on_EditDeckButton_pressed():
 	print("Deck editing not yet implemented.")
+
+func _on_select_terrain_button_pressed():
+	var overlay = preload("res://scenes/terrain_select.tscn").instantiate()
+	add_child(overlay) # This will center by default if anchor/offset are set
+	overlay.show()
