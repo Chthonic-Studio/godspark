@@ -26,3 +26,6 @@ func update_turn_info():
 	var cm = get_node(combat_manager)
 	turn_info_label.text = "Turn %d - %s" % [cm.turn, cm.phase]
 	end_turn_btn.disabled = cm.phase != "PlayerTurn"
+
+func set_enabled(enabled: bool):
+	end_turn_btn.disabled = not enabled

@@ -23,9 +23,9 @@ func refresh_hand():
 	card_instances.clear()
 
 	var container = get_node(hand_container)
-	for card_data in DeckManager.hand:
+	for card_instance in DeckManager.hand:
 		var card_ui = card_ui_scene.instantiate()
-		card_ui.set_card_data(card_data)
+		card_ui.set_card_instance(card_instance)
 		card_ui.card_selected.connect(_on_card_selected)
 		card_ui.card_play_attempt.connect(_on_card_play_attempt)
 		card_ui.card_cancelled.connect(_on_card_cancelled)
@@ -37,7 +37,7 @@ func refresh_hand():
 
 func _on_card_play_attempt(card_ui):
 	selected_card_ui = card_ui
-	get_node(board_ui_manager).highlight_valid_locations(card_ui.card_data)
+	get_node(board_ui_manager).highlight_valid_locations(card_ui.card_instance)
 
 func _on_board_location_clicked(location):
 	if selected_card_ui:
@@ -47,12 +47,11 @@ func _on_board_location_clicked(location):
 		if slot_idx == -1:
 			show_error("Location is full!")
 			return
-		var result = combat_manager_node.play_card(selected_card_ui.card_data, location, slot_idx)
+		var result = combat_manager_node.play_card(selected_card_ui.card_instance, location, slot_idx)
 		if result == "success":
-			# (existing card placement code)
 			var board_ui = get_node(board_ui_manager)
 			var card_ui = card_ui_scene.instantiate()
-			card_ui.set_card_data(selected_card_ui.card_data)
+			card_ui.set_card_instance(selected_card_ui.card_instance)
 			card_ui.scale = Vector2(0.5, 0.5)
 			var slot_node = board_ui.get_slot_node(location, slot_idx)
 			if slot_node:
@@ -92,7 +91,7 @@ func _on_card_selected(card_ui):
 	card_ui.is_selected = true
 	card_ui.get_node("HighlightOverlay").visible = true
 	selected_card_ui = card_ui
-	get_node(board_ui_manager).highlight_valid_locations(card_ui.card_data)
+	get_node(board_ui_manager).highlight_valid_locations(card_ui.card_instance)
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F1:

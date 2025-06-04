@@ -16,13 +16,18 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-CorruptionManager="*res://scripts/core/corruption_manager.gd"
+GameManager="*res://scripts/core/game_manager.gd"
+PantheonRunManager="*res://scripts/core/pantheon_run_manager.gd"
+PlayerCollectionManager="*res://scripts/core/player_collection_manager.gd"
 DeckManager="*res://scripts/core/deck_manager.gd"
 FaithManager="*res://scripts/meta/faith_manager.gd"
-PantheonRunManager="*res://scripts/core/pantheon_run_manager.gd"
-GameManager="*res://scripts/core/game_manager.gd"
+CorruptionManager="*res://scripts/core/corruption_manager.gd"
 
 [display]
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
+
+[rendering]
+
+viewport/hdr_2d=true

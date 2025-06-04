@@ -1,0 +1,265 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba13rtggwrx18"]
+
+[ext_resource type="Script" uid="uid://d4mc7cdkneyf" path="res://scripts/ui/deck_edit.gd" id="1_nh1x4"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="2_13f3i"]
+[ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="3_11ql5"]
+
+[node name="DeckEditRoot" type="Control"]
+custom_minimum_size = Vector2(1450, 850)
+layout_mode = 3
+anchor_left = 0.046875
+anchor_top = 0.0555556
+anchor_right = 0.953125
+anchor_bottom = 0.944444
+offset_left = 15.0
+offset_top = 40.0
+offset_right = -15.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nh1x4")
+metadata/_edit_use_anchors_ = true
+
+[node name="BG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BGOverlay" type="ColorRect" parent="BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.662745)
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 10.0
+offset_right = 1422.0
+offset_bottom = 850.0
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13f3i")
+theme_override_font_sizes/font_size = 60
+text = "EDIT YOUR DECK"
+horizontal_alignment = 1
+
+[node name="CollectionVBox" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CollectionLabel" type="Label" parent="VBoxContainer/CollectionVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_11ql5")
+theme_override_font_sizes/font_size = 35
+text = "YOUR COLLECTION"
+horizontal_alignment = 1
+
+[node name="CollectionScroll" type="ScrollContainer" parent="VBoxContainer/CollectionVBox"]
+custom_minimum_size = Vector2(600, 320)
+layout_mode = 2
+
+[node name="CollectionGrid" type="GridContainer" parent="VBoxContainer/CollectionVBox/CollectionScroll"]
+layout_mode = 2
+columns = 11
+
+[node name="Panel" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel7" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel8" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel9" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel10" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel11" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel12" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel13" type="Panel" parent="VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.435294, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DeckVBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="DeckGrid" type="GridContainer" parent="VBoxContainer/HBoxContainer/DeckVBox"]
+layout_mode = 2
+columns = 7
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel7" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel8" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel9" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel10" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel11" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel12" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel13" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Panel14" type="Panel" parent="VBoxContainer/HBoxContainer/DeckVBox/DeckGrid"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="TypeCountsHBox" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="TypeCounterVbox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TypeCountsHBox"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="DivineSoldierCount" type="Label" parent="VBoxContainer/HBoxContainer/TypeCountsHBox/TypeCounterVbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_11ql5")
+theme_override_font_sizes/font_size = 20
+text = "Divine Soldiers: "
+
+[node name="LevyCount" type="Label" parent="VBoxContainer/HBoxContainer/TypeCountsHBox/TypeCounterVbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_11ql5")
+theme_override_font_sizes/font_size = 20
+text = "Levies:"
+
+[node name="SpellCount" type="Label" parent="VBoxContainer/HBoxContainer/TypeCountsHBox/TypeCounterVbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_11ql5")
+theme_override_font_sizes/font_size = 20
+text = "Spells:"
+
+[node name="FallenVBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TypeCountsHBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="FallenLabel" type="Label" parent="VBoxContainer/HBoxContainer/TypeCountsHBox/FallenVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_11ql5")
+theme_override_font_sizes/font_size = 20
+text = "List of the Fallen"
+horizontal_alignment = 1
+
+[node name="FallenScroll" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/TypeCountsHBox/FallenVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FallenGrid" type="GridContainer" parent="VBoxContainer/HBoxContainer/TypeCountsHBox/FallenVBox/FallenScroll"]
+layout_mode = 2
+columns = 2
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 19.0
+offset_top = 787.0
+offset_right = 1415.0
+offset_bottom = 846.0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="ButtonsHBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13f3i")
+theme_override_font_sizes/font_size = 50
+text = "CONFIRM"
+
+[node name="CancelButton" type="Button" parent="ButtonsHBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13f3i")
+theme_override_font_sizes/font_size = 50
+text = "CANCEL"

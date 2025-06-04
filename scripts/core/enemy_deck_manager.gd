@@ -1,38 +1,40 @@
 extends Node
 class_name EnemyDeckManager
 
-var draw_pile: Array[CardData] = []
-var discard_pile: Array[CardData] = []
-var hand: Array[CardData] = []
+var draw_pile: Array = []
+var discard_pile: Array = []
+var hand: Array = []
 var max_hand_size: int = 7
 
-var debug_generate_test_cards := true
-
 func _ready():
-	if debug_generate_test_cards and draw_pile.is_empty() and hand.is_empty():
+	if GameManager.dev_mode and draw_pile.is_empty() and hand.is_empty():
 		_generate_test_cards()
 
 func _generate_test_cards():
-	# Generates 5 simple test CardData resources for debugging.
-	var test_cards: Array[CardData] = []
+	var test_cards: Array[Dictionary] = []
 	for i in range(5):
 		var card = CardData.new()
-		card.id = "enemy_test_%d" % i
-		card.name = "Enemy Card %d" % i
-		card.description = "A debug enemy card."
-		card.type = "SoldierAttack"
-		card.cost = i % 3 + 1
+		card.id = "test_%d" % i
+		card.name = "Test Card %d" % i
+		card.description = "A debug card for prototyping."
 		card.power = i % 3 + 1
 		card.health = i % 7 + 2
+		card.type = "SoldierAttack"
+		card.cost = i % 3 + 1
 		card.effects.clear()
 		card.tags.clear()
 		card.requirements = {}
-		test_cards.append(card)
+		test_cards.append({
+			"instance_id": "test_%d" % i,
+			"card_data": card,
+			"type": card.type,
+			"current_hp": card.health
+		}) # <--- This is a dictionary!
 	setup_deck(test_cards)
 	draw_cards(max_hand_size)
 
-func setup_deck(card_list: Array[CardData]) -> void:
-	draw_pile = card_list.duplicate()
+func setup_deck(card_instance_list: Array[Dictionary]) -> void:
+	draw_pile = card_instance_list.duplicate(true)
 	discard_pile.clear()
 	hand.clear()
 	shuffle_draw_pile()
@@ -50,13 +52,16 @@ func draw_cards(amount: int) -> void:
 	while hand.size() > max_hand_size:
 		discard_pile.append(hand.pop_front())
 
-func play_card(card: CardData) -> void:
-	hand.erase(card)
-	discard_pile.append(card)
+func play_card(card_instance: Dictionary) -> void:
+	for i in range(hand.size()):
+		if hand[i]["instance_id"] == card_instance["instance_id"]:
+			discard_pile.append(hand[i])
+			hand.remove_at(i)
+			return
 
 func reshuffle_discard_into_draw() -> void:
 	if discard_pile.is_empty():
 		return
-	draw_pile = discard_pile.duplicate()
+	draw_pile = discard_pile.duplicate(true)
 	discard_pile.clear()
 	shuffle_draw_pile()

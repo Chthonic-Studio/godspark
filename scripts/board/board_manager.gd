@@ -5,7 +5,7 @@ var silenced_locations: Dictionary = {} # location : bool
 var pending_on_play_damage: Dictionary = {} # key: str (location_side), value: damage
 var terrain_by_location: Dictionary = {} # e.g. "left": TerrainData
 
-# Structure: board[location][side][slot] = CardData or null
+# Structure: board[location][side][slot] = card_instance (dictionary) or null
 var locations := ["left", "middle", "right"]
 var board := {}
 
@@ -39,8 +39,8 @@ func setup_board():
 		enemy_bar.call_deferred("fade_in")
 		enemy_bar.value = 100
 
-# Place a card in a given slot (location, side, slot_idx)
-func place_card(card: CardData, location: String, side: String, slot_idx: int) -> bool:
+# Place a card instance in a given slot (location, side, slot_idx)
+func place_card(card_instance: Dictionary, location: String, side: String, slot_idx: int) -> bool:
 	if not board.has(location):
 		print("BoardManager: ERROR - board missing location:", location, "Available keys:", board.keys())
 		return false
@@ -52,16 +52,25 @@ func place_card(card: CardData, location: String, side: String, slot_idx: int) -
 		return false
 
 	if board[location][side][slot_idx] == null:
-		board[location][side][slot_idx] = card
-		print("BoardManager: Placed card '%s' in %s/%s slot %d" % [card.name, location, side, slot_idx])
+		board[location][side][slot_idx] = card_instance
+		var card_data = card_instance.get("card_data", null)
+		var name_str = card_data.name if card_data else "[NO DATA]"
+		print("BoardManager: Placed card '%s' in %s/%s slot %d" % [name_str, location, side, slot_idx])
 
 		# On Reveal: Damage Next Unit Played
 		var key = "%s_%s" % [location, side]
 		if pending_on_play_damage.has(key):
 			var damage = pending_on_play_damage[key]
-			if card.health > 0:
-				card.health -= damage
-				print("On Reveal: %s takes %d damage" % [card.name, damage])
+			# Use per-instance health if present, else fall back to CardData
+			if card_instance.has("current_hp"):
+				card_instance["current_hp"] -= damage
+				print("On Reveal: %s takes %d damage (current_hp now %d)" % [name_str, damage, card_instance["current_hp"]])
+			elif card_data and card_data.has_method("take_damage"):
+				card_data.take_damage(damage)
+				print("On Reveal: %s takes %d damage via CardData method" % [name_str, damage])
+			elif card_data and card_data.has_property("health"):
+				card_data.health -= damage
+				print("On Reveal: %s takes %d damage (CardData.health now %d)" % [name_str, damage, card_data.health])
 			# Remove trigger after use
 			pending_on_play_damage.erase(key)
 		
@@ -72,7 +81,9 @@ func place_card(card: CardData, location: String, side: String, slot_idx: int) -
 
 		return true
 	else:
-		print("BoardManager: Slot %d at %s/%s is already occupied (card: %s)" % [slot_idx, location, side, board[location][side][slot_idx].name])
+		var existing = board[location][side][slot_idx]
+		var existing_name = existing.get("card_data", null).name if typeof(existing) == TYPE_DICTIONARY and existing.has("card_data") else "[NO DATA]"
+		print("BoardManager: Slot %d at %s/%s is already occupied (card: %s)" % [slot_idx, location, side, existing_name])
 	return false
 	
 # Remove a card from its slot
@@ -93,13 +104,9 @@ func get_available_slot(location: String, side: String, prefer_back: bool=false)
 		print("ERROR: get_available_slot missing side: ", side)
 		return -1
 	var range = [2, 3, 0, 1] if prefer_back else [0, 1, 2, 3]
-	print("Checking slots for", location, side, "range:", range)
 	for idx in range:
-		print("- slot", idx, "=", board[location][side][idx])
 		if board[location][side][idx] == null:
-			print("-- returning idx", idx)
 			return idx
-	print("-- No available slot found")
 	return -1
 
 # Move card from one slot to another (for effects)
@@ -112,7 +119,6 @@ func move_card(from_loc, from_side, from_idx, to_loc, to_side, to_idx) -> bool:
 	return false
 
 # Calculate total power for a side in a location
-# Power calculation with Buff Backrow
 func calculate_power(location: String, side: String) -> int:
 	var total = 0
 	var ongoing_effects = get_ongoing_effects_in_location(location, side)
@@ -120,16 +126,16 @@ func calculate_power(location: String, side: String) -> int:
 	var buff_slots = []
 	for entry in ongoing_effects:
 		if entry.effect.effect_name == "BuffBackrow":
-			# Buff all backrow except the card itself
 			for back_idx in [2, 3]:
 				if back_idx != entry.slot:
 					buff_slots.append(back_idx)
 					buff_amount = entry.effect.power_buff # Adjust property name as needed
 	# The power calculation for the cards in this location/side
 	for idx in range(board[location][side].size()):
-		var card = board[location][side][idx]
-		if card:
-			var power = card.get_power()
+		var card_instance = board[location][side][idx]
+		if card_instance:
+			var card_data = card_instance.get("card_data", null)
+			var power = card_data.get_power() if card_data else 0
 			if idx in buff_slots:
 				power += buff_amount
 			total += power
@@ -150,31 +156,34 @@ func is_location_silenced(location: String) -> bool:
 func get_ongoing_effects_in_location(location: String, side: String) -> Array:
 	var effects = []
 	for idx in range(4):
-		var card = board[location][side][idx]
-		if card:
-			for effect in card.effects:
-				if effect.is_ongoing():
-					effects.append({"effect": effect, "slot": idx, "card": card})
+		var card_instance = board[location][side][idx]
+		if card_instance:
+			var card_data = card_instance.get("card_data", null)
+			if card_data and card_data.effects:
+				for effect in card_data.effects:
+					if effect.is_ongoing():
+						effects.append({"effect": effect, "slot": idx, "card": card_instance})
 	return effects
 
-# Call once each at end of player and enemy turn
+# Call once at end of player and enemy turn
 func resolve_ongoing_effects():
 	for loc in locations:
 		for side in ["player", "enemy"]:
 			for idx in range(4):
-				var card = board[loc][side][idx]
-				if card:
-					for effect in card.effects:
-						if effect.is_ongoing() and effect.has_method("on_end_turn"):
-							# You can pass context as needed
-							var context = {
-								"board": self,
-								"location": loc,
-								"side": side,
-								"slot_idx": idx,
-								"card": card
-							}
-							effect.on_end_turn(card, context)
+				var card_instance = board[loc][side][idx]
+				if card_instance:
+					var card_data = card_instance.get("card_data", null)
+					if card_data and card_data.effects:
+						for effect in card_data.effects:
+							if effect.is_ongoing() and effect.has_method("on_end_turn"):
+								var context = {
+									"board": self,
+									"location": loc,
+									"side": side,
+									"slot_idx": idx,
+									"card": card_instance
+								}
+								effect.on_end_turn(card_data, context)
 
 func setup_terrain(terrain_assignments: Dictionary):
 	# terrain_assignments: {"left": TerrainData, "middle": TerrainData, "right": TerrainData}
@@ -201,59 +210,52 @@ func _process_terrain_trigger(location: String, terrain: TerrainData, trigger: D
 			var lowest_hp = INF
 			var lowest_idx = -1
 			for idx in range(4):
-				var card = board[location][s][idx]
-				if card and card.health < lowest_hp:
-					lowest_hp = card.health
+				var card_instance = board[location][s][idx]
+				if card_instance and card_instance.has("current_hp") and card_instance.current_hp < lowest_hp:
+					lowest_hp = card_instance.current_hp
 					lowest_idx = idx
 			if lowest_idx != -1:
-				board[location][s][lowest_idx].health += amount
+				board[location][s][lowest_idx].current_hp += amount
 	elif effect == "damage_all":
 		for s in (["player", "enemy"] if side == "both" else [side]):
 			for idx in range(4):
-				var card = board[location][s][idx]
-				if card:
-					card.health -= amount
-					if card.health <= 0:
+				var card_instance = board[location][s][idx]
+				if card_instance and card_instance.has("current_hp"):
+					card_instance.current_hp -= amount
+					if card_instance.current_hp <= 0:
 						remove_card(location, s, idx)
 	elif effect == "add_void_corruption":
 		for s in (["player", "enemy"] if side == "both" else [side]):
 			for idx in range(4):
-				var card = board[location][s][idx]
-				if card and card.has_method("apply_void_corruption"):
-					card.apply_void_corruption(amount)
+				var card_instance = board[location][s][idx]
+				if card_instance and card_instance.has("void_corruption"):
+					card_instance.void_corruption += amount
 	elif effect == "olympus_odd_turn":
-		# Only trigger on odd turns
 		if has_node("/root/CombatScene/CombatManager"):
 			var cm = get_node("/root/CombatScene/CombatManager")
 			if cm.turn % 2 == 1:
 				for s in (["player", "enemy"] if side == "both" else [side]):
 					for idx in range(4):
-						var card = board[location][s][idx]
-						if card:
+						var card_instance = board[location][s][idx]
+						if card_instance:
 							if randi() % 2 == 0:
-								# +1 power (temporary, for 1 turn)
-								if not card.has_meta("temp_buffs"):
-									card.set_meta("temp_buffs", [])
-								var buffs = card.get_meta("temp_buffs")
-								buffs.append({ "stat": "power", "amount": 1, "turns_left": 1 })
-								card.set_meta("temp_buffs", buffs)
+								if not card_instance.has("temp_buffs"):
+									card_instance.temp_buffs = []
+								card_instance.temp_buffs.append({ "stat": "power", "amount": 1, "turns_left": 1 })
 							else:
-								# -1 health
-								card.health = max(0, card.health - 1)
-								# Optionally handle unit death here
-								if card.health == 0:
-									remove_card(location, s, idx)
+								if card_instance.has("current_hp"):
+									card_instance.current_hp = max(0, card_instance.current_hp - 1)
+									if card_instance.current_hp == 0:
+										remove_card(location, s, idx)
 									
 func decrement_and_cleanup_temporary_buffs():
 	for location in locations:
 		for side in ["player", "enemy"]:
 			for idx in range(4):
-				var card = board[location][side][idx]
-				if card and card.has_meta("temp_buffs"):
-					var buffs = card.get_meta("temp_buffs")
-					# Decrement durations
+				var card_instance = board[location][side][idx]
+				if card_instance and card_instance.has("temp_buffs"):
+					var buffs = card_instance.temp_buffs
 					for buff in buffs:
 						buff["turns_left"] = buff.get("turns_left", 0) - 1
-					# Remove expired
 					buffs = buffs.filter(func(b): return b.get("turns_left", 0) > 0)
-					card.set_meta("temp_buffs", buffs)
+					card_instance.temp_buffs = buffs

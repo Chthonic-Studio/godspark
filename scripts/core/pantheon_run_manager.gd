@@ -1,7 +1,5 @@
 extends Node
 
-# AUTLOAD SINGLETON: Add this to Project Settings > Autoload as "PantheonRunManager"
-
 # ========== DATA STRUCTURES ==========
 var liberated_pantheons: Array[String] = []
 var void_pantheons_used: Array[String] = []
@@ -15,7 +13,7 @@ var current_void_pantheon: String = ""
 var current_node_index: int = 0
 var current_node_terrains: Array[Dictionary] = [] # 5 nodes: [{pantheon: TerrainData, void: TerrainData, player: TerrainData}, ...]
 
-var player_deck: Array[Resource] = [] # CardData (15 max), set at run start
+var player_deck: Array[Dictionary] = []
 var player_terrain_cards: Array[Resource] = [] # 3 TerrainData
 var available_player_terrain_cards: Array[Resource] = []
 var dead_soldiers: Array[String] = [] # Card IDs of fallen soldiers (removed after defeat)
@@ -128,6 +126,35 @@ func abandon_run():
 	current_node_terrains.clear()
 	dead_soldiers.clear()
 	emit_signal("run_abandoned")
+	
+func validate_deck(deck: Array) -> Dictionary:
+	# Returns { "valid": bool, "error": String, "type_counts": {type: count}, "deck_size": int }
+	const DECK_SIZE = 14
+	const TYPE_LIMITS = {
+		"DivineSoldier": { "min": 3, "max": 5 },
+		"Levy": { "min": 6, "max": 10 },
+		"Spell": { "min": 1, "max": 3 }
+	}
+	var counts = { "DivineSoldier": 0, "Levy": 0, "Spell": 0 }
+	var seen_soldiers := {}
+	for inst in deck:
+		var t = inst.get("type", "Levy")
+		if t in counts:
+			counts[t] += 1
+		if t == "DivineSoldier":
+			if seen_soldiers.has(inst["base_id"]):
+				return { "valid": false, "error": "Divine Soldier %s is unique and already in deck." % inst["custom_name"], "type_counts": counts, "deck_size": deck.size() }
+			seen_soldiers[inst["base_id"]] = true
+	# Enforce deck size
+	if deck.size() != DECK_SIZE:
+		return { "valid": false, "error": "Deck must have exactly %d cards." % DECK_SIZE, "type_counts": counts, "deck_size": deck.size() }
+	# Enforce type min/max
+	for k in counts:
+		if counts[k] < TYPE_LIMITS[k]["min"]:
+			return { "valid": false, "error": "Not enough %ss." % k, "type_counts": counts, "deck_size": deck.size() }
+		if counts[k] > TYPE_LIMITS[k]["max"]:
+			return { "valid": false, "error": "Too many %ss." % k, "type_counts": counts, "deck_size": deck.size() }
+	return { "valid": true, "error": "", "type_counts": counts, "deck_size": deck.size() }
 
 # ========== INTERNAL HELPERS ==========
 

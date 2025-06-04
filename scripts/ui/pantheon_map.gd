@@ -108,7 +108,9 @@ func _after_fade_abandon():
 	get_tree().change_scene_to_file("res://scenes/pantheon_selection_scene.tscn")
 
 func _on_EditDeckButton_pressed():
-	print("Deck editing not yet implemented.")
+	var deck_edit = preload("res://scenes/deck_edit.tscn").instantiate()
+	add_child(deck_edit)
+	deck_edit.open_deck_editor(PantheonRunManager.player_deck)
 
 func _on_select_terrain_button_pressed():
 	var overlay = preload("res://scenes/terrain_select.tscn").instantiate()

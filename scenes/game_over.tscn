@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=3 uid="uid://byl5bphvnrulx"]
+
+[ext_resource type="Script" uid="uid://d11bry042r1mx" path="res://scripts/ui/game_over_screen.gd" id="1_tbwuq"]
+[ext_resource type="Texture2D" uid="uid://bgluc4ew8afje" path="res://assets/images/panel_blue.png" id="2_7m3ot"]
+[ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="2_racf3"]
+[ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="3_7m3ot"]
+
+[node name="GameOver" type="Control"]
+z_index = 2
+custom_minimum_size = Vector2(900, 500)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -300.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tbwuq")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="NinePatchRect" parent="Panel"]
+modulate = Color(0.54, 0.54, 0.54, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_7m3ot")
+metadata/_edit_use_anchors_ = true
+
+[node name="TitleLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.347083
+anchor_top = 0.0783333
+anchor_right = 0.652917
+anchor_bottom = 0.23
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_racf3")
+theme_override_font_sizes/font_size = 90
+text = "VICTORY"
+metadata/_edit_use_anchors_ = true
+
+[node name="TurnsLabel" type="Label" parent="Panel"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.272222
+anchor_top = 0.432
+anchor_right = 0.716667
+anchor_bottom = 0.512
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_7m3ot")
+theme_override_font_sizes/font_size = 30
+text = "Total turns: 10"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PantheonLabel" type="Label" parent="Panel"]
+offset_left = 321.0
+offset_top = 163.0
+offset_right = 603.0
+offset_bottom = 194.0
+theme_override_fonts/font = ExtResource("3_7m3ot")
+theme_override_font_sizes/font_size = 30
+text = "VS THE WAKING MAW "
+
+[node name="FallenLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.768889
+anchor_top = 0.342
+anchor_right = 0.933333
+anchor_bottom = 0.404
+offset_bottom = 1.52588e-05
+theme_override_fonts/font = ExtResource("3_7m3ot")
+theme_override_font_sizes/font_size = 30
+text = "Fallen Units"
+metadata/_edit_use_anchors_ = true
+
+[node name="FallenListVBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -268.0
+offset_top = 217.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="Panel"]
+layout_mode = 0
+anchor_left = 0.36
+anchor_top = 0.596
+anchor_right = 0.653333
+anchor_bottom = 0.714
+theme_override_fonts/font = ExtResource("2_racf3")
+theme_override_font_sizes/font_size = 40
+text = "CONTINUE"
+metadata/_edit_use_anchors_ = true

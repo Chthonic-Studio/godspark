@@ -30,7 +30,7 @@ func _on_slot_gui_input(event: InputEvent, slot: Panel):
 		emit_signal("slot_clicked", location, slot_idx)
 
 # Highlight entire location if any player slot is available
-func highlight_valid_locations(card_data):
+func highlight_valid_locations(card_instance):
 	var board = get_node(board_manager)
 	for location in board.locations:
 		var found = false
@@ -59,13 +59,13 @@ func get_slot_node(location: String, idx: int) -> Panel:
 	return null
 	
 # Adds a CardUI node to the correct slot (player or enemy), sets scale/anchors for board display
-func add_card_to_slot(card_data: CardData, location: String, side: String, slot_idx: int, card_ui_scene: PackedScene) -> CardUI:
+func add_card_to_slot(card_instance: Dictionary, location: String, side: String, slot_idx: int, card_ui_scene: PackedScene) -> CardUI:
 	var slot_node = get_slot_node_for_side(location, side, slot_idx)
 	if slot_node == null:
 		print("ERROR: No slot node found for", location, side, slot_idx)
 		return null
 	var card_ui = card_ui_scene.instantiate()
-	card_ui.set_card_data(card_data)
+	card_ui.set_card_instance(card_instance)
 	card_ui.scale = Vector2(0.7, 0.7)
 	# Center the card in the slot
 	card_ui.anchor_left = 0.5
@@ -94,16 +94,12 @@ func get_slot_node_for_side(location: String, side: String, idx: int) -> Panel:
 		return get_node(node_path)
 	return null
 
-func add_enemy_card_to_slot(card_data: CardData, location: String, slot_idx: int):
+func add_enemy_card_to_slot(card_instance: Dictionary, location: String, slot_idx: int):
 	var card_ui_scene = enemy_card_ui_scene if enemy_card_ui_scene else preload("res://scenes/card.tscn")
 	var card_ui = card_ui_scene.instantiate()
-	card_ui.set_card_data(card_data)
+	card_ui.set_card_instance(card_instance)
 	card_ui.scale = Vector2(0.5, 0.5)
-	# Optionally: Make enemy cards visually distinct (e.g., greyscale, red overlay, card back)
-	card_ui.modulate = Color(1, 0.85, 0.85, 1) # Light red tint for enemy
-	# Hide details if you want (e.g., only show cardback)
-	# card_ui.get_node("Art").visible = false
-	# card_ui.get_node("NameLabel").visible = false
+	card_ui.modulate = Color(1, 0.85, 0.85, 1)
 	var slot_node = get_enemy_slot_node(location, slot_idx)
 	if slot_node:
 		slot_node.add_child(card_ui)
@@ -139,9 +135,9 @@ func remove_card_from_slot(location: String, side: String, slot_idx: int) -> voi
 func repack_cards_in_location(location: String, side: String) -> void:
 	for idx in [0, 1, 2, 3]:
 		remove_card_from_slot(location, side, idx)
-		var card = get_node(board_manager).board[location][side][idx]
-		if card:
-			add_card_to_slot(card, location, side, idx, enemy_card_ui_scene if side == "enemy" else preload("res://scenes/card.tscn"))
+		var card_instance = get_node(board_manager).board[location][side][idx]
+		if card_instance:
+			add_card_to_slot(card_instance, location, side, idx, enemy_card_ui_scene if side == "enemy" else preload("res://scenes/card.tscn"))
 
 # Call this after setup_terrain or at combat start
 func update_location_info():
