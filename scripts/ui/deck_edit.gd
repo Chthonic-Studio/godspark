@@ -6,7 +6,7 @@ extends Control
 
 @onready var deck_grid = $VBoxContainer/HBoxContainer/DeckVBox/DeckGrid
 @onready var type_counts_hbox = $VBoxContainer/HBoxContainer/TypeCountsHBox/TypeCounterVbox
-@onready var error_label = $VBoxContainer/HBoxContainer/DeckVBox/ErrorLabel
+@onready var error_label = $VBoxContainer/ErrorLabel
 @onready var collection_grid = $VBoxContainer/CollectionVBox/CollectionScroll/CollectionGrid
 @onready var fallen_grid = $VBoxContainer/HBoxContainer/TypeCountsHBox/FallenVBox/FallenScroll/FallenGrid
 @onready var confirm_btn = $ButtonsHBox/ConfirmButton

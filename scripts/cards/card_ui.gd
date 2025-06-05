@@ -42,7 +42,23 @@ func update_card_visuals():
 	# Optional: show instance-specific values here (e.g., current_hp, corruption)
 	if card_instance and card_instance.has("current_hp"):
 		$HealthLabel.text = str(card_instance.current_hp)
-	# Add other per-instance visuals as needed
+
+	# --- Corruption visual indicator ---
+	# Hide all by default
+	var corruption_control = $CorruptionControl if has_node("CorruptionControl") else null
+	if corruption_control:
+		for i in range(1, 5):
+			var node_name = "Corruption%d" % i
+			if corruption_control.has_node(node_name):
+				corruption_control.get_node(node_name).visible = false
+
+		# Only show for Divine Soldiers
+		if card_instance and card_instance.has("type") and card_instance.type == "DivineSoldier":
+			var corruption = card_instance.get("void_corruption", 0)
+			for i in range(1, min(corruption, 4) + 1):
+				var node_name = "Corruption%d" % i
+				if corruption_control.has_node(node_name):
+					corruption_control.get_node(node_name).visible = true
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

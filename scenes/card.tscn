@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://6iigglaq8stq"]
+[gd_scene load_steps=8 format=3 uid="uid://6iigglaq8stq"]
 
 [ext_resource type="Script" uid="uid://x3q7w62rlk68" path="res://scripts/cards/card_ui.gd" id="1_d81rb"]
 [ext_resource type="Texture2D" uid="uid://dg8fxts8qnpco" path="res://assets/images/cardbacks4092021.png" id="2_6u4wf"]
@@ -9,6 +9,12 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_ktuci"]
 atlas = ExtResource("2_6u4wf")
 region = Rect2(444, 138, 99, 128)
+
+[sub_resource type="Environment" id="Environment_sy11y"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.43
+glow_blend_mode = 1
 
 [node name="CardRoot" type="Control"]
 custom_minimum_size = Vector2(120, 150)
@@ -31,6 +37,53 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_ktuci")
 
+[node name="CorruptionControl" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="CorruptionLevel1" type="ColorRect" parent="CorruptionControl"]
+visible = false
+modulate = Color(2.762, 0, 1, 1)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 16.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
+[node name="CorruptionLevel2" type="ColorRect" parent="CorruptionControl"]
+visible = false
+modulate = Color(2.762, 0, 1, 1)
+offset_left = 103.0
+offset_top = 13.0
+offset_right = 110.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
+[node name="CorruptionLevel3" type="ColorRect" parent="CorruptionControl"]
+visible = false
+modulate = Color(2.762, 0, 1, 1)
+offset_left = 9.0
+offset_top = 130.0
+offset_right = 16.0
+offset_bottom = 137.0
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
+[node name="CorruptionLevel4" type="ColorRect" parent="CorruptionControl"]
+visible = false
+modulate = Color(2.762, 0, 1, 1)
+offset_left = 103.0
+offset_top = 130.0
+offset_right = 110.0
+offset_bottom = 137.0
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
 [node name="Art" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -45,16 +98,21 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="NameLabel" type="Label" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.0916667
 anchor_top = 0.546667
 anchor_right = 0.908333
 anchor_bottom = 0.646667
+offset_top = -30.0
+offset_right = 3.8147e-05
+offset_bottom = 1.99995
 theme_override_fonts/font = ExtResource("3_sy11y")
 theme_override_font_sizes/font_size = 14
 text = "Card Name"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="CostLabel" type="Label" parent="."]
 layout_mode = 0
@@ -121,3 +179,6 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0.203922)
 metadata/_edit_use_anchors_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sy11y")
