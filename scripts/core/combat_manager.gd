@@ -151,7 +151,16 @@ func resolve_turn():
 	emit_signal("turn_changed")
 	phase = "PlayerTurn"
 	DeckManager.draw_cards(1)
-	divinity += 1
+	# Apply permanent divinity bonus if set
+	var perm_bonus = get_meta("permanent_divinity_bonus") if has_meta("permanent_divinity_bonus") else {"player": 0, "enemy": 0}
+	divinity += 1 + (perm_bonus["player"] if perm_bonus.has("player") else 0)
+	
+	# Apply temporary divinity bonus if set, then clear it
+	var temp_bonus = get_meta("temp_divinity_bonus") if has_meta("temp_divinity_bonus") else {"player": 0, "enemy": 0}
+	if temp_bonus.has("player") and temp_bonus["player"] != 0:
+		divinity += temp_bonus["player"]
+		temp_bonus["player"] = 0
+		set_meta("temp_divinity_bonus", temp_bonus)
 	hand_manager.refresh_hand()
 	board_ui_manager.update_power_labels()
 	emit_signal("divinity_changed")

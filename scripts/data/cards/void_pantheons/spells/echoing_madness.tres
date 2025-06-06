@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://cx770l0gc1dii"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_0xlml"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_57bcn"]
+[ext_resource type="Script" uid="uid://dr1hfcwacx16a" path="res://scripts/effects/divine_energy_modifier.gd" id="2_ftrcr"]
+
+[sub_resource type="Resource" id="Resource_qm2ar"]
+script = ExtResource("2_ftrcr")
+energy_amount = -1
+energy_target = 1
+bonus_type = 0
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://dr1hfcwacx16a"
+
+[sub_resource type="Resource" id="Resource_cbtgr"]
+script = ExtResource("2_ftrcr")
+energy_amount = 1
+energy_target = 0
+bonus_type = 0
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://dr1hfcwacx16a"
+
+[resource]
+script = ExtResource("2_57bcn")
+id = "echoing_madness"
+name = "Echoing Madness"
+description = "Gain +1 Divine Energy next turn. Enemy loses -1 Energy next turn."
+type = 0
+cost = 3
+pantheon = 0
+effects = Array[ExtResource("1_0xlml")]([SubResource("Resource_qm2ar"), SubResource("Resource_cbtgr")])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

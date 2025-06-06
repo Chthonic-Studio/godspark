@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://bkpfd5wabva4i"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_3lsu7"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_fofup"]
+[ext_resource type="Script" uid="uid://hyqjun5qhf3m" path="res://scripts/effects/on_reveal_modifier.gd" id="2_ocm3n"]
+
+[sub_resource type="Resource" id="Resource_7lre4"]
+script = ExtResource("2_ocm3n")
+power_modifier = 0
+health_modifier = -1
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+exclude_self = true
+target_self_only = false
+target_type = 4
+threshold = 0
+stat_type = 1
+only_in_location = true
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://hyqjun5qhf3m"
+
+[resource]
+script = ExtResource("2_fofup")
+id = "veiled_acolyte"
+name = "Veiled Acolyte"
+description = "Deals 1 damage to the enemy with lowest health in this location"
+type = 1
+cost = 2
+pantheon = 1
+effects = Array[ExtResource("1_3lsu7")]([SubResource("Resource_7lre4")])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 3
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

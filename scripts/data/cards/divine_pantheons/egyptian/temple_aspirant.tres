@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dr2okbtpqt76x"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_tshx5"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_i2jdi"]
+[ext_resource type="Script" uid="uid://dr1hfcwacx16a" path="res://scripts/effects/divine_energy_modifier.gd" id="2_p5abr"]
+
+[sub_resource type="Resource" id="Resource_n2370"]
+script = ExtResource("2_p5abr")
+energy_amount = 2
+energy_target = 0
+bonus_type = 0
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://dr1hfcwacx16a"
+
+[resource]
+script = ExtResource("2_i2jdi")
+id = "temple_aspirant"
+name = "Temple Aspirant"
+description = "Gain 2 Divine Energy for next turn"
+type = 1
+cost = 2
+pantheon = 18
+effects = Array[ExtResource("1_tshx5")]([SubResource("Resource_n2370")])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

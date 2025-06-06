@@ -15,7 +15,6 @@ const GREEK_PANTHEON = [
 	preload("res://scripts/data/cards/divine_pantheons/greek/bolt_of_the_skyfather.tres"),
 	preload("res://scripts/data/cards/divine_pantheons/greek/oracle_insight.tres"),
 	preload("res://scripts/data/cards/divine_pantheons/greek/ambrosial_blessing.tres")
-	# ...add more Greek cards
 ]
 
 const NORSE_PANTHEON = [
@@ -41,15 +40,15 @@ const EGYPTIAN_PANTHEON = [
 	preload("res://scripts/data/cards/divine_pantheons/egyptian/scribe_of_thoth.tres"),
 	preload("res://scripts/data/cards/divine_pantheons/egyptian/holder_of_the_scale.tres"),
 	# Levy
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/draugr_warrior.tres"),
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/fylgja_guide.tres"),
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/jotunn_brute.tres"),
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/shieldmaiden_corps.tres"),
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/thrall_raider.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/ankh_bearer_guard.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/crocodile_hunter.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/hieroglyph_engraver.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/scorpion_warrior.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/temple_aspirant.tres"),
 	# Spells
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/rune_of_warding.tres"),
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/gungnir_strike.tres"),
-	preload("res://scripts/data/cards/divine_pantheons/egyptian/skuld_weave.tres")	
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/shifting_sands.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/afterlife_glimpse.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/scarab_swarm.tres")	
 ]
 
 # ...repeat for each pantheon

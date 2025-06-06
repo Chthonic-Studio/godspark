@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://bc0bsketw467f"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_owcjg"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_n4d27"]
+[ext_resource type="Script" uid="uid://bgy4qwaikqlkq" path="res://scripts/effects/on_reveal_draw.gd" id="2_nwm1e"]
+
+[sub_resource type="Resource" id="Resource_n7lug"]
+script = ExtResource("2_nwm1e")
+draw_count = 1
+draw_source = 1
+draw_order = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://bgy4qwaikqlkq"
+
+[resource]
+script = ExtResource("2_n4d27")
+id = "illusionary_veil"
+name = "Illusionary Veil"
+description = "Draws a card from the bottom of the enemy's deck"
+type = 2
+cost = 3
+pantheon = 1
+effects = Array[ExtResource("1_owcjg")]([SubResource("Resource_n7lug")])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

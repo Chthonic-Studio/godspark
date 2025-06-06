@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dledhsrb5qffh"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_1x5b2"]
+[ext_resource type="Script" uid="uid://hyqjun5qhf3m" path="res://scripts/effects/on_reveal_modifier.gd" id="2_blpai"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_sv62c"]
+
+[sub_resource type="Resource" id="Resource_fj6ie"]
+script = ExtResource("2_blpai")
+power_modifier = 0
+health_modifier = -2
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+exclude_self = true
+target_self_only = false
+target_type = 7
+threshold = 5
+stat_type = 0
+only_in_location = true
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://hyqjun5qhf3m"
+
+[resource]
+script = ExtResource("2_sv62c")
+id = "crocodile_hunter"
+name = "Crocodile Hunter"
+description = "Deals 2 damage to all enemies in this location with 6 or more Health."
+type = 1
+cost = 3
+pantheon = 18
+effects = Array[ExtResource("1_1x5b2")]([SubResource("Resource_fj6ie")])
+tags = Array[String]([])
+requirements = {}
+power = 3
+health = 3
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

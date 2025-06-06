@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://xd1xnxtiqqk3"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_h6uje"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_hxsn8"]
+[ext_resource type="Script" uid="uid://db4aj8jju3kbv" path="res://scripts/effects/void_corruption.gd" id="2_pcuo0"]
+[ext_resource type="Script" uid="uid://jpvys1sa1fmy" path="res://scripts/effects/on_reveal_hand_modifier.gd" id="3_yuvw3"]
+
+[sub_resource type="Resource" id="Resource_bp4ga"]
+script = ExtResource("2_pcuo0")
+corruption_amount = 2
+ongoing = false
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+target_type = 0
+threshold = 0
+stat_type = 0
+only_in_location = true
+exclude_self = true
+selection_count = 1
+target_self_only = false
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://db4aj8jju3kbv"
+
+[sub_resource type="Resource" id="Resource_gvf0t"]
+script = ExtResource("3_yuvw3")
+power_modifier = 2
+health_modifier = 0
+cost_modifier = 0
+hand_target = 0
+select_mode = 1
+selection_count = 1
+highest_stat_type = 0
+target_self_only = false
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://jpvys1sa1fmy"
+
+[resource]
+script = ExtResource("2_hxsn8")
+id = "deep_heartbeat"
+name = "Deep Heartbeat"
+description = "Gives 2 Corruption to a random enemy in this location. Gives +2 Power to a random card in hand."
+type = 2
+cost = 3
+pantheon = 0
+effects = Array[ExtResource("1_h6uje")]([SubResource("Resource_bp4ga"), SubResource("Resource_gvf0t")])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://2kqk3klh1vt"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_hsxlq"]
+[ext_resource type="Script" uid="uid://db4aj8jju3kbv" path="res://scripts/effects/void_corruption.gd" id="2_c4wi4"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_yisp7"]
+
+[sub_resource type="Resource" id="Resource_oiv4i"]
+script = ExtResource("2_c4wi4")
+corruption_amount = 1
+ongoing = false
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+target_type = 0
+threshold = 0
+stat_type = 0
+only_in_location = true
+exclude_self = true
+selection_count = 4
+target_self_only = false
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://db4aj8jju3kbv"
+
+[resource]
+script = ExtResource("2_yisp7")
+id = "priest_of_sunken_stars"
+name = "Priest of Sunken Stars"
+description = "Deals +1 Corruption to all enemies in this location"
+type = 0
+cost = 4
+pantheon = 0
+effects = Array[ExtResource("1_hsxlq")]([SubResource("Resource_oiv4i")])
+tags = Array[String]([])
+requirements = {}
+power = 4
+health = 5
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

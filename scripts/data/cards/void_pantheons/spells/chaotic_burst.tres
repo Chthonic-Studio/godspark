@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://cx47bhdh8nplr"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_rhlmw"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_qy8q6"]
+
+[resource]
+script = ExtResource("2_qy8q6")
+id = ""
+name = ""
+description = ""
+type = 0
+cost = 0
+pantheon = 0
+effects = Array[ExtResource("1_rhlmw")]([])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

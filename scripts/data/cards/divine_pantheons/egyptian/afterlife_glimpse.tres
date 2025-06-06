@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://bj3ip5fdugwpk"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_uwcof"]
+[ext_resource type="Script" uid="uid://bgy4qwaikqlkq" path="res://scripts/effects/on_reveal_draw.gd" id="2_knn4o"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_mmjn4"]
+
+[sub_resource type="Resource" id="Resource_3nstu"]
+script = ExtResource("2_knn4o")
+draw_count = 1
+draw_source = 0
+draw_order = 2
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://bgy4qwaikqlkq"
+
+[resource]
+script = ExtResource("2_mmjn4")
+id = "afterlife_glimpse"
+name = "Glimpse of the Afterlife"
+description = "Draw 1 random card from your deck"
+type = 2
+cost = 1
+pantheon = 18
+effects = Array[ExtResource("1_uwcof")]([SubResource("Resource_3nstu")])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

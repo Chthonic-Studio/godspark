@@ -23,6 +23,7 @@ hand_target = 0
 select_mode = 1
 selection_count = 1
 highest_stat_type = 0
+target_self_only = false
 effect_name = ""
 description = ""
 metadata/_custom_type_script = "uid://jpvys1sa1fmy"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://db20spe83vwnb"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_drf3k"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_ws8cn"]
+
+[resource]
+script = ExtResource("2_ws8cn")
+id = "ankh_bearer_guard"
+name = "Ankh-Bearer Guard"
+description = ""
+type = 1
+cost = 1
+pantheon = 18
+effects = Array[ExtResource("1_drf3k")]([])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 2
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

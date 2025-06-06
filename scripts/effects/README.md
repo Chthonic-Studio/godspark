@@ -14,7 +14,7 @@ extends CardEffect
 @export var amount: int = 1
 
 func execute(card: CardData, context: Dictionary) -> void:
-    # effect logic here
+	# effect logic here
 ```
 
 *Common context keys:*
@@ -54,9 +54,9 @@ extends CardEffect
 @export var turns: int = 2
 
 func execute(card: CardData, context: Dictionary) -> void:
-    var buffs = card.get_meta("temp_buffs") if card.has_meta("temp_buffs") else []
-    buffs.append({"stat": "power", "amount": amount, "turns_left": turns})
-    card.set_meta("temp_buffs", buffs)
+	var buffs = card.get_meta("temp_buffs") if card.has_meta("temp_buffs") else []
+	buffs.append({"stat": "power", "amount": amount, "turns_left": turns})
+	card.set_meta("temp_buffs", buffs)
 ```
 - This will add a +2 power buff for 2 turns to the card when played.
 

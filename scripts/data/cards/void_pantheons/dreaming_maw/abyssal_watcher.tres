@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://bgdsq60spjuxl"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_ph08j"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_nn5en"]
+[ext_resource type="Script" uid="uid://db4aj8jju3kbv" path="res://scripts/effects/void_corruption.gd" id="2_nxxuk"]
+[ext_resource type="Script" uid="uid://c85kk5amad7ks" path="res://scripts/effects/ongoing_modifier.gd" id="3_ixysy"]
+
+[sub_resource type="Resource" id="Resource_arvbn"]
+script = ExtResource("2_nxxuk")
+corruption_amount = 1
+ongoing = true
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+target_type = 0
+threshold = 0
+stat_type = 0
+only_in_location = true
+exclude_self = true
+selection_count = 1
+target_self_only = false
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://db4aj8jju3kbv"
+
+[sub_resource type="Resource" id="Resource_mhbej"]
+script = ExtResource("3_ixysy")
+power_modifier = 0
+health_modifier = -1
+affected_locations = Array[int]([3])
+target_side = 0
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+buff_mode = 1
+exclude_self = true
+target_self_only = false
+require_self_in_location = false
+trigger_locations = Array[int]([3])
+effect_frequency_turns = 1
+target_type = 1
+threshold = 0
+stat_type = 0
+only_in_location = true
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c85kk5amad7ks"
+
+[resource]
+script = ExtResource("2_nn5en")
+id = "abyssal_watcher"
+name = "Abyssal Watcher"
+description = "Deals 1 Corruption to a random enemy each turn. Deals 1 Damage to the highest power enemy each turn."
+type = 0
+cost = 5
+pantheon = 0
+effects = Array[ExtResource("1_ph08j")]([SubResource("Resource_arvbn"), SubResource("Resource_mhbej")])
+tags = Array[String]([])
+requirements = {}
+power = 6
+health = 3
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dyo0d0i7k32en"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_f7vqd"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_0ec23"]
+[ext_resource type="Script" uid="uid://jpvys1sa1fmy" path="res://scripts/effects/on_reveal_hand_modifier.gd" id="2_3jhns"]
+
+[sub_resource type="Resource" id="Resource_aj6a4"]
+script = ExtResource("2_3jhns")
+power_modifier = 0
+health_modifier = 0
+cost_modifier = -1
+hand_target = 0
+select_mode = 1
+selection_count = 4
+highest_stat_type = 0
+target_self_only = false
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://jpvys1sa1fmy"
+
+[resource]
+script = ExtResource("2_0ec23")
+id = "hieroglyph_engraver"
+name = "Hieroglyph Engraver"
+description = "If played on the right location, 4 random cards in hand get -1 Cost"
+type = 1
+cost = 2
+pantheon = 0
+effects = Array[ExtResource("1_f7vqd")]([SubResource("Resource_aj6a4")])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 2
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://dcqn0caeny8kl"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_bns11"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_nyn83"]
+[ext_resource type="Script" uid="uid://jpvys1sa1fmy" path="res://scripts/effects/on_reveal_hand_modifier.gd" id="2_pl4t3"]
+[ext_resource type="Script" uid="uid://db4aj8jju3kbv" path="res://scripts/effects/void_corruption.gd" id="3_7f0r2"]
+
+[sub_resource type="Resource" id="Resource_115mo"]
+script = ExtResource("2_pl4t3")
+power_modifier = 0
+health_modifier = 0
+cost_modifier = -1
+hand_target = 0
+select_mode = 1
+selection_count = 2
+highest_stat_type = 0
+target_self_only = false
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://jpvys1sa1fmy"
+
+[sub_resource type="Resource" id="Resource_ur62e"]
+script = ExtResource("3_7f0r2")
+corruption_amount = 2
+ongoing = false
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+target_type = 0
+threshold = 0
+stat_type = 0
+only_in_location = true
+exclude_self = true
+selection_count = 1
+target_self_only = false
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://db4aj8jju3kbv"
+
+[resource]
+script = ExtResource("2_nyn83")
+id = "faceless_deceiver"
+name = "Faceless Deceiver"
+description = "Gives -1 cost to 2 cards in hand and +2 Corruption to a random enemy card in this location"
+type = 0
+cost = 4
+pantheon = 0
+effects = Array[ExtResource("1_bns11")]([SubResource("Resource_115mo"), SubResource("Resource_ur62e")])
+tags = Array[String]([])
+requirements = {}
+power = 5
+health = 4
+metadata/_custom_type_script = "uid://cjoyfln420vcw"
