@@ -1,7 +1,7 @@
 extends Control
 class_name CardUI
 
-@export var card_data: Resource # CardData (legacy, but keep for now)
+@export var card_data: Resource 
 var card_instance: Dictionary = {}
 var is_selected: bool = false
 var is_hovered: bool = false
@@ -37,12 +37,22 @@ func update_card_visuals():
 	$HealthLabel.text = str(cd.health) if cd.health != 0 else ""
 	$Art.texture = cd.art if cd.art else null
 	$EffectLabel.text = cd.description
-	$HealthLabel.visible = cd.type != "Spell"
-	$PowerLabel.visible = cd.type != "Spell"
+	$HealthLabel.visible = cd.type != CardData.CardType.SPELL
+	$PowerLabel.visible = cd.type != CardData.CardType.SPELL
 	# Optional: show instance-specific values here (e.g., current_hp, corruption)
 	if card_instance and card_instance.has("current_hp"):
 		$HealthLabel.text = str(card_instance.current_hp)
 
+	var power_label = $PowerLabel
+	if cd:
+		power_label.text = str(cd.power)
+		# Use original value if available (store on first set)
+		if not card_instance.has("original_power"):
+			card_instance["original_power"] = cd.power
+		if cd.power != card_instance["original_power"]:
+			power_label.modulate = Color(1, 0.2, 0.2) # Red
+		else:
+			power_label.modulate = Color(1, 1, 1) # White
 	# --- Corruption visual indicator ---
 	# Hide all by default
 	var corruption_control = $CorruptionControl if has_node("CorruptionControl") else null
@@ -53,12 +63,18 @@ func update_card_visuals():
 				corruption_control.get_node(node_name).visible = false
 
 		# Only show for Divine Soldiers
-		if card_instance and card_instance.has("type") and card_instance.type == "DivineSoldier":
-			var corruption = card_instance.get("void_corruption", 0)
-			for i in range(1, min(corruption, 4) + 1):
-				var node_name = "Corruption%d" % i
-				if corruption_control.has_node(node_name):
-					corruption_control.get_node(node_name).visible = true
+		if card_instance and card_instance.has("type"):
+			var is_divine_soldier = false
+			if typeof(card_instance.type) == TYPE_STRING:
+				is_divine_soldier = card_instance.type == "DivineSoldier"
+			elif typeof(card_instance.type) == TYPE_INT:
+				is_divine_soldier = card_instance.type == CardData.CardType.DIVINE_SOLDIER
+			if is_divine_soldier:
+				var corruption = card_instance.get("void_corruption", 0)
+				for i in range(1, min(corruption, 4) + 1):
+					var node_name = "Corruption%d" % i
+					if corruption_control.has_node(node_name):
+						corruption_control.get_node(node_name).visible = true
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

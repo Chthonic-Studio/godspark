@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://bpwni5i25eo8t"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_yt5da"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_jkh86"]
+
+[resource]
+script = ExtResource("2_jkh86")
+id = "voice_of_prophecy"
+name = "Voice of Prophecy"
+description = ""
+type = 0
+cost = 0
+pantheon = 16
+effects = Array[ExtResource("1_yt5da")]([])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

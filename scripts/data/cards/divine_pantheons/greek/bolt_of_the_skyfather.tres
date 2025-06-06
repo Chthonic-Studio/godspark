@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://day5w5yycvilc"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_7k3a8"]
+[ext_resource type="Script" uid="uid://hyqjun5qhf3m" path="res://scripts/effects/on_reveal_modifier.gd" id="2_j0v3b"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_pmlnd"]
+
+[sub_resource type="Resource" id="Resource_i1hxs"]
+script = ExtResource("2_j0v3b")
+power_modifier = 0
+health_modifier = -7
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+exclude_self = true
+target_self_only = false
+target_type = 1
+threshold = 0
+stat_type = 0
+only_in_location = true
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://hyqjun5qhf3m"
+
+[resource]
+script = ExtResource("2_pmlnd")
+id = "bolt_of_the_skyfather"
+name = "Bolt of the Skyfather"
+description = "Deals 7 damage to the enemy with the highest power in this location"
+type = 2
+cost = 5
+pantheon = 16
+effects = Array[ExtResource("1_7k3a8")]([SubResource("Resource_i1hxs")])
+tags = Array[String]([])
+requirements = {}
+power = 0
+health = 0
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

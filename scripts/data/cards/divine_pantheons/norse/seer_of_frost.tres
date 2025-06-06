@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://bhh5ryhu1kf1u"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_xguhq"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_k4pox"]
+[ext_resource type="Script" uid="uid://bgy4qwaikqlkq" path="res://scripts/effects/on_reveal_draw.gd" id="2_ttc5m"]
+[ext_resource type="Script" uid="uid://jpvys1sa1fmy" path="res://scripts/effects/on_reveal_hand_modifier.gd" id="3_4mcj1"]
+
+[sub_resource type="Resource" id="Resource_p5f7i"]
+script = ExtResource("2_ttc5m")
+draw_count = 1
+draw_source = 1
+draw_order = 0
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://bgy4qwaikqlkq"
+
+[sub_resource type="Resource" id="Resource_k3jik"]
+script = ExtResource("3_4mcj1")
+power_modifier = 0
+health_modifier = 0
+cost_modifier = -3
+hand_target = 0
+select_mode = 1
+selection_count = 1
+highest_stat_type = 0
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://jpvys1sa1fmy"
+
+[resource]
+script = ExtResource("2_k4pox")
+id = "seer_of_frost"
+name = "Seer of Frost"
+description = "Draws a card from the top of the enemy deck and reduces the cost of a random card in hand by -3."
+type = 0
+cost = 4
+pantheon = 17
+effects = Array[ExtResource("1_xguhq")]([SubResource("Resource_p5f7i"), SubResource("Resource_k3jik")])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 6
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

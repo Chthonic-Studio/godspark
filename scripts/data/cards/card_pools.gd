@@ -1,17 +1,55 @@
 # Card pools for each pantheon for easy filtering and deck generation
 
 const GREEK_PANTHEON = [
-	preload("res://scripts/data/cards/greek/soldier_alexios.tres"),
-	preload("res://scripts/data/cards/greek/levy_hoplite.tres"),
-	preload("res://scripts/data/cards/greek/spell_zeus_bolt.tres"),
+	# Divine Soldiers
+	preload("res://scripts/data/cards/divine_pantheons/greek/acropolis_guardian.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/olympian_strategist.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/voice_of_prophecy.tres"),
+	# Levy
+	preload("res://scripts/data/cards/divine_pantheons/greek/olympian_guard.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/athenian_skirmisher.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/centaur_archer.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/spartan_vanguard.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/hoplite_phalanx.tres"),
+	# Spell
+	preload("res://scripts/data/cards/divine_pantheons/greek/bolt_of_the_skyfather.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/oracle_insight.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/greek/ambrosial_blessing.tres")
 	# ...add more Greek cards
 ]
 
 const NORSE_PANTHEON = [
-	preload("res://scripts/data/cards/norse/soldier_bjorn.tres"),
-	preload("res://scripts/data/cards/norse/levy_raider.tres"),
-	preload("res://scripts/data/cards/norse/spell_odin_eye.tres"),
-	# ...etc.
+	# Divine Soldiers
+	preload("res://scripts/data/cards/divine_pantheons/norse/berserker_herald.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/einherjar_champion.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/seer_of_frost.tres"),
+	# Levy
+	preload("res://scripts/data/cards/divine_pantheons/norse/draugr_warrior.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/fylgja_guide.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/jotunn_brute.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/shieldmaiden_corps.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/thrall_raider.tres"),
+	# Spells
+	preload("res://scripts/data/cards/divine_pantheons/norse/rune_of_warding.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/gungnir_strike.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/norse/skuld_weave.tres")
+]
+
+const EGYPTIAN_PANTHEON = [
+	# Divine Soldiers
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/eye_of_ra.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/scribe_of_thoth.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/holder_of_the_scale.tres"),
+	# Levy
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/draugr_warrior.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/fylgja_guide.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/jotunn_brute.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/shieldmaiden_corps.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/thrall_raider.tres"),
+	# Spells
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/rune_of_warding.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/gungnir_strike.tres"),
+	preload("res://scripts/data/cards/divine_pantheons/egyptian/skuld_weave.tres")	
 ]
 
 # ...repeat for each pantheon

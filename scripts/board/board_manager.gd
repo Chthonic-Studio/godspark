@@ -1,6 +1,14 @@
 extends Node
 class_name BoardManager
 
+# --- Enums for modular effect support ---
+enum LocationEnum { LEFT, MIDDLE, RIGHT, ANY }
+enum RowEnum { FRONT, BACK, BOTH }
+enum SideEnum { ALLY, ENEMY, BOTH }
+enum StatEnum { POWER, HEALTH, BOTH }
+
+const EffectUtils = preload("res://scripts/effects/effect_utils.gd")
+
 var silenced_locations: Dictionary = {} # location : bool
 var pending_on_play_damage: Dictionary = {} # key: str (location_side), value: damage
 var terrain_by_location: Dictionary = {} # e.g. "left": TerrainData
@@ -118,28 +126,64 @@ func move_card(from_loc, from_side, from_idx, to_loc, to_side, to_idx) -> bool:
 		return true
 	return false
 
-# Calculate total power for a side in a location
+# --- MODULAR ONGOING EFFECTS HANDLING ---
+
+# Calculate total power for a side in a location, and apply all ongoing modular (enum-based) buffs
 func calculate_power(location: String, side: String) -> int:
 	var total = 0
 	var ongoing_effects = get_ongoing_effects_in_location(location, side)
-	var buff_amount = 0
-	var buff_slots = []
+
+	# Modular: Build per-slot buffs for power and health (health not used here, but can be shown in UI/other logic)
+	var power_buffs := [0, 0, 0, 0]
+	var health_buffs := [0, 0, 0, 0]
+
+	# Support for enum-based modular ongoing buffs
 	for entry in ongoing_effects:
-		if entry.effect.effect_name == "BuffBackrow":
-			for back_idx in [2, 3]:
-				if back_idx != entry.slot:
-					buff_slots.append(back_idx)
-					buff_amount = entry.effect.power_buff # Adjust property name as needed
+		var effect = entry.effect
+		if effect.has_method("is_ongoing") and effect.is_ongoing():
+			# Only process modular OngoingModifierEffect
+			if effect.has_property("power_modifier") or effect.has_property("health_modifier"):
+				# Which rows to use per side?
+				var row_arr = effect.target_rows_allies if side == entry.side else effect.target_rows_enemies
+				var targets = EffectUtils.get_targets(
+					self, location, side,
+					effect.affected_locations,
+					effect.target_side,
+					row_arr,
+					effect.target_type,
+					effect.threshold,
+					effect.stat_type,
+					effect.only_in_location,
+					effect.exclude_self,
+					entry.card
+				)
+				for target in targets:
+					var idx = target["slot"]
+					power_buffs[idx] += effect.power_modifier
+					health_buffs[idx] += effect.health_modifier
+			# Classic hardcoded effect compatibility
+			elif effect.effect_name == "BuffBackrow":
+				for idx in [2, 3]:
+					if idx != entry.slot:
+						power_buffs[idx] += effect.power_buff
+
 	# The power calculation for the cards in this location/side
 	for idx in range(board[location][side].size()):
 		var card_instance = board[location][side][idx]
 		if card_instance:
 			var card_data = card_instance.get("card_data", null)
 			var power = card_data.get_power() if card_data else 0
-			if idx in buff_slots:
-				power += buff_amount
+			power += power_buffs[idx]
 			total += power
 	return total
+
+# Helper: convert string location to enum integer
+func _get_location_enum(loc: String) -> int:
+	match loc:
+		"left": return LocationEnum.LEFT
+		"middle": return LocationEnum.MIDDLE
+		"right": return LocationEnum.RIGHT
+		_: return LocationEnum.ANY
 
 # For UI: Get cards in a location and side, with position info
 func get_cards_in_location(location: String, side: String) -> Array:
@@ -153,6 +197,7 @@ func is_location_silenced(location: String) -> bool:
 	return silenced_locations.has(location) and silenced_locations[location]
 
 # Helper to detect ongoing effects
+# Returns: Array of { "effect": effect_resource, "slot": int, "card": card_instance, "side": String }
 func get_ongoing_effects_in_location(location: String, side: String) -> Array:
 	var effects = []
 	for idx in range(4):
@@ -162,7 +207,7 @@ func get_ongoing_effects_in_location(location: String, side: String) -> Array:
 			if card_data and card_data.effects:
 				for effect in card_data.effects:
 					if effect.is_ongoing():
-						effects.append({"effect": effect, "slot": idx, "card": card_instance})
+						effects.append({"effect": effect, "slot": idx, "card": card_instance, "side": side})
 	return effects
 
 # Call once at end of player and enemy turn
@@ -175,7 +220,7 @@ func resolve_ongoing_effects():
 					var card_data = card_instance.get("card_data", null)
 					if card_data and card_data.effects:
 						for effect in card_data.effects:
-							if effect.is_ongoing() and effect.has_method("on_end_turn"):
+							if effect.is_ongoing():
 								var context = {
 									"board": self,
 									"location": loc,
@@ -183,8 +228,28 @@ func resolve_ongoing_effects():
 									"slot_idx": idx,
 									"card": card_instance
 								}
-								effect.on_end_turn(card_data, context)
+								# Call modular ongoing effect if defined
+								if effect.has_method("apply_ongoing_buff"):
+									effect.apply_ongoing_buff(context)
+								# Call classic on_end_turn for legacy effects
+								if effect.has_method("on_end_turn"):
+									effect.on_end_turn(card_data, context)
 
+# Returns how much to reduce commander damage on the given side
+func get_commander_damage_reduction(side: String) -> int:
+	var reduction = 0
+	for loc in locations:
+		for idx in range(4):
+			var card_instance = board[loc][side][idx]
+			if card_instance:
+				var card_data = card_instance.get("card_data", null)
+				if card_data and card_data.effects:
+					for effect in card_data.effects:
+						if effect.is_ongoing() and effect.has_method("get_commander_damage_reduction"):
+							# Pass in board, side, and card_id as context
+							reduction += effect.get_commander_damage_reduction(self, side, card_data.id)
+	return reduction
+	
 func setup_terrain(terrain_assignments: Dictionary):
 	# terrain_assignments: {"left": TerrainData, "middle": TerrainData, "right": TerrainData}
 	terrain_by_location = terrain_assignments.duplicate()
@@ -259,3 +324,8 @@ func decrement_and_cleanup_temporary_buffs():
 						buff["turns_left"] = buff.get("turns_left", 0) - 1
 					buffs = buffs.filter(func(b): return b.get("turns_left", 0) > 0)
 					card_instance.temp_buffs = buffs
+
+# --- How to use this modular version ---
+# 1. Use modular ongoing effect scripts that export enums/arrays for affected locations, rows, side, etc.
+# 2. BoardManager will automatically apply stacking and frequency logic per above.
+# 3. Add new effect enums as needed for future buffs or stat types.

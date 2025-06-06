@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://daqnw0gsci0u4"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_breax"]
+[ext_resource type="Script" uid="uid://c85kk5amad7ks" path="res://scripts/effects/ongoing_modifier.gd" id="2_2y8gy"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_2130j"]
+
+[sub_resource type="Resource" id="Resource_y3uj6"]
+script = ExtResource("2_2y8gy")
+power_modifier = 2
+health_modifier = -1
+affected_locations = Array[int]([3])
+target_side = 0
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+buff_mode = 0
+exclude_self = false
+target_self_only = true
+require_self_in_location = false
+trigger_locations = Array[int]([3])
+effect_frequency_turns = 1
+target_type = 0
+threshold = 0
+stat_type = 2
+only_in_location = true
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c85kk5amad7ks"
+
+[resource]
+script = ExtResource("2_2130j")
+id = "jotunn_brute"
+name = "Jötunn Brute"
+description = "When played, deals 1 damage to itself and gains +2 power"
+type = 1
+cost = 3
+pantheon = 17
+effects = Array[ExtResource("1_breax")]([SubResource("Resource_y3uj6"), null])
+tags = Array[String]([])
+requirements = {}
+power = 4
+health = 3
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

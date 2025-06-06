@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://dujtep2df0d3s"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_tnk85"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_8diwc"]
+[ext_resource type="Script" uid="uid://bgy4qwaikqlkq" path="res://scripts/effects/on_reveal_draw.gd" id="2_cg6ts"]
+
+[sub_resource type="Resource" id="Resource_gkpud"]
+script = ExtResource("2_cg6ts")
+draw_count = 1
+draw_source = 0
+draw_order = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://bgy4qwaikqlkq"
+
+[sub_resource type="Resource" id="Resource_t867v"]
+script = ExtResource("2_cg6ts")
+draw_count = 1
+draw_source = 1
+draw_order = 0
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://bgy4qwaikqlkq"
+
+[resource]
+script = ExtResource("2_8diwc")
+id = "scribe_of_thoth"
+name = "Scribe of Thoth"
+description = "Draws 1 card from the bottom of your deck and 1 from the top of the enemy's deck"
+type = 0
+cost = 5
+pantheon = 18
+effects = Array[ExtResource("1_tnk85")]([SubResource("Resource_gkpud"), SubResource("Resource_t867v")])
+tags = Array[String]([])
+requirements = {}
+power = 4
+health = 7
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dt4aqp215qwwk"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_5fy1d"]
+[ext_resource type="Script" uid="uid://c85kk5amad7ks" path="res://scripts/effects/ongoing_modifier.gd" id="2_1u5vh"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_rsgr5"]
+
+[sub_resource type="Resource" id="Resource_4xodr"]
+script = ExtResource("2_1u5vh")
+power_modifier = 1
+health_modifier = 0
+affected_locations = Array[int]([3])
+target_side = 0
+target_rows_allies = Array[int]([0])
+target_rows_enemies = Array[int]([2])
+buff_mode = 0
+exclude_self = true
+target_self_only = false
+require_self_in_location = false
+trigger_locations = Array[int]([3])
+effect_frequency_turns = 1
+target_type = 0
+threshold = 0
+stat_type = 0
+only_in_location = true
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c85kk5amad7ks"
+
+[resource]
+script = ExtResource("2_rsgr5")
+id = "fylgja_guide"
+name = "Fylgja's Guide"
+description = "Allied cards in the front row of this location gain +1 power"
+type = 1
+cost = 3
+pantheon = 17
+effects = Array[ExtResource("1_5fy1d")]([SubResource("Resource_4xodr")])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 4
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://6iigglaq8stq"]
+[gd_scene load_steps=9 format=3 uid="uid://6iigglaq8stq"]
 
 [ext_resource type="Script" uid="uid://x3q7w62rlk68" path="res://scripts/cards/card_ui.gd" id="1_d81rb"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_6ligt"]
 [ext_resource type="Texture2D" uid="uid://dg8fxts8qnpco" path="res://assets/images/cardbacks4092021.png" id="2_6u4wf"]
 [ext_resource type="FontFile" uid="uid://1cno6d6vxjie" path="res://assets/fonts/Beholden-Bold.ttf" id="3_sy11y"]
 [ext_resource type="FontFile" uid="uid://3smuqfrp3lm7" path="res://assets/fonts/Beholden-Medium.ttf" id="4_6ligt"]
@@ -27,6 +28,7 @@ offset_bottom = -750.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d81rb")
+card_data = ExtResource("2_6ligt")
 
 [node name="CardBG" type="NinePatchRect" parent="."]
 layout_mode = 1
@@ -57,6 +59,7 @@ color = Color(1, 0, 0, 1)
 [node name="CorruptionLevel2" type="ColorRect" parent="CorruptionControl"]
 visible = false
 modulate = Color(2.762, 0, 1, 1)
+layout_mode = 0
 offset_left = 103.0
 offset_top = 13.0
 offset_right = 110.0
@@ -67,6 +70,7 @@ color = Color(1, 0, 0, 1)
 [node name="CorruptionLevel3" type="ColorRect" parent="CorruptionControl"]
 visible = false
 modulate = Color(2.762, 0, 1, 1)
+layout_mode = 0
 offset_left = 9.0
 offset_top = 130.0
 offset_right = 16.0
@@ -77,6 +81,7 @@ color = Color(1, 0, 0, 1)
 [node name="CorruptionLevel4" type="ColorRect" parent="CorruptionControl"]
 visible = false
 modulate = Color(2.762, 0, 1, 1)
+layout_mode = 0
 offset_left = 103.0
 offset_top = 130.0
 offset_right = 110.0

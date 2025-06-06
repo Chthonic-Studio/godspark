@@ -97,7 +97,9 @@ func enemy_turn():
 							"board": board_manager,
 							"owner": "enemy",
 							"location": location,
-							"slot_idx": slot
+							"slot_idx": slot,
+							"hand_manager": hand_manager, # Add for completeness (not used unless you want to affect player hand in enemy turn)
+							"enemy_deck_manager": enemy_deck_manager
 						}
 						effect.execute(card_data, context)
 			break
@@ -123,8 +125,17 @@ func resolve_turn():
 				enemy_total += player_power - enemy_power
 			elif enemy_power > player_power:
 				player_total += enemy_power - player_power
+		
+		# Calculate damage reductions to health
+		var player_reduction = board_manager.get_commander_damage_reduction("player")
+		var enemy_reduction = board_manager.get_commander_damage_reduction("enemy")
+		player_total = max(0, player_total - player_reduction)
+		enemy_total = max(0, enemy_total - enemy_reduction)
+		
+		# Deal commander health damage
 		player_health -= player_total
 		enemy_health -= enemy_total
+		
 		# Update health bars visually after health changes
 		if has_node("/root/CombatScene/PlayerHUD/PlayerHealthBar"):
 			var player_bar = get_node("/root/CombatScene/PlayerHUD/PlayerHealthBar")
@@ -170,6 +181,7 @@ func play_card(card_instance: Dictionary, location: String, slot_idx: int = -1) 
 			"owner": "player",
 			"location": location,
 			"slot_idx": slot_idx,
+			"hand_manager": hand_manager, # <--- Add this!
 			"enemy_deck_manager": enemy_deck_manager
 		}
 		effect.execute(card_data, context)

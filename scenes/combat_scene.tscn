@@ -72,19 +72,17 @@ script = ExtResource("2_a2e2y")
 script = ExtResource("5_g5ebj")
 
 [node name="HandPanel" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(1300, 180)
+custom_minimum_size = Vector2(1100, 180)
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = -1
+anchor_left = 0.15625
+anchor_top = 0.8
+anchor_right = 0.84375
 anchor_bottom = 1.0
-offset_left = -650.0
-offset_top = -180.0
-offset_right = 650.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HandManager" type="Control" parent="HandPanel"]
 layout_mode = 2
@@ -709,3 +707,21 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="LogContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(220, 180)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.74
+anchor_right = 0.145
+anchor_bottom = 1.0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="LogScroll" type="ScrollContainer" parent="LogContainer"]
+layout_mode = 2
+
+[node name="LogVbox" type="VBoxContainer" parent="LogContainer/LogScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://bo4qijotjfewn"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_jf8qf"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_fcs2l"]
+[ext_resource type="Script" uid="uid://c85kk5amad7ks" path="res://scripts/effects/ongoing_modifier.gd" id="2_fn32k"]
+
+[sub_resource type="Resource" id="Resource_07hhb"]
+script = ExtResource("2_fn32k")
+power_modifier = 1
+health_modifier = 0
+affected_locations = Array[int]([3])
+target_side = 0
+target_rows_allies = Array[int]([0])
+target_rows_enemies = Array[int]([2])
+exclude_self = true
+require_self_in_location = false
+trigger_locations = Array[int]([3])
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c85kk5amad7ks"
+
+[sub_resource type="Resource" id="Resource_jou45"]
+script = ExtResource("2_fn32k")
+power_modifier = -1
+health_modifier = 0
+affected_locations = Array[int]([3])
+target_side = 1
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([0])
+exclude_self = true
+require_self_in_location = false
+trigger_locations = Array[int]([3])
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c85kk5amad7ks"
+
+[resource]
+script = ExtResource("2_fcs2l")
+id = "olympian_strategist"
+name = "Olympian Strategist"
+description = "All allied front row cards gain +1 power, all front row enemies gain -1 Powerfront row"
+type = 0
+cost = 4
+pantheon = 16
+effects = Array[ExtResource("1_jf8qf")]([SubResource("Resource_07hhb"), SubResource("Resource_jou45")])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 6
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

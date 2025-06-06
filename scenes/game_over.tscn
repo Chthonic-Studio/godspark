@@ -71,6 +71,7 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PantheonLabel" type="Label" parent="Panel"]
+layout_mode = 0
 offset_left = 321.0
 offset_top = 163.0
 offset_right = 603.0

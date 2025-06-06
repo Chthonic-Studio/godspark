@@ -52,7 +52,12 @@ func draw_cards(amount: int) -> void:
 			reshuffle_discard_into_draw()
 		if draw_pile.is_empty():
 			break
-		hand.append(draw_pile.pop_back())
+		var card_instance = draw_pile.pop_back()
+		# Store original values for UI color feedback
+		card_instance["original_power"] = card_instance["card_data"].power
+		card_instance["original_health"] = card_instance["card_data"].health
+		card_instance["original_cost"] = card_instance["card_data"].cost
+		hand.append(card_instance)
 	while hand.size() > max_hand_size:
 		discard_pile.append(hand.pop_front())
 

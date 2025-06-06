@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://q2omlyiwfrh8"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_bccw0"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_65rki"]
+[ext_resource type="Script" uid="uid://c52vti51odefc" path="res://scripts/effects/ongoing_per_copy.gd" id="2_lb63x"]
+
+[sub_resource type="Resource" id="Resource_hv1g4"]
+script = ExtResource("2_lb63x")
+power_modifier_per_copy = 0
+health_modifier_per_copy = 1
+affect_all_allies = true
+only_in_own_location = true
+reduce_commander_damage_per_copy = 0
+effect_duration_turns = -1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c52vti51odefc"
+
+[resource]
+script = ExtResource("2_65rki")
+id = "hoplite_phalanx"
+name = "Hoplite Phalanx"
+description = " If another \"Hoplite Phalanx\" is in this location, gain +1 Health."
+type = 1
+cost = 3
+pantheon = 16
+effects = Array[ExtResource("1_bccw0")]([SubResource("Resource_hv1g4")])
+tags = Array[String]([])
+requirements = {}
+power = 4
+health = 3
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -1,19 +1,36 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://cx2ni0sf5ijy7"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cx2ni0sf5ijy7"]
 
 [ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_c1yl4"]
 [ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_g7v8r"]
+[ext_resource type="Script" uid="uid://c85kk5amad7ks" path="res://scripts/effects/ongoing_modifier.gd" id="2_ky3h0"]
+
+[sub_resource type="Resource" id="Resource_skbm3"]
+script = ExtResource("2_ky3h0")
+power_modifier = 2
+health_modifier = 0
+affected_locations = Array[int]([1])
+target_side = 0
+target_rows_allies = Array[int]([2])
+target_rows_enemies = Array[int]([2])
+exclude_self = true
+require_self_in_location = true
+trigger_locations = Array[int]([1])
+effect_frequency_turns = 1
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://c85kk5amad7ks"
 
 [resource]
 script = ExtResource("2_g7v8r")
-id = ""
-name = ""
-description = ""
+id = "acropolis_guardian"
+name = "Acropolis Guardian"
+description = "All allies in this location gain +2 Power"
 type = 0
-cost = 0
-pantheon = 0
-effects = Array[ExtResource("1_c1yl4")]([])
+cost = 5
+pantheon = 16
+effects = Array[ExtResource("1_c1yl4")]([SubResource("Resource_skbm3")])
 tags = Array[String]([])
 requirements = {}
-power = 0
-health = 0
+power = 5
+health = 8
 metadata/_custom_type_script = "uid://cjoyfln420vcw"

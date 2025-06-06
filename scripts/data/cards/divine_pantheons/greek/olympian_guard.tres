@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://carveoicn1e75"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_08ota"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_sxbgs"]
+
+[resource]
+script = ExtResource("2_sxbgs")
+id = "olympian_guard"
+name = "Olympian Guard"
+description = "The Bannermen of the Olympus"
+type = 1
+cost = 1
+pantheon = 16
+effects = Array[ExtResource("1_08ota")]([])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 2
+metadata/_custom_type_script = "uid://cjoyfln420vcw"

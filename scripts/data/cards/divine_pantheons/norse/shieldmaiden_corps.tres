@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dg7dotjaotnjb"]
+
+[ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_1wlpr"]
+[ext_resource type="Script" uid="uid://hyqjun5qhf3m" path="res://scripts/effects/on_reveal_modifier.gd" id="2_md6en"]
+[ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_uwmu2"]
+
+[sub_resource type="Resource" id="Resource_n1kui"]
+script = ExtResource("2_md6en")
+power_modifier = 0
+health_modifier = 2
+affected_locations = Array[int]([3])
+target_side = 0
+target_rows = Array[int]([2])
+target_type = 4
+threshold = 0
+stat_type = Array[int]([1])
+only_in_location = true
+exclude_self = false
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://hyqjun5qhf3m"
+
+[resource]
+script = ExtResource("2_uwmu2")
+id = "shieldmaiden_corps"
+name = "Shieldmaiden Corps"
+description = "Heals the ally with the lowest health in this location by +2"
+type = 1
+cost = 3
+pantheon = 17
+effects = Array[ExtResource("1_1wlpr")]([SubResource("Resource_n1kui")])
+tags = Array[String]([])
+requirements = {}
+power = 2
+health = 2
+metadata/_custom_type_script = "uid://cjoyfln420vcw"
