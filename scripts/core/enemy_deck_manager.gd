@@ -7,7 +7,7 @@ var hand: Array = []
 var max_hand_size: int = 7
 
 func _ready():
-	if GameManager.dev_mode and draw_pile.is_empty() and hand.is_empty():
+	if GameManager.dev_mode and draw_pile.is_empty() and hand.is_empty() and not GameManager.demo_mode:
 		_generate_test_cards()
 
 func _generate_test_cards():

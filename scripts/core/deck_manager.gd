@@ -6,7 +6,7 @@ var hand: Array[Dictionary] = []
 var max_hand_size: int = 7
 
 func _ready():
-	if GameManager.dev_mode and draw_pile.is_empty() and hand.is_empty():
+	if GameManager.dev_mode and draw_pile.is_empty() and hand.is_empty() and not GameManager.demo_mode:
 		_generate_test_cards()
 
 func start_game():
@@ -38,6 +38,7 @@ func _generate_test_cards():
 
 # Accepts a list of card instance dictionaries (from PantheonRunManager.player_deck or deck editor)
 func setup_deck(card_instance_list: Array[Dictionary]) -> void:
+	print("DeckManager.setup_deck() called with:", card_instance_list)
 	draw_pile = card_instance_list.duplicate(true)
 	discard_pile.clear()
 	hand.clear()

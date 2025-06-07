@@ -160,9 +160,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/left/LocationInfo"]
-layout_mode = 2
-offset_right = 446.0
-offset_bottom = 150.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/left/LocationInfo"]
@@ -298,9 +301,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/middle/LocationInfo"]
-layout_mode = 2
-offset_right = 446.0
-offset_bottom = 150.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/middle/LocationInfo"]
@@ -436,9 +442,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Art" type="TextureRect" parent="BoardPanel/right/LocationInfo"]
-layout_mode = 2
-offset_right = 446.0
-offset_bottom = 150.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/right/LocationInfo"]

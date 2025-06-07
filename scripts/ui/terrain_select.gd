@@ -16,13 +16,14 @@ var available_terrains: Array[Resource] = []
 var selected_terrains: Array[Resource] = []
 
 func _ready():
-		# --- DEV MODE TEST TERRAIN INJECTION ---
+	# --- DEV MODE TEST TERRAIN INJECTION ---
 	if GameManager.dev_mode and (not PantheonRunManager.available_player_terrain_cards or PantheonRunManager.available_player_terrain_cards.size() == 0):
-		# Load a few test terrains (edit paths/types as appropriate for your project)
 		var pools = preload("res://scripts/data/terrain_pools.gd")
 		var test_terrains = pools.PLAYER_TERRAIN_POOL.duplicate()
 		test_terrains.shuffle()
-		available_terrains = test_terrains.slice(0, 4) # get first 4
+		available_terrains.clear()
+		for i in range(min(4, test_terrains.size())):
+			available_terrains.append(test_terrains[i])
 	else:
 		available_terrains = PantheonRunManager.available_player_terrain_cards.duplicate()
 	# Get available terrains for this run

@@ -29,6 +29,9 @@ extends Control
 var selected_pantheon : String = ""
 
 func _ready():
+	if GameManager.demo_mode and not PantheonRunManager.current_run_active:
+		PantheonRunManager.start_new_run()
+	# Rest of your _ready() logic
 	confirm_panel.visible = false
 	_setup_pantheon_buttons()
 	confirm_button.pressed.connect(_on_ConfirmButton_pressed)
@@ -55,20 +58,28 @@ func _setup_pantheon_buttons():
 		"CELTIC": celtic_button
 	}
 	var liberated = PantheonRunManager.liberated_pantheons if PantheonRunManager.has_method("liberated_pantheons") else []
+	var allowed_pantheons = null
+	if GameManager.demo_mode:
+		allowed_pantheons = GameManager.demo_pantheons
 	for pantheon_name in pantheon_buttons:
 		var btn = pantheon_buttons[pantheon_name]
 		# Disconnect old signals to avoid duplicates (good practice for reloads)
 		if btn.pressed.is_connected(_on_pantheon_button_pressed):
 			btn.pressed.disconnect(_on_pantheon_button_pressed)
 		btn.pressed.connect(_on_pantheon_button_pressed.bind(pantheon_name))
-		# Check if available
+		# Only enable allowed pantheons in demo mode
+		var enabled = true
+		if allowed_pantheons != null and not allowed_pantheons.has(pantheon_name):
+			enabled = false
 		if pantheon_name in liberated:
 			btn.disabled = true
-			# Add green tint overlay (or modulate)
 			_apply_green_tint(btn)
 		else:
-			btn.disabled = false
-			_remove_tint(btn)
+			btn.disabled = not enabled
+			if enabled:
+				_remove_tint(btn)
+			else:
+				btn.modulate = Color(0.7, 0.7, 0.7, 1)
 
 func _apply_green_tint(btn: Button):
 	# Modulate the button (works for TextureButton)

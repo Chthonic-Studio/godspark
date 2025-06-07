@@ -20,9 +20,58 @@ signal turn_changed
 
 # Called once at combat start
 func start_combat():
-	# DEV MODE: set up test state for isolated scene testing
-	if GameManager.dev_mode:
-		# Setup terrain for test if not already assigned
+	print("\n=== COMBAT SCENE DEBUG ===")
+	print("PantheonRunManager.current_run_active:", PantheonRunManager.current_run_active)
+	print("PantheonRunManager.current_node_index:", PantheonRunManager.current_node_index)
+	print("PantheonRunManager.current_node_terrains:", PantheonRunManager.current_node_terrains)
+	print("PantheonRunManager.player_deck (size):", PantheonRunManager.player_deck.size())
+	print("PantheonRunManager.player_terrain_cards (size):", PantheonRunManager.player_terrain_cards.size())
+	print("PantheonRunManager.current_void_pantheon:", PantheonRunManager.current_void_pantheon)
+	print("==========================\n")
+
+	if PantheonRunManager.current_run_active:
+		# --- CAMPAIGN/DEMO MODE ---
+		var node_terrain = PantheonRunManager.get_current_node_terrains()
+		print("node_terrain at combat start:", node_terrain)
+		
+		# Make sure player terrain is assigned for this node
+		if node_terrain.has("void") and node_terrain.has("pantheon") and node_terrain.has("player") and node_terrain["player"] != null:
+			# Use ZoneGenerator to build a proper assignment
+			var zone_gen = get_node_or_null("/root/CombatScene/ZoneGenerator")
+			if not zone_gen:
+				print("ERROR: ZoneGenerator node not found in scene!")
+				current_terrain_assignments = {}
+			else:
+				current_terrain_assignments = zone_gen.get_combat_terrain_assignment(
+					node_terrain,
+					node_terrain["player"]
+				)
+				print("current_terrain_assignments for board:", current_terrain_assignments)
+		else:
+			print("WARNING: Terrain assignments incomplete for this node! node_terrain:", node_terrain)
+			current_terrain_assignments = {}
+		
+		# Terrain and board setup
+		board_manager.setup_terrain(current_terrain_assignments)
+		board_manager.setup_board()
+		board_ui_manager.update_power_labels()
+
+		# Deck setup
+		print("Assigning DeckManager.setup_deck with size:", PantheonRunManager.player_deck.size())
+		DeckManager.setup_deck(PantheonRunManager.player_deck)
+		print("After setup_deck, DeckManager.draw_pile size:", DeckManager.draw_pile.size())
+		DeckManager.start_game()
+		print("After start_game, DeckManager.hand size:", DeckManager.hand.size())
+
+		# Enemy deck setup
+		if enemy_deck_manager and PantheonRunManager.current_void_pantheon != "":
+			print("Setting up enemy deck for void pantheon:", PantheonRunManager.current_void_pantheon)
+			enemy_deck_manager.setup_deck(generate_enemy_deck_for_void_pantheon(PantheonRunManager.current_void_pantheon))
+		elif enemy_deck_manager:
+			print("WARNING: No void pantheon assigned for this node! Using test cards.")
+			enemy_deck_manager._generate_test_cards()
+	else:
+		# --- DEV/TEST MODE (fallback) ---
 		if not current_terrain_assignments or current_terrain_assignments.is_empty():
 			var TerrainPool = preload("res://scripts/data/terrain_pools.gd")
 			current_terrain_assignments = {
@@ -31,25 +80,18 @@ func start_combat():
 				"right": TerrainPool.PANTHEON_TERRAIN_POOLS["GREEK"][0],
 			}
 			print("DEBUG: Assigned fake terrain for direct scene test.")
-		# Setup deck if empty
+		board_manager.setup_terrain(current_terrain_assignments)
+		board_manager.setup_board()
+		board_ui_manager.update_power_labels()
+
 		if DeckManager.draw_pile.is_empty() and DeckManager.hand.is_empty():
+			print("Generating test cards for DeckManager (DEV MODE).")
 			DeckManager._generate_test_cards()
-		# Setup enemy deck if empty
 		if enemy_deck_manager.draw_pile.is_empty() and enemy_deck_manager.hand.is_empty():
+			print("Generating test cards for EnemyDeckManager (DEV MODE).")
 			enemy_deck_manager._generate_test_cards()
-	else:
-		# In campaign flow: assign from run manager, expects PantheonRunManager.player_deck to be set
-		if current_terrain_assignments and not current_terrain_assignments.is_empty():
-			board_manager.setup_terrain(current_terrain_assignments)
-		else:
-			print("WARNING: No terrain assignments set for this combat!")
-		DeckManager.setup_deck(PantheonRunManager.player_deck)
 
-	# Always setup terrain, board, health bars, etc.
-	board_manager.setup_terrain(current_terrain_assignments)
-	board_manager.setup_board()
-	board_ui_manager.update_power_labels()
-
+	# === COMMON SETUP (UI, health bars, etc) ===
 	var player_bar = $"../PlayerHUD/PlayerHealthBar"
 	player_bar.fade_in()
 	player_bar.set_health(player_health)
@@ -58,7 +100,10 @@ func start_combat():
 	enemy_bar.fade_in()
 	enemy_bar.set_health(enemy_health)
 
+	# Draw initial hand if not already drawn (in case start_game hasn't)
 	DeckManager.start_game()
+	if hand_manager:
+		hand_manager.refresh_hand()
 	enemy_deck_manager.draw_cards(3)
 	phase = "PlayerTurn"
 	divinity = 10
@@ -212,6 +257,11 @@ func assign_terrain_from_run():
 		print("PantheonRunManager: No active run, skipping terrain assignment.")
 		return
 	var node_terrain = PantheonRunManager.get_current_node_terrains()
+	print("node_terrain at combat start:", node_terrain)
+	if node_terrain.has("player") and node_terrain["player"] != null:
+		print("Player terrain is set correctly for combat!")
+	else:
+		print("ERROR: Player terrain is still null at combat start!")
 	var player_terrains = PantheonRunManager.player_terrain_cards
 	if player_terrains.size() != 3:
 		print("CombatManager: Player must have exactly 3 terrain cards selected!")
@@ -283,5 +333,28 @@ func check_end_conditions():
 	elif enemy_health <= 0:
 		victory()
 		
+
+# Utility: Generate an enemy deck for the current void pantheon
+func generate_enemy_deck_for_void_pantheon(void_pantheon: String) -> Array:
+	var card_pools = preload("res://scripts/data/cards/card_pools.gd")
+	var void_pool_map = {
+		"THE DREAMING MAW": card_pools.DREAMING_MAW_VOID_PANTHEON,
+		"THE PRIMAL ROIL": card_pools.PRIMAL_ROIL_VOID_PANTHEON,
+		"THE INFINITE MESSENGER": card_pools.INFINITE_MESSENGER_VOID_PANTHEON,
+		# ...add more as you add new void pantheons
+	}
+	var pool = void_pool_map.get(void_pantheon, [])
+	var deck: Array = []
+	if pool.is_empty():
+		push_error("No enemy card pool for void pantheon: %s" % void_pantheon)
+		return deck
+	for i in range(14):
+		var card = pool.pick_random()
+		deck.append({
+			"instance_id": "void_%s_%d" % [void_pantheon, i],
+			"card_data": card,
+			"type": card.type
+		})
+	return deck
 # When you implement AI, simply call the same BoardUIManager function for the enemy side:
 # $BoardUIManager.add_card_to_slot(enemy_card_instance, location, "enemy", slot_idx, card_ui_scene)

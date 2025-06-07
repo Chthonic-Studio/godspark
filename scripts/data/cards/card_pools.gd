@@ -51,4 +51,58 @@ const EGYPTIAN_PANTHEON = [
 	preload("res://scripts/data/cards/divine_pantheons/egyptian/scarab_swarm.tres")	
 ]
 
+const THE_DREAMING_MAW = [
+	# Divine Soldiers
+	preload("res://scripts/data/cards/void_pantheons/dreaming_maw/abyssal_watcher.tres"),
+	preload("res://scripts/data/cards/void_pantheons/dreaming_maw/priest_of_sunken_stars.tres"),
+	preload("res://scripts/data/cards/void_pantheons/dreaming_maw/sleeper_eldest_scion.tres"),
+	# Levy
+	preload("res://scripts/data/cards/void_pantheons/levies/amorphous_thrall.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/mindless_drone.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/sanity_devourer.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/shoggoth_spawn.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/veiled_acolyte.tres"),
+	# Spells
+	preload("res://scripts/data/cards/void_pantheons/spells/chaotic_burst.tres"),
+	preload("res://scripts/data/cards/void_pantheons/dreaming_maw/deep_heartbeat.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/echoing_madness.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/mind_flaying_scream.tres")	
+]
+
+const INFINITE_MESSENGER = [
+	# Divine Soldiers
+	preload("res://scripts/data/cards/void_pantheons/infinite_messenger/avatar_of_secrecy.tres"),
+	preload("res://scripts/data/cards/void_pantheons/infinite_messenger/faceless_deceiver.tres"),
+	preload("res://scripts/data/cards/void_pantheons/infinite_messenger/herald_of_chaos.tres"),
+	# Levy
+	preload("res://scripts/data/cards/void_pantheons/levies/amorphous_thrall.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/mindless_drone.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/sanity_devourer.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/shoggoth_spawn.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/veiled_acolyte.tres"),
+	# Spells
+	preload("res://scripts/data/cards/void_pantheons/infinite_messenger/illusionary_veil.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/chaotic_burst.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/echoing_madness.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/mind_flaying_scream.tres")	
+]
+
+const PRIMAL_ROIL = [
+	# Divine Soldiers
+	preload("res://scripts/data/cards/void_pantheons/primal_roil/blind_spawn.tres"),
+	preload("res://scripts/data/cards/void_pantheons/primal_roil/chaos_engine.tres"),
+	preload("res://scripts/data/cards/void_pantheons/primal_roil/idiot_god_fragment.tres"),
+	# Levy
+	preload("res://scripts/data/cards/void_pantheons/levies/amorphous_thrall.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/mindless_drone.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/sanity_devourer.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/shoggoth_spawn.tres"),
+	preload("res://scripts/data/cards/void_pantheons/levies/veiled_acolyte.tres"),
+	# Spells
+	preload("res://scripts/data/cards/void_pantheons/spells/chaotic_burst.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/echoing_madness.tres"),
+	preload("res://scripts/data/cards/void_pantheons/spells/mind_flaying_scream.tres")	
+]
+
+
 # ...repeat for each pantheon

@@ -5,15 +5,15 @@
 
 [resource]
 script = ExtResource("2_cswxo")
-id = ""
-name = ""
+id = "mindless_drone"
+name = "Mindless Drone"
 description = ""
-type = 0
-cost = 0
-pantheon = 0
+type = 1
+cost = 1
+pantheon = 2
 effects = Array[ExtResource("1_k7rgv")]([])
 tags = Array[String]([])
 requirements = {}
-power = 0
-health = 0
+power = 2
+health = 1
 metadata/_custom_type_script = "uid://cjoyfln420vcw"

@@ -129,6 +129,64 @@ func reset_all_card_states():
 		if inst.type == "DivineSoldier":
 			inst["void_corruption"] = 0
 
+# Get all CardData resources for a pantheon and type
+static func get_cards_for_pantheon_type(pantheon: String, card_type: int) -> Array:
+	var pools = preload("res://scripts/data/cards/card_pools.gd")
+	var pool_map = {
+		"GREEK": pools.GREEK_PANTHEON,
+		"NORSE": pools.NORSE_PANTHEON,
+		"EGYPTIAN": pools.EGYPTIAN_PANTHEON,
+		# ...add more pantheons as you expand
+	}
+	var card_pool = pool_map.get(pantheon, [])
+	var matches = []
+	for card in card_pool:
+		if card.type == card_type:
+			matches.append(card)
+	return matches
+
+# Generate the starting deck for a pantheon: 5 Divine Soldiers, 12 Levies, 5 Spells
+func generate_starting_collection(pantheon: String):
+	var CardData = preload("res://scripts/data/card_data.gd")
+	var card_pools = preload("res://scripts/data/cards/card_pools.gd")
+	var pool_map = {
+		"GREEK": card_pools.GREEK_PANTHEON,
+		"NORSE": card_pools.NORSE_PANTHEON,
+		"EGYPTIAN": card_pools.EGYPTIAN_PANTHEON,
+		# ...add others as needed
+	}
+	var card_pool = pool_map.get(pantheon, [])
+	if card_pool.is_empty():
+		push_error("No card pool found for pantheon: %s" % pantheon)
+		return
+
+	# Separate by type
+	var divine_soldiers = []
+	var levies = []
+	var spells = []
+	for card in card_pool:
+		match card.type:
+			CardData.CardType.DIVINE_SOLDIER:
+				divine_soldiers.append(card)
+			CardData.CardType.LEVY:
+				levies.append(card)
+			CardData.CardType.SPELL:
+				spells.append(card)
+
+	# --- Pick with replacement ---
+	# Divine Soldiers (7)
+	for i in range(7):
+		var pick = divine_soldiers.pick_random()
+		add_card(pick.id, "DivineSoldier", pantheon, pick, pick.health)
+	# Levies (12)
+	for i in range(12):
+		var pick = levies.pick_random()
+		add_card(pick.id, "Levy", pantheon, pick, pick.health)
+	# Spells (5)
+	for i in range(5):
+		var pick = spells.pick_random()
+		add_card(pick.id, "Spell", pantheon, pick)
+		
 # --- How to use ---
 # - Add to autoload as PlayerCollectionManager
 # - Use add_card() to add new cards to collection

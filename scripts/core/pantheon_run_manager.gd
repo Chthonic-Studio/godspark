@@ -33,16 +33,15 @@ signal run_abandoned
 
 # ========== TESTING VARIABLES ==========
 
-var isTest: bool = true
-
 func _ready() -> void:
-	if isTest == true:
+	if GameManager.dev_mode and not GameManager.demo_mode:
 		start_new_run()
 	else:
 		pass
 		
 # Call to start a new run
 func start_new_run(seed: int = 0):
+	
 	liberated_pantheons.clear()
 	void_pantheons_used.clear()
 	current_run_active = true
@@ -55,10 +54,17 @@ func start_new_run(seed: int = 0):
 	dead_soldiers.clear()
 	run_seed = seed if seed != 0 else randi()
 	randomize()
-	for pantheon in preload("res://scripts/data/pantheon_list.gd").PANTHEONS:
-		available_pantheons.append(pantheon)
-	var terrain_pools = preload("res://scripts/data/terrain_pools.gd")
-	available_void_pantheons = terrain_pools.VOID_TERRAIN_POOL.keys().duplicate()
+	available_pantheons.clear()
+	available_void_pantheons.clear()
+
+	if GameManager.demo_mode:
+		available_pantheons = GameManager.demo_pantheons.duplicate()
+		available_void_pantheons = GameManager.demo_void_pantheons.duplicate()
+	else:
+		for pantheon in preload("res://scripts/data/pantheon_list.gd").PANTHEONS:
+			available_pantheons.append(pantheon)
+		var terrain_pools = preload("res://scripts/data/terrain_pools.gd")
+		available_void_pantheons = terrain_pools.VOID_TERRAIN_POOL.keys().duplicate()
 	print("Available void pantheons at start:", available_void_pantheons)
 	available_player_terrain_cards.clear()
 	# Assign 4 random unique terrains from a specific pool
@@ -70,8 +76,12 @@ func start_new_run(seed: int = 0):
 
 # Called when the player picks a pantheon from campaign screen
 func select_pantheon(pantheon_name: String):
+	print("Available void pantheons:", available_void_pantheons)
 	current_pantheon = pantheon_name
 	available_pantheons.erase(pantheon_name)
+	# Only generate collection at the start of the run
+	if liberated_pantheons.is_empty() and PlayerCollectionManager.owned_cards.is_empty():
+		PlayerCollectionManager.generate_starting_collection(pantheon_name)
 	# Filter for unused void pantheons
 	var pool = available_void_pantheons.filter(func(p): return not void_pantheons_used.has(p))
 	if pool.is_empty():
@@ -83,6 +93,7 @@ func select_pantheon(pantheon_name: String):
 	_generate_pantheon_nodes()
 	current_node_index = 0
 	print("Filtered available void pantheons:", pool)
+	print("Void pantheons used:", void_pantheons_used)
 	emit_signal("pantheon_selected", pantheon_name)
 
 # Returns the current node's terrain assignment (for ZoneGenerator/CombatManager)
@@ -98,6 +109,22 @@ func advance_to_next_node():
 		# Pantheon cleared
 		liberated_pantheons.append(current_pantheon)
 		emit_signal("pantheon_cleared", current_pantheon)
+				# Check if all are cleared
+		if liberated_pantheons.size() >= available_pantheons.size():
+			reset_run() # All pantheons liberated, reset for new run
+		else:
+			emit_signal("node_unlocked", current_node_index)
+		# --- DEMO MODE: End run after all demo pantheons are cleared ---
+		if GameManager.demo_mode:
+			var all_done := true
+			for p in GameManager.demo_pantheons:
+				if not liberated_pantheons.has(p):
+					all_done = false
+					break
+			if all_done:
+				# You can emit a run_finished signal or load a "thanks for playing" screen here
+				print("Demo run complete! Thanks for playing the demo.")
+				# Example: go to end screen, or title, or reload
 	else:
 		emit_signal("node_unlocked", current_node_index)
 
@@ -115,17 +142,25 @@ func on_combat_result(result: String, fallen_cards: Array[String]=[]):
 
 # Called when player abandons run
 func abandon_run():
-	current_run_active = false
-	player_deck.clear()
-	player_terrain_cards.clear()
+	reset_run()
+	emit_signal("run_abandoned")
+	
+func reset_run():
+	# Resets all run and deck state so a new run can be started cleanly
 	liberated_pantheons.clear()
 	void_pantheons_used.clear()
+	current_run_active = false
 	current_pantheon = ""
 	current_void_pantheon = ""
 	current_node_index = 0
 	current_node_terrains.clear()
+	player_deck.clear()
+	player_terrain_cards.clear()
+	available_pantheons.clear()
+	available_void_pantheons.clear()
 	dead_soldiers.clear()
-	emit_signal("run_abandoned")
+	run_seed = 0
+	available_player_terrain_cards.clear()
 	
 func validate_deck(deck: Array) -> Dictionary:
 	# Returns { "valid": bool, "error": String, "type_counts": {type: count}, "deck_size": int }
@@ -175,6 +210,10 @@ func _generate_pantheon_nodes():
 
 # At combat start, call this with the player's shuffled terrain cards
 func set_player_terrain_for_current_combat(selected_terrain: Resource):
+	print("PRE-COMBAT: PantheonRunManager.player_deck size =", PantheonRunManager.player_deck.size())
+	print("PRE-COMBAT: PantheonRunManager.current_node_terrains =", PantheonRunManager.current_node_terrains)
+	print("PRE-COMBAT: PantheonRunManager.player_terrain_cards =", PantheonRunManager.player_terrain_cards)
+	print("set_player_terrain_for_current_combat called with:", selected_terrain)
 	if current_node_terrains.size() > current_node_index:
 		current_node_terrains[current_node_index]["player"] = selected_terrain
 

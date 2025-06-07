@@ -37,7 +37,10 @@ func _ready():
 	edit_deck_btn.pressed.connect(_on_EditDeckButton_pressed)
 	abandon_confirm.confirmed.connect(_on_abandon_confirmed)
 	select_terrain_btn.pressed.connect(_on_select_terrain_button_pressed)
-	
+
+	if PantheonRunManager.player_deck.is_empty():
+		print("No player deck set, showing deck editor.")
+		_on_EditDeckButton_pressed()
 
 func _setup_pantheon_display():
 	pantheon_name_label.text = PantheonRunManager.current_pantheon.capitalize()
@@ -74,15 +77,15 @@ func _on_NodeButton_pressed(idx):
 		return
 	if idx > PantheonRunManager.current_node_index:
 		return # Not unlocked yet
-	# Prompt for terrain shuffle/selection (implement this UI as needed)
 	var player_terrains = PantheonRunManager.player_terrain_cards
 	player_terrains.shuffle()
 	if player_terrains.size() > 0:
 		var selected_terrain = player_terrains[0]
 		PantheonRunManager.set_player_terrain_for_current_combat(selected_terrain)
+		await get_tree().process_frame # <-- This line ensures the assignment is committed!
+		print("POST-ASSIGN: PantheonRunManager.current_node_terrains =", PantheonRunManager.current_node_terrains)
 	else:
 		print("No player terrain cards assigned yet.")
-	# Set up terrain assignment for combat scene (optional: use a global holder or let CombatManager fetch via PantheonRunManager)
 	get_tree().change_scene_to_file("res://scenes/combat_scene.tscn")
 
 func _on_AbandonRunButton_pressed():

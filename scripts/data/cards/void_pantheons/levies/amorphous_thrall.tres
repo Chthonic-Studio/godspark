@@ -1,19 +1,34 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://brpp4av0v54yf"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://brpp4av0v54yf"]
 
 [ext_resource type="Script" uid="uid://cfws31715v3wk" path="res://scripts/effects/card_effect.gd" id="1_b7gy7"]
+[ext_resource type="Script" uid="uid://jpvys1sa1fmy" path="res://scripts/effects/on_reveal_hand_modifier.gd" id="2_pyeh3"]
 [ext_resource type="Script" uid="uid://cjoyfln420vcw" path="res://scripts/data/card_data.gd" id="2_ygphq"]
+
+[sub_resource type="Resource" id="Resource_x0lnp"]
+script = ExtResource("2_pyeh3")
+power_modifier = 0
+health_modifier = 0
+cost_modifier = 1
+hand_target = 0
+select_mode = 1
+selection_count = 1
+highest_stat_type = 0
+target_self_only = false
+effect_name = ""
+description = ""
+metadata/_custom_type_script = "uid://jpvys1sa1fmy"
 
 [resource]
 script = ExtResource("2_ygphq")
-id = ""
-name = ""
-description = ""
-type = 0
-cost = 0
+id = "amorphous_thrall"
+name = "Amorphous Thrall"
+description = "Adds -1 Cost to a card in hand"
+type = 1
+cost = 3
 pantheon = 0
-effects = Array[ExtResource("1_b7gy7")]([])
+effects = Array[ExtResource("1_b7gy7")]([SubResource("Resource_x0lnp")])
 tags = Array[String]([])
 requirements = {}
-power = 0
-health = 0
+power = 3
+health = 4
 metadata/_custom_type_script = "uid://cjoyfln420vcw"
