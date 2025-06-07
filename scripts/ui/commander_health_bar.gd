@@ -15,6 +15,7 @@ func _ready():
 	self.visible = false
 	modulate.a = 0.0
 	if not health_label_path.is_empty():
+		print("Health label:", get_node_or_null(health_label_path))
 		get_node(health_label_path).text = str(value)
 	prev_health = value
 	target_health = value
@@ -23,6 +24,7 @@ func _ready():
 func fade_in():
 	print("Commander health bar fade_in: ", self.name)
 	self.visible = true
+	self.show()
 	modulate.a = 0.0
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1.0, fade_duration)

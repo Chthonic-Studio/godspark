@@ -76,7 +76,7 @@ func place_card(card_instance: Dictionary, location: String, side: String, slot_
 			elif card_data and card_data.has_method("take_damage"):
 				card_data.take_damage(damage)
 				print("On Reveal: %s takes %d damage via CardData method" % [name_str, damage])
-			elif card_data and card_data.has_property("health"):
+			elif card_data and "health" in card_data:
 				card_data.health -= damage
 				print("On Reveal: %s takes %d damage (CardData.health now %d)" % [name_str, damage, card_data.health])
 			# Remove trigger after use
@@ -142,7 +142,7 @@ func calculate_power(location: String, side: String) -> int:
 		var effect = entry.effect
 		if effect.has_method("is_ongoing") and effect.is_ongoing():
 			# Only process modular OngoingModifierEffect
-			if effect.has_property("power_modifier") or effect.has_property("health_modifier"):
+			if "power_modifier" in effect or "health_modifier" in effect:
 				# Which rows to use per side?
 				var row_arr = effect.target_rows_allies if side == entry.side else effect.target_rows_enemies
 				var targets = EffectUtils.get_targets(

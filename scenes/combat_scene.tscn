@@ -169,15 +169,19 @@ grow_vertical = 2
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/left/LocationInfo"]
-layout_mode = 2
-offset_left = 93.0
-offset_top = 54.0
-offset_right = 353.0
-offset_bottom = 95.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.363333
+anchor_right = 1.0
+anchor_bottom = 0.636667
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_ivkwx")
 theme_override_font_sizes/font_size = 40
 text = "Location Name"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="LocationDescription" type="Label" parent="BoardPanel/left/LocationInfo"]
 layout_mode = 1
@@ -310,15 +314,20 @@ grow_vertical = 2
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/middle/LocationInfo"]
-layout_mode = 2
-offset_left = 93.0
-offset_top = 54.0
-offset_right = 353.0
-offset_bottom = 95.0
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -20.5
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_ivkwx")
 theme_override_font_sizes/font_size = 40
 text = "Location Name"
+horizontal_alignment = 1
 
 [node name="LocationDescription" type="Label" parent="BoardPanel/middle/LocationInfo"]
 layout_mode = 1
@@ -451,15 +460,19 @@ grow_vertical = 2
 texture = ExtResource("7_6ovae")
 
 [node name="LocationName" type="Label" parent="BoardPanel/right/LocationInfo"]
-layout_mode = 2
-offset_left = 93.0
-offset_top = 54.0
-offset_right = 353.0
-offset_bottom = 95.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.363333
+anchor_right = 1.0
+anchor_bottom = 0.636667
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_ivkwx")
 theme_override_font_sizes/font_size = 40
 text = "Location Name"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="LocationDescription" type="Label" parent="BoardPanel/right/LocationInfo"]
 layout_mode = 1
@@ -560,21 +573,20 @@ modulate = Color(1.5, 1, 1, 1)
 custom_minimum_size = Vector2(500, 40)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.097
-anchor_top = -0.382
-anchor_right = 0.961798
-anchor_bottom = 1.0
-offset_left = 132.67
-offset_top = 13.28
-offset_right = -137.0
-offset_bottom = -2.0
+anchor_left = 0.246067
+anchor_top = -0.05
+anchor_right = 0.807865
+anchor_bottom = 0.95
+offset_right = 0.000244141
 grow_horizontal = 2
 grow_vertical = 2
 value = 100.0
 rounded = true
+texture_under = ExtResource("13_blj0x")
 texture_progress = ExtResource("13_blj0x")
 script = ExtResource("13_ohwxf")
 health_label_path = NodePath("HealthValueLabel")
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthValueLabel" type="Label" parent="PlayerHUD/PlayerHealthBar"]
 custom_minimum_size = Vector2(83, 23)
@@ -660,22 +672,22 @@ modulate = Color(1.5, 1, 1, 1)
 custom_minimum_size = Vector2(500, 40)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.097
-anchor_top = -0.382
-anchor_right = 0.961798
-anchor_bottom = 1.0
-offset_left = -234.869
-offset_top = 25.28
-offset_right = 230.539
-offset_bottom = 10.0
+anchor_left = -5.77473
+anchor_top = 0.25
+anchor_right = 6.72527
+anchor_bottom = 1.25
+offset_left = 4.57764e-05
+offset_right = -6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
 value = 100.0
 rounded = true
+texture_under = ExtResource("13_blj0x")
 texture_progress = ExtResource("13_blj0x")
 script = ExtResource("13_ohwxf")
 is_player = false
 health_label_path = NodePath("HealthValueLabel")
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthValueLabel" type="Label" parent="EnemyHUD/EnemyHealthBar"]
 custom_minimum_size = Vector2(83, 23)

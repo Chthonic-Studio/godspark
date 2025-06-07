@@ -3,7 +3,18 @@ extends Node
 const EffectEnums = preload("res://scripts/effects/effect_enums.gd")
 
 # Top-level helper: gets the correct stat
-static func _get_stat(card_data, stat_type: String) -> int:
+static func _get_stat(card_data, stat_type) -> int:
+	# Accept EffectEnums.Stat (int) or string, always convert to a string internally
+	if typeof(stat_type) == TYPE_INT:
+		# If it's the Stat enum, convert it to string
+		match stat_type:
+			EffectEnums.Stat.POWER:
+				stat_type = "power"
+			EffectEnums.Stat.HEALTH:
+				stat_type = "health"
+			EffectEnums.Stat.BOTH:
+				# If BOTH, default to power (or handle as needed)
+				stat_type = "power"
 	if stat_type == "power":
 		if card_data.has_method("get_power"):
 			return card_data.get_power()

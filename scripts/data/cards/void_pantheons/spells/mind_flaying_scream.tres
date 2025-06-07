@@ -24,8 +24,8 @@ metadata/_custom_type_script = "uid://hyqjun5qhf3m"
 
 [resource]
 script = ExtResource("2_om55o")
-id = "mind_flaying_screen"
-name = "Mind-flaying Screen"
+id = "mind_flaying_scream"
+name = "Mind-flaying Scream"
 description = "Deals 3 Damage to all units in this location"
 type = 2
 cost = 3

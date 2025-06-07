@@ -75,7 +75,7 @@ func apply_ongoing_buff(context: Dictionary) -> void:
 						if ally.has("current_hp"):
 							ally["current_hp"] += health_modifier_per_copy * copy_count
 						var cd = ally.get("card_data", null)
-						if cd and cd.has_property("health"):
+						if cd and "health" in cd:
 							cd.health += health_modifier_per_copy * copy_count
 	else:
 		# Only this card gets buff
@@ -90,7 +90,7 @@ func apply_ongoing_buff(context: Dictionary) -> void:
 		if health_modifier_per_copy != 0:
 			if card_instance.has("current_hp"):
 				card_instance["current_hp"] += health_modifier_per_copy * copy_count
-			if card_data and card_data.has_property("health"):
+			if card_data and "health" in card_data:
 				card_data.health += health_modifier_per_copy * copy_count
 
 	# Track turns if duration is set

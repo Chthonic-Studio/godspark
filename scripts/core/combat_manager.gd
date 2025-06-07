@@ -19,6 +19,10 @@ signal phase_changed
 signal turn_changed
 
 func _ready():
+	# Defer start_combat to the next idle frame, ensuring all children are ready
+	call_deferred("_start_combat_safe")
+
+func _start_combat_safe():
 	start_combat()
 
 func start_combat():
@@ -66,12 +70,19 @@ func start_combat():
 			enemy_deck_manager._generate_test_cards()
 
 	var player_bar = $"../PlayerHUD/PlayerHealthBar"
+	print("player_bar node:", player_bar)
 	player_bar.fade_in()
 	player_bar.set_health(player_health)
+	# Make sure the bars show up
+	player_bar.visible = true
+	player_bar.modulate.a = 1.0
 
 	var enemy_bar = $"../EnemyHUD/EnemyHealthBar"
+	print("enemy_bar node:", enemy_bar)
 	enemy_bar.fade_in()
 	enemy_bar.set_health(enemy_health)
+	enemy_bar.visible = true
+	enemy_bar.modulate.a = 1.0
 
 	DeckManager.start_game()
 	enemy_deck_manager.draw_cards(3)

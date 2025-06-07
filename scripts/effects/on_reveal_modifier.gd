@@ -38,7 +38,7 @@ func execute(card: CardData, context: Dictionary) -> void:
 		var board = context.get("board")
 		var location = context.get("location")
 		var side = context.get("side")
-		var card_instance = context.get("card") if context.has("card") else null
+		var card_instance = context.get("card") if context.has("card") else {}
 		var row_arr = target_rows_allies if target_side == EffectEnums.Side.ALLY else target_rows_enemies
 		targets = EffectUtils.get_targets(
 			board, location, side,
