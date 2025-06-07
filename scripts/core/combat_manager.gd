@@ -40,6 +40,8 @@ func start_combat():
 		# Setup deck if empty
 		if DeckManager.draw_pile.is_empty() and DeckManager.hand.is_empty():
 			DeckManager._generate_test_cards()
+			DeckManager.start_game()
+			hand_manager.refresh_hand() # Only here in dev mode
 		# Setup enemy deck if empty
 		if enemy_deck_manager.draw_pile.is_empty() and enemy_deck_manager.hand.is_empty():
 			enemy_deck_manager._generate_test_cards()
@@ -62,7 +64,8 @@ func start_combat():
 		board_ui_manager.update_location_info()
 
 		DeckManager.setup_deck(PantheonRunManager.player_deck)
-		DeckManager.start_game()
+		DeckManager.start_game() # Only here in campaign flow
+		hand_manager.refresh_hand()
 
 		if enemy_deck_manager and PantheonRunManager.current_void_pantheon != "":
 			enemy_deck_manager.setup_deck(generate_enemy_deck_for_void_pantheon(PantheonRunManager.current_void_pantheon))
@@ -73,7 +76,6 @@ func start_combat():
 	print("player_bar node:", player_bar)
 	player_bar.fade_in()
 	player_bar.set_health(player_health)
-	# Make sure the bars show up
 	player_bar.visible = true
 	player_bar.modulate.a = 1.0
 
@@ -84,7 +86,9 @@ func start_combat():
 	enemy_bar.visible = true
 	enemy_bar.modulate.a = 1.0
 
-	DeckManager.start_game()
+	# REMOVE this unconditional start_game call:
+	# DeckManager.start_game()
+
 	enemy_deck_manager.draw_cards(3)
 	phase = "PlayerTurn"
 	divinity = 10

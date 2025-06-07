@@ -93,6 +93,11 @@ static func get_targets(
 				)
 				if not in_row:
 					continue
+				print("DEBUG:", loc, check_side, idx)
+				print("BOARD LOCS:", board_manager.board.keys())
+				print("BOARD SIDES:", board_manager.board[loc].keys() if board_manager.board.has(loc) else "MISSING LOC")
+				print("BOARD SLOTS:", board_manager.board[loc][check_side] if board_manager.board.has(loc) and board_manager.board[loc].has(check_side) else "MISSING SIDE")
+
 				var card_instance = board_manager.board[loc][check_side][idx]
 				if card_instance:
 					if exclude_self and self_card_instance and card_instance == self_card_instance:
