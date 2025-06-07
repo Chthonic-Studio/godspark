@@ -11,9 +11,3 @@ func get_combat_terrain_assignment(node_terrain: Dictionary, player_terrain: Res
 		"middle": node_terrain.get("pantheon"),
 		"right": player_terrain
 	}
-
-# Utility: At combat scene, call this at setup:
-# var zone_gen = $ZoneGenerator
-# var node_terrain = PantheonRunManager.get_current_node_terrains()
-# var player_terrain = PantheonRunManager.player_terrain_cards.pick_random()
-# zone_gen.get_combat_terrain_assignment(node_terrain, player_terrain)

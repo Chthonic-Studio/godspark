@@ -51,7 +51,7 @@ const EGYPTIAN_PANTHEON = [
 	preload("res://scripts/data/cards/divine_pantheons/egyptian/scarab_swarm.tres")	
 ]
 
-const THE_DREAMING_MAW = [
+const DREAMING_MAW = [
 	# Divine Soldiers
 	preload("res://scripts/data/cards/void_pantheons/dreaming_maw/abyssal_watcher.tres"),
 	preload("res://scripts/data/cards/void_pantheons/dreaming_maw/priest_of_sunken_stars.tres"),
